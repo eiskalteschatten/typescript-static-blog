@@ -13,6 +13,10 @@
 
     <link rel="stylesheet" href="/css/bootstrap.css?v=1">
     <link rel="stylesheet" href="/css/main.css?v=1">
+    <link rel="preload" href="/css/secondary.css?v=1" as="style" class="asyncCss">
+
+    <script defer src="/scripts/scripts.js?v=1"></script>
+    <script defer src="/scripts/web-components/index.js?v=1" type="module"></script>
   </head>
   <body>
     <header class="header py-2 pe-3 d-flex align-items-center justify-content-between">
@@ -71,7 +75,5 @@
         <button class="button primary" id="cookieBannerAcceptAllButton">Accept All</button>
       </div>
     </dialog>
-
-    <script defer src="/scripts/web-components/index.js?v=1" type="module"></script>
   </body>
 </html>
