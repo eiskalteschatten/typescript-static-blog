@@ -1,0 +1,19 @@
+<div class="item-tile-horizontal row">
+  <div class="col-12 col-md-5 mb-4 mb-md-0">
+    <a href="<%= item.link %>" <% if (item.openInNewTab) { %>target="_blank"<% } %>>
+      <img src="<%= item.imageUrl %>" class="item-tile-image" alt="<%= item.title %>" loading="lazy">
+    </a>
+  </div>
+
+  <div class="col-12 col-md-7">
+    <h2 class="item-tile-name">
+      <a href="<%= item.link %>" <% if (item.openInNewTab) { %>target="_blank"<% } %>>
+        <%= item.title %>
+      </a>
+    </h2>
+
+    <div class="item-tile-description">
+      <%- item.description %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+.item-tile-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: var(--border-radius);
+}
+
+.item-tile-name {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin: 0;
+
+  a {
+    color: var(--color);
+    transition: color $animationSpeed;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.item-tile-description {
+  opacity: .8;
+  transition: opacity $animationSpeed;
+  font-size: .95em;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.item-tile-horizontal {
+  margin-top: 15px;
+  margin-bottom: 35px;
+
+  .item-tile-image {
+    height: 210px !important;
+  }
+
+  .item-tile-description {
+    margin: 20px 0;
+  }
+}
