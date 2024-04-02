@@ -8,7 +8,7 @@ export default async (app: FastifyInstance) => {
     const blogPostIndex = new BlogPostIndex('allPosts');
     await blogPostIndex.getPosts();
 
-    return reply.view('all-posts/index.ejs', {
+    return reply.view('_blog/index.ejs', {
       title: 'All Posts',
       mainNavId: 'allPosts',
       blogPosts: blogPostIndex.getPostsAsItemTileItems(),
