@@ -54,6 +54,7 @@ export async function getPost(postId: string): Promise<BlogPost | undefined> {
     return {
       metaData,
       body,
+      parsedBody: body,
     };
   }
   catch (error) {

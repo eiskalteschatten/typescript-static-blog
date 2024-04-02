@@ -14,6 +14,7 @@ export interface BlogPostMetaData {
 export interface BlogPost {
   metaData: BlogPostMetaData;
   body: string;
+  parsedBody: string;
 }
 
 export interface WordPressPost {
