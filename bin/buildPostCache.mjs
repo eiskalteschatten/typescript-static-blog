@@ -1,6 +1,8 @@
 import path from 'node:path';
 import fs from 'node:fs';
 
+import { slugify } from './utils.mjs';
+
 import categories from '../data/categories.json' assert { type: 'json' };
 
 console.log('Building post caches...');
@@ -82,13 +84,7 @@ function buildTagCache() {
   }
 
   for (const tag in tagData) {
-    const slug = tag
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, '')
-      .replace(/[\s_-]+/g, '-')
-      .replace(/^-+|-+$/g, '');
-
+    const slug = slugify(tag);
     const cacheFile = path.resolve(tagCacheDirectory, `${slug}.json`);
 
     const cacheContents = {
