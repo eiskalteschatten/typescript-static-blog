@@ -1,5 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
+import categories from '@data/categories.json';
+
 import BlogPostIndex from '@/blog/BlogPostIndex';
 
 export default async (app: FastifyInstance) => {
@@ -11,7 +13,7 @@ export default async (app: FastifyInstance) => {
       title: 'All Posts',
       mainNavId: 'allPosts',
       blogPosts: blogPostIndex.getPostsAsItemTileItems(),
-      categories: [],
+      categories,
     });
   });
 };
