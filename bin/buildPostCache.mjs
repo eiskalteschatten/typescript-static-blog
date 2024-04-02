@@ -56,7 +56,6 @@ function buildCategoryCache() {
     const postsInCategory = allPostsData.filter(post => post.categories.includes(category.id));
     const cacheFile = path.resolve(categoryCacheDirectory, `${category.id}.json`);
     const sortedPostFolders = postsInCategory.map(post => post.id);
-
     fs.writeFileSync(cacheFile, JSON.stringify(sortedPostFolders, null, 2));
   }
 }
@@ -83,8 +82,21 @@ function buildTagCache() {
   }
 
   for (const tag in tagData) {
-    const cacheFile = path.resolve(tagCacheDirectory, `${tag}.json`);
-    fs.writeFileSync(cacheFile, JSON.stringify(tagData[tag], null, 2));
+    const slug = tag
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/[\s_-]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+
+    const cacheFile = path.resolve(tagCacheDirectory, `${slug}.json`);
+
+    const cacheContents = {
+      name: tag,
+      posts: tagData[tag],
+    };
+
+    fs.writeFileSync(cacheFile, JSON.stringify(cacheContents, null, 2));
   }
 }
 
