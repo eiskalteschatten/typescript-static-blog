@@ -2,12 +2,14 @@ import path from 'node:path';
 import fs from 'node:fs';
 
 import { BlogPostMetaData } from '@/interfaces/blog.interface';
+import { ItemTileItem } from '@/interfaces/itemTile.interface';
 
 type BlogPostIndexType = 'allPosts' | 'category' | 'tag' | 'archive' | 'search';
 
 export default class BlogPostIndex {
   private cacheDirectory = path.resolve(process.cwd(), '.cache');
   private postsDirectory = path.resolve(process.cwd(), 'data', 'posts');
+  posts: BlogPostMetaData[] = [];
 
   constructor(private type: BlogPostIndexType) {}
 
@@ -28,11 +30,19 @@ export default class BlogPostIndex {
     }
   }
 
+  getPostsAsItemTileItems(): ItemTileItem[] {
+    return this.posts.map(post => ({
+      id: post.id,
+      title: post.title,
+      description: post.excerpt,
+      image: post.titleImage,
+      link: `/post/${post.id}`,
+    }));
+  }
+
   private async getAllPosts(): Promise<BlogPostMetaData[]> {
     const cacheFile = path.resolve(this.cacheDirectory, 'allPosts.json');
     const postIds = await this.parseCacheFile<string[]>(cacheFile);
-
-    const postData: BlogPostMetaData[] = [];
 
     for (const postId of postIds) {
       const fullPathToFolder = path.resolve(this.postsDirectory, postId);
@@ -41,14 +51,14 @@ export default class BlogPostIndex {
 
       try {
         const postMetaData = JSON.parse(fileContent) as BlogPostMetaData;
-        postData.push(postMetaData);
+        this.posts.push(postMetaData);
       }
       catch (error) {
         console.error(error);
       }
     }
 
-    return postData;
+    return this.posts;
   }
 
   private async parseCacheFile<T>(cacheFile: string): Promise<T> {
