@@ -11,6 +11,7 @@ export default async (app: FastifyInstance) => {
       title: 'All Posts',
       mainNavId: 'allPosts',
       blogPosts: blogPostIndex.getPostsAsItemTileItems(),
+      categories: [],
     });
   });
 };

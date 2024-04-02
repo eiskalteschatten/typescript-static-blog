@@ -1,3 +1,17 @@
 <aside class="sidebar">
-  This is a sidebar
+  <% if (typeof categories !== 'undefined') { %>
+    <nav class="categories">
+      <h4 class="sidebar-title">Categories</h4>
+
+      <ul>
+        <% for (const category of categories) { %>
+          <li>
+            <a href="<%= category.url %>">
+              <%= category.name %>
+            </a>
+          </li>
+        <% } %>
+      </ul>
+    </nav>
+  <% } %>
 </aside>
