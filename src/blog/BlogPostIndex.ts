@@ -3,9 +3,7 @@ import fs from 'node:fs';
 
 import { BlogPostMetaData } from '@/interfaces/blog.interface';
 import { ItemTileItem } from '@/interfaces/itemTile.interface';
-
-import Tags from './Tags';
-import Categories from './Categories';
+import Sidebar from '@/components/Sidebar';
 
 export default class BlogPostIndex {
   private cacheDirectory = path.resolve(process.cwd(), '.cache');
@@ -76,14 +74,13 @@ export default class BlogPostIndex {
   }
 
   async getTemplateData(): Promise<any> {
-    const tags = await Tags.getAllTags();
+    const sidebarData = await Sidebar.getGenericSidebarData();
 
     return {
       blogPosts: this.getPostsAsItemTileItems(),
-      categories: Categories.getSorted(),
-      tags,
       currentPage: this.page,
       totalPages: this.totalPages,
+      ...sidebarData,
     };
   }
 }
