@@ -1,6 +1,13 @@
 <div class="container">
   <h1 class="page-title"><%= title %></h1>
 
-  <%- include('../_partials/itemTileGridHorizontal.ejs', { items: blogPosts }) %>
+  <div class="row">
+    <div class="col-12 col-lg-9">
+      <%- include('../_partials/itemTileGridHorizontal.ejs', { items: blogPosts }) %>
+    </div>
+    <div class="col-12 col-lg-3 mt-5 mt-lg-0">
+      <%- include('../_partials/genericSidebar.ejs') %>
+    </div>
+  </div>
 </div>
 
