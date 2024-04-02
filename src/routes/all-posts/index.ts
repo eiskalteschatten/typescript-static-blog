@@ -1,11 +1,13 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
-import { getAllBlogPostMetaData } from '@/blog/utils';
 import { ItemTileItem } from '@/interfaces/itemTile.interface';
+import BlogPostIndex from '@/blog/BlogPostIndex';
 
 export default async (app: FastifyInstance) => {
   app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
-    const postMetaData = await getAllBlogPostMetaData();
+    const blogPostIndex = new BlogPostIndex('allPosts');
+    const postMetaData = await blogPostIndex.getPosts();
+
     const blogPosts: ItemTileItem[] = postMetaData ? postMetaData.map(post => ({
       id: post.id,
       title: post.title,
