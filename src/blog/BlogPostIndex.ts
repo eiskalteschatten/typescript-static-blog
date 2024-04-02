@@ -9,8 +9,7 @@ type BlogPostIndexType = 'allPosts' | 'category' | 'tag' | 'archive' | 'search';
 export default class BlogPostIndex {
   private cacheDirectory = path.resolve(process.cwd(), '.cache');
   private postsDirectory = path.resolve(process.cwd(), 'data', 'posts');
-  // private postsPerPage = 12;
-  private postsPerPage = 1;
+  private postsPerPage = 12;
 
   posts: BlogPostMetaData[] = [];
   page = 1;
