@@ -4,6 +4,9 @@ import fs from 'node:fs';
 import { BlogPostMetaData } from '@/interfaces/blog.interface';
 import { ItemTileItem } from '@/interfaces/itemTile.interface';
 
+import Tags from './Tags';
+import Categories from './Categories';
+
 type BlogPostIndexType = 'allPosts' | 'category' | 'tag' | 'archive' | 'search';
 
 export default class BlogPostIndex {
@@ -94,5 +97,16 @@ export default class BlogPostIndex {
     }
 
     return this.posts;
+  }
+
+  async getAdditionalTemplateData(): Promise<any> {
+    const tags = await Tags.getAllTags();
+
+    return {
+      categories: Categories.getSorted(),
+      tags,
+      currentPage: this.page,
+      totalPages: this.totalPages,
+    };
   }
 }
