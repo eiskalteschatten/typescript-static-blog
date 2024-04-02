@@ -11,9 +11,10 @@ export default class BlogPostIndex {
   private postsDirectory = path.resolve(process.cwd(), 'data', 'posts');
   // private postsPerPage = 12;
   private postsPerPage = 1;
-  private page = 1;
 
   posts: BlogPostMetaData[] = [];
+  page = 1;
+  totalPages = 1;
 
   constructor(private type: BlogPostIndexType) {}
 
@@ -51,6 +52,8 @@ export default class BlogPostIndex {
     const cacheFile = path.resolve(this.cacheDirectory, 'allPosts.json');
     const postIds = await this.parseCacheFile<string[]>(cacheFile);
     const postIdsForPage = postIds.slice((this.page - 1) * this.postsPerPage, this.page * this.postsPerPage);
+
+    this.totalPages = Math.ceil(postIds.length / this.postsPerPage);
 
     for (const postId of postIdsForPage) {
       const fullPathToFolder = path.resolve(this.postsDirectory, postId);

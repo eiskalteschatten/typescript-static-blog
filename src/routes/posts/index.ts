@@ -17,6 +17,8 @@ export default async (app: FastifyInstance) => {
       blogPosts: blogPostIndex.getPostsAsItemTileItems(),
       categories: Categories.getSorted(),
       tags,
+      currentPage: blogPostIndex.page,
+      totalPages: blogPostIndex.totalPages,
     });
   });
 };
