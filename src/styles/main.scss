@@ -83,6 +83,15 @@ p {
   }
 }
 
+.low-opacity-text {
+  opacity: .65;
+  transition: opacity 250ms;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 @import "./fonts";
 @import "./structure";
 @import "./header";
