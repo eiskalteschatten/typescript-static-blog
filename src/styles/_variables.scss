@@ -14,9 +14,9 @@ $paletteBrown: #544130;
 $primaryColor: $paletteYellow;
 
 $lightBg: #ffffff;
-$lightSecondaryBg: #f5f5f7;
-$lightColor: #1a1816;
-$lightShadowColor: #6a5c46;
+$lightSecondaryBg: #f5f5f5;
+$lightColor: #24292f;
+$lightShadowColor: $paletteLightGray;
 $darkBg: #000000;
 $darkSecondaryBg: #111111;
 $darkColor: #f0f0f0;
@@ -25,9 +25,9 @@ $lightBorderLighterColor: lighten($lightBorderColor, 15%);
 $darkBorderColor: #333333;
 $darkBorderLighterColor: darken($darkBorderColor, 10%);
 $darkShadowColor: #111111;
-$lightHoverBgColor: #{$paletteBrown}50;
+$lightHoverBgColor: darken($lightBg, 15%);
 $darkHoverBgColor: lighten($darkBg, 15%);
-$lightActiveBgColor: #{$paletteBrown}85;
+$lightActiveBgColor: darken($lightBg, 9%);
 $darkActiveBgColor: lighten($darkBg, 9%);
 
 $borderRadius: 5px;
