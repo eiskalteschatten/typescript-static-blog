@@ -13,12 +13,12 @@ const mainNav: MainNavItem[] = [
   {
     id: 'allPosts',
     label: 'All Posts',
-    url: '/all-posts',
+    url: '/posts/',
   },
   {
     id: 'about',
     label: 'About TypeScript Static Blog',
-    url: '/about',
+    url: '/about/',
   },
 ];
 
