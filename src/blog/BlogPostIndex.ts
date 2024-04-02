@@ -52,7 +52,7 @@ export default class BlogPostIndex {
 
   private async getAllPosts(): Promise<BlogPostMetaData[]> {
     const cacheFile = path.resolve(this.cacheDirectory, 'allPosts.json');
-    return await this.parseCacheFile(cacheFile);
+    return await this.parsePostIdCacheFile(cacheFile);
   }
 
   private async getPostsByCategory(): Promise<BlogPostMetaData[]> {
@@ -61,10 +61,10 @@ export default class BlogPostIndex {
     }
 
     const cacheFile = path.resolve(this.cacheDirectory, 'categories', `${this.typeId}.json`);
-    return await this.parseCacheFile(cacheFile);
+    return await this.parsePostIdCacheFile(cacheFile);
   }
 
-  private async parseCacheFile(cacheFile: string): Promise<BlogPostMetaData[]> {
+  private async parsePostIdCacheFile(cacheFile: string): Promise<BlogPostMetaData[]> {
     let postIds = [];
 
     try {
