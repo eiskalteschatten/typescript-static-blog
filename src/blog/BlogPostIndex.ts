@@ -15,7 +15,10 @@ export default class BlogPostIndex {
   page = 1;
   totalPages = 1;
 
-  constructor(private type: BlogPostIndexType) {}
+  constructor(
+    private type: BlogPostIndexType,
+    private typeId?: string
+  ) {}
 
   async getPosts(page = 1): Promise<BlogPostMetaData[]> {
     this.page = page;
@@ -23,8 +26,8 @@ export default class BlogPostIndex {
     switch (this.type) {
       case 'allPosts':
         return await this.getAllPosts();
-      // case 'category':
-      //   return await this.getPostsByCategory();
+      case 'category':
+        return await this.getPostsByCategory();
       // case 'tag':
       //   return await this.getPostsByTag();
       // case 'archive':
@@ -49,7 +52,29 @@ export default class BlogPostIndex {
 
   private async getAllPosts(): Promise<BlogPostMetaData[]> {
     const cacheFile = path.resolve(this.cacheDirectory, 'allPosts.json');
-    const postIds = await this.parseCacheFile<string[]>(cacheFile);
+    return await this.parseCacheFile(cacheFile);
+  }
+
+  private async getPostsByCategory(): Promise<BlogPostMetaData[]> {
+    if (!this.typeId) {
+      throw new Error('No category ID provided!');
+    }
+
+    const cacheFile = path.resolve(this.cacheDirectory, 'categories', `${this.typeId}.json`);
+    return await this.parseCacheFile(cacheFile);
+  }
+
+  private async parseCacheFile(cacheFile: string): Promise<BlogPostMetaData[]> {
+    let postIds = [];
+
+    try {
+      const fileContent = await fs.promises.readFile(cacheFile, 'utf8');
+      postIds = JSON.parse(fileContent);
+    }
+    catch (error) {
+      console.error(error);
+    }
+
     const postIdsForPage = postIds.slice((this.page - 1) * this.postsPerPage, this.page * this.postsPerPage);
 
     this.totalPages = Math.ceil(postIds.length / this.postsPerPage);
@@ -69,15 +94,5 @@ export default class BlogPostIndex {
     }
 
     return this.posts;
-  }
-
-  private async parseCacheFile<T>(cacheFile: string): Promise<T> {
-    try {
-      const fileContent = await fs.promises.readFile(cacheFile, 'utf8');
-      return JSON.parse(fileContent);
-    }
-    catch (error) {
-      console.error(error);
-    }
   }
 }

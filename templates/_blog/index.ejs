@@ -8,19 +8,15 @@
       <% if (totalPages > 1) { %>
         <div class="pagination d-flex gap-1 justify-content-center mt-2 mt-md-5">
           <% if (currentPage != 1) { %>
-            <a href="/posts/?page=<%= Number(currentPage) - 1 %>" class="pagination-link badge">&#x2190; Previous</a>
+            <a href="?page=<%= Number(currentPage) - 1 %>" class="pagination-link badge">&#x2190; Previous</a>
           <% } %>
 
           <% for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) { %>
-            <% if (pageNumber === 1) { %>
-              <a href="/posts/" class="pagination-link badge <% if (currentPage == 1) { %>selected<% } %>">1</a>
-            <% } else { %>
-              <a href="/posts/?page=<%= pageNumber %>" class="pagination-link badge <% if (pageNumber == currentPage) { %>selected<% } %>"><%= pageNumber %></a>
-            <% } %>
+            <a href="?page=<%= pageNumber %>" class="pagination-link badge <% if (pageNumber == currentPage) { %>selected<% } %>"><%= pageNumber %></a>
           <% } %>
 
           <% if (currentPage < totalPages) { %>
-            <a href="/posts/?page=<%= Number(currentPage) + 1 %>" class="pagination-link badge">Next &#x2192;</a>
+            <a href="?page=<%= Number(currentPage) + 1 %>" class="pagination-link badge">Next &#x2192;</a>
           <% } %>
         </div>
       <% } %>

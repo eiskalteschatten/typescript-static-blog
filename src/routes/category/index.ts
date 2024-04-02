@@ -11,7 +11,7 @@ export default async (app: FastifyInstance) => {
     const { categoryId } = req.params;
     const category = new Category(categoryId);
 
-    const blogPostIndex = new BlogPostIndex('category');
+    const blogPostIndex = new BlogPostIndex('category', categoryId);
     await blogPostIndex.getPosts(req.query.page);
     const tags = await Tags.getAllTags();
 
