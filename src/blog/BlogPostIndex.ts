@@ -31,8 +31,8 @@ export default class BlogPostIndex {
         return await this.getAllPosts();
       case 'category':
         return await this.getPostsByCategory();
-      // case 'tag':
-      //   return await this.getPostsByTag();
+      case 'tag':
+        return await this.getPostsByTag();
       // case 'archive':
       //   return await this.getPostsByArchive();
       // case 'search':
@@ -64,6 +64,15 @@ export default class BlogPostIndex {
     }
 
     const cacheFile = path.resolve(this.cacheDirectory, 'categories', `${this.typeId}.json`);
+    return await this.parsePostIdCacheFile(cacheFile);
+  }
+
+  private async getPostsByTag(): Promise<BlogPostMetaData[]> {
+    if (!this.typeId) {
+      throw new Error('No category ID provided!');
+    }
+
+    const cacheFile = path.resolve(this.cacheDirectory, 'tags', `${this.typeId}.json`);
     return await this.parsePostIdCacheFile(cacheFile);
   }
 

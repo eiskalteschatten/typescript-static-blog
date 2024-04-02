@@ -92,12 +92,7 @@ function buildTagCache() {
     const slug = slugify(tag);
     const cacheFile = path.resolve(tagCacheDirectory, `${slug}.json`);
 
-    const cacheContents = {
-      name: tag,
-      posts: tagData[tag],
-    };
-
-    fs.writeFileSync(cacheFile, JSON.stringify(cacheContents, null, 2));
+    fs.writeFileSync(cacheFile, JSON.stringify(tagData[tag], null, 2));
   }
 
   const cacheFile = path.resolve(tagCacheDirectory, 'allTags.json');
