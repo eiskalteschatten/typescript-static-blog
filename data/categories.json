@@ -1,0 +1,17 @@
+[
+  {
+    "id": "news",
+    "name": "News",
+    "description": "News"
+  },
+  {
+    "id": "the-old-west",
+    "name": "The Old West",
+    "description": "Posts about the website."
+  },
+  {
+    "id": "history-online",
+    "name": "History Online",
+    "description": "Posts about where history comes to life online."
+  }
+]

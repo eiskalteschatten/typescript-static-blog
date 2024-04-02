@@ -9,13 +9,14 @@
     "esModuleInterop": true,
     "allowJs": true,
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "lib": ["es2020.string", "esnext.asynciterable"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noImplicitOverride": true,
     "paths": {
-      "~/*": [ "*" ]
+      "@/*": ["./src/*"],
+      "@data/*": ["./data/*"]
     }
   },
   "include": [

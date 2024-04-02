@@ -1,0 +1,5 @@
+Together with PBS Education, <a href="https://earth.google.com/web/@43.61414605,-107.10269614,2402.09485009a,3203596.78d,35y,0h,45.009t,0r/data=CjsSORIgMGZlYjg5N2RiMTEwMTFlNjlmZWYzOTljMWQzYTJlZWYiFXBic19sZXdpc2NsYXJrX3NwbGFzaA" target="_blank">Google Earth</a> has released an interactive map of Lewis and Clark's famous expedition to explore the newly aquired Louisiana Territory. Visitors to the site can go on a virtual journey with Lewis and Clark following several important locations throughout their trip. At each stop, there is a video and an explanation as to why it was important.
+
+<a href="/topics/article/the-lewis-and-clark-expedition/">The Lewis and Clark Expedition</a> was one of the most signficant expeditions in the history of the old west. Waves of settlers followed in their wake changing the landscape of the west forever.
+
+<a href="https://earth.google.com/web/@43.61414605,-107.10269614,2402.09485009a,3203596.78d,35y,0h,45.009t,0r/data=CjsSORIgMGZlYjg5N2RiMTEwMTFlNjlmZWYzOTljMWQzYTJlZWYiFXBic19sZXdpc2NsYXJrX3NwbGFzaA" target="_blank">Visit the interactive map &rarr;</a>
