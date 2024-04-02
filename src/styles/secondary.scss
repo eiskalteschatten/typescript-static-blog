@@ -1,3 +1,98 @@
+@import "./variables";
+
+.sub-headline {
+  opacity: .65;
+  transition: opacity 250ms;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  p {
+    margin: 15px 0 0 0;
+  }
+}
+
+.low-opacity-text {
+  opacity: .65;
+  transition: opacity 250ms;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.badge {
+  text-decoration: none;
+  display: block;
+  border-radius: var(--border-radius);
+  background-color: var(--background-secondary-color);
+  padding: 5px 12px;
+  transition: background-color 350ms;
+  font-size: .9em;
+  font-weight: 700;
+  color: var(--color);
+
+  a {
+    text-decoration: none;
+    color: var(--color);
+
+    &:hover {
+      color: #000000;
+    }
+  }
+
+  &:hover {
+    color: #000000;
+    background-color: var(--primary-color);
+
+    a {
+      color: #000000;
+    }
+  }
+
+  &.small {
+    font-weight: 600;
+    font-size: .85em;
+    padding: 3px 10px;
+  }
+
+  &.primary {
+    color: #000000;
+    background-color: var(--primary-color);
+
+    a {
+      color: #000000;
+    }
+  }
+
+  &.green {
+    color: #ffffff;
+    background-color: $paletteGreen;
+
+    a {
+      color: #ffffff;
+    }
+  }
+
+  &.orange {
+    color: #000000;
+    background-color: $paletteOrange;
+
+    a {
+      color: #000000;
+    }
+  }
+}
+
+.alert {
+  border-radius: 5px;
+
+  &.error {
+    color: $errorColor;
+  }
+}
+
 @import "./forms";
 @import "./buttons";
 @import "./contact";
