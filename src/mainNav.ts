@@ -12,7 +12,7 @@ const mainNav: MainNavItem[] = [
   },
   {
     id: 'about',
-    label: 'About TypeScript Fastify',
+    label: 'About TypeScript Static Blog',
     url: '/about',
   },
 ];

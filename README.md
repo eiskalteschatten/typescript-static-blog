@@ -1,4 +1,4 @@
-# TypeScript Fastify
+# TypeScript Static Blog
 
 To start locally for development:
 

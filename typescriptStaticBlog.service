@@ -1,29 +1,29 @@
 # Copies to /etc/systemd/system
 
 # Start service
-# sudo systemctl start typescriptFastify
+# sudo systemctl start typescriptStaticBlog
 
 # Enable restart on reboot
-# sudo systemctl enable typescriptFastify
+# sudo systemctl enable typescriptStaticBlog
 
 # Reload
 # sudo systemctl daemon-reload
 
 # Follow logging
-# sudo journalctl --follow -u typescriptFastify
+# sudo journalctl --follow -u typescriptStaticBlog
 
 [Unit]
-Description=Feed The Dev
+Description=TypeScript Static Blog
 
 [Service]
-ExecStart=/var/www/typescript-fastify/typescriptFastifyStart.sh
+ExecStart=/var/www/typescript-static-blog/typescriptStaticBlogStart.sh
 Restart=always
 User=www-data
 # Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
 Group=nogroup
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
-WorkingDirectory=/var/www/typescript-fastify
+WorkingDirectory=/var/www/typescript-static-blog
 
 [Install]
 WantedBy=multi-user.target

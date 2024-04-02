@@ -1,5 +1,5 @@
 {
-  "name": "typescript-fastify",
+  "name": "typescript-static-blog",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/main.js",

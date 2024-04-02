@@ -38,7 +38,7 @@ export default async (app: FastifyInstance) => {
       await transporter.sendMail({
         from: process.env.EMAIL_USER,
         to: 'alex@alexseifert.com',
-        subject: 'Email from TypeScript Fastify',
+        subject: 'Email from TypeScript Static Blog',
         html: generateHtml(req.body),
       });
 
