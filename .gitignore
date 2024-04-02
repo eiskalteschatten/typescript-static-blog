@@ -48,8 +48,7 @@ node_modules/
 .env.test
 
 # Caches
-.cache/*.json
-.feed-cache
+.cache
 
 dist
 .vs
