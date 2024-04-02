@@ -1,7 +1,6 @@
 .item-tile-image, .no-item-tile-title-image {
   width: 100%;
-  height: 210px;
-  max-width: 100%;
+  height: 300px;
   object-fit: cover;
   border-radius: var(--border-radius);
 }
@@ -16,7 +15,7 @@
   border-radius: var(--border-radius);
 
   .material-icons {
-      opacity: .15;
+    opacity: .15;
   }
 }
 
@@ -36,24 +35,23 @@
 }
 
 .item-tile-description {
-  opacity: .8;
-  transition: opacity $animationSpeed;
-  font-size: .95em;
-
-  &:hover {
-    opacity: 1;
-  }
+  font-size: .9em;
 }
 
 .item-tile-horizontal {
   margin-top: 15px;
   margin-bottom: 35px;
 
-  .item-tile-image {
+  .item-tile-image, .no-item-tile-title-image {
     height: 210px !important;
   }
 
   .item-tile-description {
     margin: 20px 0;
   }
+}
+
+.item-tile-meta {
+  text-transform: uppercase;
+  font-size: .85em;
 }

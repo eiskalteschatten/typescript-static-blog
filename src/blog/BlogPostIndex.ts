@@ -37,6 +37,7 @@ export default class BlogPostIndex {
       description: post.excerpt,
       image: post.titleImage,
       link: `/post/${post.id}`,
+      date: post.publishedDate,
     }));
   }
 

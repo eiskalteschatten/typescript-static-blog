@@ -19,8 +19,14 @@
         </a>
       </h2>
 
-      <div class="item-tile-description">
+      <div class="item-tile-description low-opacity-text">
         <%- item.description %>
+      </div>
+
+      <div class="item-tile-meta low-opacity-text d-flex gap-2">
+        <a href="/author/" class="body-color">author</a>
+        <span>∙</span>
+        <time datetime="<%= item.date %>"><%= helpers.formatLocaleDateTime(item.date) %></time>
       </div>
     </div>
   </div>
