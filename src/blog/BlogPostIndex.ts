@@ -9,11 +9,17 @@ type BlogPostIndexType = 'allPosts' | 'category' | 'tag' | 'archive' | 'search';
 export default class BlogPostIndex {
   private cacheDirectory = path.resolve(process.cwd(), '.cache');
   private postsDirectory = path.resolve(process.cwd(), 'data', 'posts');
+  // private postsPerPage = 12;
+  private postsPerPage = 1;
+  private page = 1;
+
   posts: BlogPostMetaData[] = [];
 
   constructor(private type: BlogPostIndexType) {}
 
-  async getPosts(): Promise<BlogPostMetaData[]> {
+  async getPosts(page = 1): Promise<BlogPostMetaData[]> {
+    this.page = page;
+
     switch (this.type) {
       case 'allPosts':
         return await this.getAllPosts();
@@ -44,8 +50,9 @@ export default class BlogPostIndex {
   private async getAllPosts(): Promise<BlogPostMetaData[]> {
     const cacheFile = path.resolve(this.cacheDirectory, 'allPosts.json');
     const postIds = await this.parseCacheFile<string[]>(cacheFile);
+    const postIdsForPage = postIds.slice((this.page - 1) * this.postsPerPage, this.page * this.postsPerPage);
 
-    for (const postId of postIds) {
+    for (const postId of postIdsForPage) {
       const fullPathToFolder = path.resolve(this.postsDirectory, postId);
       const fullPathtoMetaFile = path.resolve(fullPathToFolder, 'meta.json');
       const fileContent = await fs.promises.readFile(fullPathtoMetaFile, 'utf8');
