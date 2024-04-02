@@ -71,10 +71,15 @@ function buildTagCache() {
     fs.mkdirSync(tagCacheDirectory);
   }
 
+  const tags = [];
   const tagData = {};
 
   for (const post of allPostsData) {
     for (const tag of post.tags) {
+      if (!tags.includes(tag)) {
+        tags.push(tag);
+      }
+
       if (!tagData[tag]) {
         tagData[tag] = [];
       }
@@ -94,6 +99,14 @@ function buildTagCache() {
 
     fs.writeFileSync(cacheFile, JSON.stringify(cacheContents, null, 2));
   }
+
+  const cacheFile = path.resolve(tagCacheDirectory, 'allTags.json');
+  const allTagData = tags.map(tag => ({
+    tag,
+    slug: slugify(tag),
+  }));
+
+  fs.writeFileSync(cacheFile, JSON.stringify(allTagData, null, 2));
 }
 
 function buildArchiveCache() {
