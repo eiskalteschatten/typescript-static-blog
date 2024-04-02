@@ -1,8 +1,7 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
-import categories from '@data/categories.json';
-
 import BlogPostIndex from '@/blog/BlogPostIndex';
+import Categories from '@/blog/Categories';
 
 export default async (app: FastifyInstance) => {
   app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
@@ -13,7 +12,7 @@ export default async (app: FastifyInstance) => {
       title: 'All Posts',
       mainNavId: 'allPosts',
       blogPosts: blogPostIndex.getPostsAsItemTileItems(),
-      categories: categories.sort((a, b) => a.name.localeCompare(b.name)),
+      categories: Categories.getSorted(),
     });
   });
 };
