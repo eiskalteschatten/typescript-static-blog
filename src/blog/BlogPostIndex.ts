@@ -7,40 +7,15 @@ import { ItemTileItem } from '@/interfaces/itemTile.interface';
 import Tags from './Tags';
 import Categories from './Categories';
 
-type BlogPostIndexType = 'allPosts' | 'category' | 'tag' | 'archive' | 'search';
-
 export default class BlogPostIndex {
   private cacheDirectory = path.resolve(process.cwd(), '.cache');
   private postsDirectory = path.resolve(process.cwd(), 'data', 'posts');
   private postsPerPage = 12;
 
   posts: BlogPostMetaData[] = [];
-  page = 1;
   totalPages = 1;
 
-  constructor(
-    private type: BlogPostIndexType,
-    private typeId?: string
-  ) {}
-
-  async getPosts(page = 1): Promise<BlogPostMetaData[]> {
-    this.page = page;
-
-    switch (this.type) {
-      case 'allPosts':
-        return await this.getAllPosts();
-      case 'category':
-        return await this.getPostsByCategory();
-      case 'tag':
-        return await this.getPostsByTag();
-      // case 'archive':
-      //   return await this.getPostsByArchive();
-      // case 'search':
-      //   return await this.getPostsBySearch();
-      default:
-        return [];
-    }
-  }
+  constructor(public page = 1) {}
 
   getPostsAsItemTileItems(): ItemTileItem[] {
     return this.posts.map(post => ({
@@ -53,26 +28,18 @@ export default class BlogPostIndex {
     }));
   }
 
-  private async getAllPosts(): Promise<BlogPostMetaData[]> {
+  async getAllPosts(): Promise<BlogPostMetaData[]> {
     const cacheFile = path.resolve(this.cacheDirectory, 'allPosts.json');
     return await this.parsePostIdCacheFile(cacheFile);
   }
 
-  private async getPostsByCategory(): Promise<BlogPostMetaData[]> {
-    if (!this.typeId) {
-      throw new Error('No category ID provided!');
-    }
-
-    const cacheFile = path.resolve(this.cacheDirectory, 'categories', `${this.typeId}.json`);
+  async getPostsByCategory(categoryId: string): Promise<BlogPostMetaData[]> {
+    const cacheFile = path.resolve(this.cacheDirectory, 'categories', `${categoryId}.json`);
     return await this.parsePostIdCacheFile(cacheFile);
   }
 
-  private async getPostsByTag(): Promise<BlogPostMetaData[]> {
-    if (!this.typeId) {
-      throw new Error('No category ID provided!');
-    }
-
-    const cacheFile = path.resolve(this.cacheDirectory, 'tags', `${this.typeId}.json`);
+  async getPostsByTag(tagSlug: string): Promise<BlogPostMetaData[]> {
+    const cacheFile = path.resolve(this.cacheDirectory, 'tags', `${tagSlug}.json`);
     return await this.parsePostIdCacheFile(cacheFile);
   }
 

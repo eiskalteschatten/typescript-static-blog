@@ -10,8 +10,8 @@ export default async (app: FastifyInstance) => {
     const tag = new Tag(tagSlug);
     await tag.getTagMetaData();
 
-    const blogPostIndex = new BlogPostIndex('tag', tagSlug);
-    await blogPostIndex.getPosts(req.query.page);
+    const blogPostIndex = new BlogPostIndex(req.query.page);
+    await blogPostIndex.getPostsByTag(tagSlug);
     const getAdditionalTemplateData = await blogPostIndex.getAdditionalTemplateData();
 
     return reply.view('_blog/index.ejs', {

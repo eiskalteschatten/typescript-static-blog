@@ -9,8 +9,8 @@ export default async (app: FastifyInstance) => {
     const { categoryId } = req.params;
     const category = new Category(categoryId);
 
-    const blogPostIndex = new BlogPostIndex('category', categoryId);
-    await blogPostIndex.getPosts(req.query.page);
+    const blogPostIndex = new BlogPostIndex(req.query.page);
+    await blogPostIndex.getPostsByCategory(categoryId);
     const getAdditionalTemplateData = await blogPostIndex.getAdditionalTemplateData();
 
     return reply.view('_blog/index.ejs', {
