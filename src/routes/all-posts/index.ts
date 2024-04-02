@@ -13,7 +13,7 @@ export default async (app: FastifyInstance) => {
       title: 'All Posts',
       mainNavId: 'allPosts',
       blogPosts: blogPostIndex.getPostsAsItemTileItems(),
-      categories,
+      categories: categories.sort((a, b) => a.name.localeCompare(b.name)),
     });
   });
 };
