@@ -4,4 +4,5 @@ export interface ItemTileItem {
   description: string;
   image: string;
   link: string;
+  openInNewTab?: boolean;
 }
