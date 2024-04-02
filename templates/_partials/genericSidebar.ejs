@@ -1,4 +1,4 @@
-<aside class="sidebar">
+<aside class="sidebar d-flex flex-column gap-5">
   <% if (typeof categories !== 'undefined') { %>
     <nav class="categories">
       <h4 class="sidebar-title">Categories</h4>
@@ -7,6 +7,21 @@
           <li>
             <a href="/category/<%= category.id %>">
               <%= category.name %>
+            </a>
+          </li>
+        <% } %>
+      </ul>
+    </nav>
+  <% } %>
+
+  <% if (typeof tags !== 'undefined') { %>
+    <nav class="tags">
+      <h4 class="sidebar-title">Tags</h4>
+      <ul>
+        <% for (const tag of tags) { %>
+          <li>
+            <a href="/tag/<%= tag.slug %>">
+              <%= tag.name %>
             </a>
           </li>
         <% } %>

@@ -102,7 +102,7 @@ function buildTagCache() {
 
   const cacheFile = path.resolve(tagCacheDirectory, 'allTags.json');
   const allTagData = tags.map(tag => ({
-    tag,
+    name: tag,
     slug: slugify(tag),
   }));
 
