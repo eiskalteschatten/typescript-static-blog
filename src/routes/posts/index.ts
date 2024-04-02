@@ -5,9 +5,10 @@ import Categories from '@/blog/Categories';
 import Tags from '@/blog/Tags';
 
 export default async (app: FastifyInstance) => {
-  app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
+  type PostsRequest = FastifyRequest<{ Querystring: { page?: number } }>;
+  app.get('/', async (req: PostsRequest, reply: FastifyReply) => {
     const blogPostIndex = new BlogPostIndex('allPosts');
-    await blogPostIndex.getPosts();
+    await blogPostIndex.getPosts(req.query.page);
     const tags = await Tags.getAllTags();
 
     return reply.view('_blog/index.ejs', {
