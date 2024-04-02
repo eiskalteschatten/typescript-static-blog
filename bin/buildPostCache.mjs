@@ -9,6 +9,8 @@ const postsDirectory = path.resolve(process.cwd(), 'data', 'posts');
 const allPostsData = [];
 const cacheDirectory = path.resolve(process.cwd(), '.cache');
 
+fs.rmSync(cacheDirectory, { recursive: true, force: true });
+
 if (!fs.existsSync(cacheDirectory)) {
   fs.mkdirSync(cacheDirectory);
 }
@@ -61,6 +63,29 @@ function buildCategoryCache() {
 
 function buildTagCache() {
   console.log('Building tag cache...');
+
+  const tagCacheDirectory = path.resolve(cacheDirectory, 'tags');
+
+  if (!fs.existsSync(tagCacheDirectory)) {
+    fs.mkdirSync(tagCacheDirectory);
+  }
+
+  const tagData = {};
+
+  for (const post of allPostsData) {
+    for (const tag of post.tags) {
+      if (!tagData[tag]) {
+        tagData[tag] = [];
+      }
+
+      tagData[tag].push(post.id);
+    }
+  }
+
+  for (const tag in tagData) {
+    const cacheFile = path.resolve(tagCacheDirectory, `${tag}.json`);
+    fs.writeFileSync(cacheFile, JSON.stringify(tagData[tag], null, 2));
+  }
 }
 
 function buildArchiveCache() {
