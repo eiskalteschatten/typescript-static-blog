@@ -5,8 +5,9 @@ import fs from 'node:fs';
 
 import { BlogPost, BlogPostMetaData } from '@/interfaces/blog.interface';
 
+const postsDirectory = path.resolve(process.cwd(), 'data', 'posts');
+
 export async function getAllBlogPostMetaData(): Promise<BlogPostMetaData[] | null> {
-  const postsDirectory = path.resolve(process.cwd(), 'data', 'blog', 'posts');
   const postFolders = await fs.promises.readdir(postsDirectory);
   const allPostsData: BlogPostMetaData[] = [];
 
@@ -31,7 +32,6 @@ export async function getAllBlogPostMetaData(): Promise<BlogPostMetaData[] | nul
 
 export async function getMetaDataForPost(postId: string): Promise<BlogPostMetaData | undefined> {
   try {
-    const postsDirectory = path.resolve(process.cwd(), 'data', 'blog', 'posts');
     const metaDataString = await fs.promises.readFile(`${postsDirectory}/${postId}/meta.json`, 'utf8');
     const metaData = JSON.parse(metaDataString);
     return metaData;
@@ -43,7 +43,6 @@ export async function getMetaDataForPost(postId: string): Promise<BlogPostMetaDa
 
 export async function getPost(postId: string): Promise<BlogPost | undefined> {
   try {
-    const postsDirectory = path.resolve(process.cwd(), 'data', 'blog', 'posts');
     const post = `${postsDirectory}/${postId}/index.md`;
     await fs.promises.access(post);
     const body = await fs.promises.readFile(post, 'utf8');
