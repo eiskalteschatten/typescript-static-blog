@@ -6,12 +6,12 @@
       <%- include('../_partials/itemTileGridHorizontal.ejs', { items: blogPosts }) %>
 
       <% if (totalPages > 1) { %>
-        <div class="pagination">
+        <div class="pagination d-flex gap-1 justify-content-center mt-2 mt-md-5">
           <% for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) { %>
             <% if (pageNumber === 1) { %>
-              <a href="/posts/" class="pagination-link <% if (currentPage === 1) { %>selected<% } %>">1</a>
+              <a href="/posts/" class="pagination-link badge <% if (currentPage === 1) { %>selected<% } %>">1</a>
             <% } else { %>
-              <a href="/posts/?page=<%= pageNumber %>" class="pagination-link <% if (pageNumber == currentPage) { %>selected<% } %>"><%= pageNumber %></a>
+              <a href="/posts/?page=<%= pageNumber %>" class="pagination-link badge <% if (pageNumber == currentPage) { %>selected<% } %>"><%= pageNumber %></a>
             <% } %>
           <% } %>
         </div>
