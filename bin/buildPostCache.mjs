@@ -1,6 +1,8 @@
 import path from 'node:path';
 import fs from 'node:fs';
 
+import categories from '../data/categories.json' assert { type: 'json' };
+
 console.log('Building post caches...');
 
 const postsDirectory = path.resolve(process.cwd(), 'data', 'posts');
@@ -41,6 +43,20 @@ function buildAllPostsCache() {
 
 function buildCategoryCache() {
   console.log('Building category cache...');
+
+  const categoryCacheDirectory = path.resolve(cacheDirectory, 'categories');
+
+  if (!fs.existsSync(categoryCacheDirectory)) {
+    fs.mkdirSync(categoryCacheDirectory);
+  }
+
+  for (const category of categories) {
+    const postsInCategory = allPostsData.filter(post => post.categories.includes(category.id));
+    const cacheFile = path.resolve(categoryCacheDirectory, `${category.id}.json`);
+    const sortedPostFolders = postsInCategory.map(post => post.id);
+
+    fs.writeFileSync(cacheFile, JSON.stringify(sortedPostFolders, null, 2));
+  }
 }
 
 function buildTagCache() {
