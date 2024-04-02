@@ -105,7 +105,26 @@ function buildArchiveCache() {
     fs.mkdirSync(archiveCacheDirectory);
   }
 
+  for (const post of allPostsData) {
+    const publishedDate = new Date(post.publishedDate);
+    const year = publishedDate.getFullYear();
+    let month = publishedDate.getMonth() + 1;
+    month = month < 10 ? `0${month}` : month;
+    const day = publishedDate.getDate();
 
+    console.log(year, month, day);
+
+    // const cacheFile = path.resolve(archiveCacheDirectory, `${year}.json`);
+
+    // if (!fs.existsSync(cacheFile)) {
+    //   fs.writeFileSync(cacheFile, JSON.stringify([], null, 2));
+    // }
+
+    // const cacheContents = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
+    // cacheContents.push(post.id);
+
+    // fs.writeFileSync(cacheFile, JSON.stringify(cacheContents, null, 2));
+  }
 }
 
 await setup();
