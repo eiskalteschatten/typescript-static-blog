@@ -1,7 +1,11 @@
 <div class="item-tile-horizontal row">
   <div class="col-12 col-md-5 mb-4 mb-md-0">
     <a href="<%= item.link %>" <% if (item.openInNewTab) { %>target="_blank"<% } %>>
-      <img src="<%= item.imageUrl %>" class="item-tile-image" alt="<%= item.title %>" loading="lazy">
+      <% if (item.image) { %>
+        <img src="<%= item.image %>" class="item-tile-image" alt="<%= item.title %>" loading="lazy">
+      <% } else { %>
+        image placeholder!
+      <% } %>
     </a>
   </div>
 
