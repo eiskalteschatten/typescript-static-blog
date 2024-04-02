@@ -1,8 +1,23 @@
-.item-tile-image {
+.item-tile-image, .no-item-tile-title-image {
   width: 100%;
-  height: 300px;
+  height: 210px;
+  max-width: 100%;
   object-fit: cover;
   border-radius: var(--border-radius);
+}
+
+.no-item-tile-title-image {
+  background: var(--background-secondary-color);
+  color: var(--color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 100px;
+  border-radius: var(--border-radius);
+
+  .material-icons {
+      opacity: .15;
+  }
 }
 
 .item-tile-name {

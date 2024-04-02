@@ -4,7 +4,9 @@
       <% if (item.image) { %>
         <img src="<%= item.image %>" class="item-tile-image" alt="<%= item.title %>" loading="lazy">
       <% } else { %>
-        image placeholder!
+        <div class="no-item-tile-title-image">
+          <span class="material-icons">article</span>
+        </div>
       <% } %>
     </a>
   </div>
