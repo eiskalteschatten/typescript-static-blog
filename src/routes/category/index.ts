@@ -11,12 +11,11 @@ export default async (app: FastifyInstance) => {
 
     const blogPostIndex = new BlogPostIndex(req.query.page);
     await blogPostIndex.getPostsByCategory(categoryId);
-    const getAdditionalTemplateData = await blogPostIndex.getAdditionalTemplateData();
+    const templateData = await blogPostIndex.getTemplateData();
 
     return reply.view('_blog/index.ejs', {
       title: category.metaData.name,
-      blogPosts: blogPostIndex.getPostsAsItemTileItems(),
-      ...getAdditionalTemplateData,
+      ...templateData,
     });
   });
 };

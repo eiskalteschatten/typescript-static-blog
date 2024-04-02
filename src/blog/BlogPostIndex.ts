@@ -75,10 +75,11 @@ export default class BlogPostIndex {
     return this.posts;
   }
 
-  async getAdditionalTemplateData(): Promise<any> {
+  async getTemplateData(): Promise<any> {
     const tags = await Tags.getAllTags();
 
     return {
+      blogPosts: this.getPostsAsItemTileItems(),
       categories: Categories.getSorted(),
       tags,
       currentPage: this.page,

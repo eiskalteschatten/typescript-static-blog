@@ -7,14 +7,12 @@ export default async (app: FastifyInstance) => {
   app.get('/', async (req: PostsRequest, reply: FastifyReply) => {
     const blogPostIndex = new BlogPostIndex(req.query.page);
     await blogPostIndex.getAllPosts();
-
-    const getAdditionalTemplateData = await blogPostIndex.getAdditionalTemplateData();
+    const templateData = await blogPostIndex.getTemplateData();
 
     return reply.view('_blog/index.ejs', {
       title: 'All Posts',
       mainNavId: 'allPosts',
-      blogPosts: blogPostIndex.getPostsAsItemTileItems(),
-      ...getAdditionalTemplateData,
+      ...templateData,
     });
   });
 };
