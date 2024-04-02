@@ -98,6 +98,14 @@ function buildTagCache() {
 
 function buildArchiveCache() {
   console.log('Building archive cache...');
+
+  const archiveCacheDirectory = path.resolve(cacheDirectory, 'archives');
+
+  if (!fs.existsSync(archiveCacheDirectory)) {
+    fs.mkdirSync(archiveCacheDirectory);
+  }
+
+
 }
 
 await setup();
