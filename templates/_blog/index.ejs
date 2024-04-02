@@ -5,15 +5,17 @@
     <div class="col-12 col-lg-9">
       <%- include('../_partials/itemTileGridHorizontal.ejs', { items: blogPosts }) %>
 
-      <div class="pagination">
-        <% for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) { %>
-          <% if (pageNumber === 1) { %>
-            <a href="/posts/" class="pagination-link <% if (currentPage === 1) { %>selected<% } %>">1</a>
-          <% } else { %>
-            <a href="/posts/?page=<%= pageNumber %>" class="pagination-link <% if (pageNumber == currentPage) { %>selected<% } %>"><%= pageNumber %></a>
+      <% if (totalPages > 1) { %>
+        <div class="pagination">
+          <% for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) { %>
+            <% if (pageNumber === 1) { %>
+              <a href="/posts/" class="pagination-link <% if (currentPage === 1) { %>selected<% } %>">1</a>
+            <% } else { %>
+              <a href="/posts/?page=<%= pageNumber %>" class="pagination-link <% if (pageNumber == currentPage) { %>selected<% } %>"><%= pageNumber %></a>
+            <% } %>
           <% } %>
-        <% } %>
-      </div>
+        </div>
+      <% } %>
     </div>
     <div class="col-12 col-lg-3 mt-5 mt-lg-0">
       <%- include('../_partials/genericSidebar.ejs') %>
