@@ -1,0 +1,23 @@
+<div class="container blog-post">
+  <div class="row">
+    <div class="col-12 col-lg-8">
+      <h1 class="post-title mb-4"><%= title %></h1>
+
+      <div class="post-meta low-opacity-text d-flex gap-2 mb-5">
+        <a href="/author/" class="body-color">author</a>
+        <span>∙</span>
+        <time datetime="<%= metaData.date %>"><%= helpers.formatLocaleDateTime(metaData.date) %></time>
+      </div>
+
+      <% if (metaData.titleImage) { %>
+        <img src="<%= metaData.titleImage %>" alt="<%= title %>" class="title-image mb-4">
+      <% } %>
+
+      <%- body %>
+    </div>
+    <div class="col-lg-3 mt-5 mt-lg-0 offset-lg-1">
+      <%- include('../_partials/genericSidebar.ejs') %>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,16 @@
+.blog-post {
+  .post-title {
+    font-weight: 700;
+    line-height: 1.5em;
+  }
+
+  .post-meta {
+    text-transform: uppercase;
+    font-size: .85em;
+  }
+
+  .title-image {
+    max-width: 100%;
+    border-radius: var(--border-radius);
+  }
+}
