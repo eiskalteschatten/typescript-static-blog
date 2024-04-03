@@ -3,6 +3,7 @@ import path from 'node:path';
 import { marked } from 'marked';
 
 import { BlogPostMetaData, BlogPost as IBlogPost } from '@/interfaces/blog.interface';
+import { ItemTileItem } from '@/interfaces/itemTile.interface';
 
 export default class BlogPost implements IBlogPost {
   metaData: BlogPostMetaData;
@@ -65,5 +66,16 @@ export default class BlogPost implements IBlogPost {
   private postExists(): boolean {
     const postDir = path.resolve(this.postsDirectory, this.postId);
     return fs.existsSync(postDir);
+  }
+
+  getPostAsItemTileItems(): ItemTileItem {
+    return {
+      id: this.metaData.id,
+      title: this.metaData.title,
+      description: this.metaData.excerpt,
+      image: this.metaData.titleImage,
+      link: `/post/${this.metaData.id}`,
+      date: this.metaData.publishedDate,
+    };
   }
 }

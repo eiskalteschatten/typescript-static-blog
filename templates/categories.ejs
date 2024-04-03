@@ -4,7 +4,7 @@
   <div class="row">
     <div class="col-12 col-lg-8">
       <% for (const postsForCategory of postsForCategories) { %>
-        <div class="section no-top-padding">
+        <div class="section no-padding-top">
           <div class="d-flex flex-column flex-sm-row align-items-lg-center justify-content-between pb-4">
             <h2 class="section-header mb-0"><%= postsForCategory.category.name %></h2>
 
@@ -13,7 +13,7 @@
             </a>
           </div>
 
-          <!-- <?php include "components/category-group.php"; ?> -->
+          <%- include('./_partials/itemTileSmallGrid.ejs', { items: postsForCategory.posts }) %>
         </div>
       <% } %>
     </div>

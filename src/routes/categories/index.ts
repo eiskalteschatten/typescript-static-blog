@@ -3,13 +3,13 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import Sidebar from '@/components/Sidebar';
 import Categories from '@/blog/Categories';
 import { CategoryMetaData } from '@/interfaces/category.interface';
-import { BlogPostMetaData } from '@/interfaces/blog.interface';
 import Category from '@/blog/Category';
 import BlogPost from '@/blog/BlogPost';
+import { ItemTileItem } from '@/interfaces/itemTile.interface';
 
 interface PostForCategory {
   category: CategoryMetaData;
-  posts: BlogPostMetaData[];
+  posts: ItemTileItem[];
 }
 
 export default async (app: FastifyInstance) => {
@@ -21,12 +21,12 @@ export default async (app: FastifyInstance) => {
     for (const categoryMetaData of categories) {
       const category = new Category(categoryMetaData.id);
       const postIds = await category.getFirstThreePosts();
-      const posts: BlogPostMetaData[] = [];
+      const posts: ItemTileItem[] = [];
 
       for (const postId of postIds) {
         const blogPost = new BlogPost(postId);
-        const metadata = await blogPost.getMetaData();
-        posts.push(metadata);
+        await blogPost.getMetaData();
+        posts.push(blogPost.getPostAsItemTileItems());
       }
 
       postsForCategories.push({

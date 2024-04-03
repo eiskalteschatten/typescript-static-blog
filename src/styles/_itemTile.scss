@@ -38,6 +38,11 @@
   font-size: .9em;
 }
 
+.item-tile-meta {
+  text-transform: uppercase;
+  font-size: .85em;
+}
+
 .item-tile-horizontal {
   margin-top: 15px;
   margin-bottom: 35px;
@@ -51,7 +56,14 @@
   }
 }
 
-.item-tile-meta {
-  text-transform: uppercase;
-  font-size: .85em;
+.item-tile-small {
+  .item-tile-image, .no-item-tile-title-image {
+    height: 210px !important;
+  }
+
+  .item-tile-name {
+    font-size: 1.2em;
+    line-height: 1.5em;
+    margin-bottom: 0;
+  }
 }

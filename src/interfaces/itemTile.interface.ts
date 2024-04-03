@@ -4,5 +4,6 @@ export interface ItemTileItem {
   description: string;
   image: string;
   link: string;
+  date: string | Date;
   openInNewTab?: boolean;
 }
