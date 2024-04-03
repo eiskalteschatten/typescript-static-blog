@@ -22,7 +22,7 @@
       <div class="row">
         <div class="col">
           <% if (metaData.categories) { %>
-            <strong>Categories</strong>
+            <strong class="categories-tags-label">Categories</strong>
             <div class="d-flex gap-2 flex-wrap mt-2">
               <% for (const category of metaData.categories) { %>
                 <a href="/category/<%= category %>" class="badge small green"><%= category %></a>
@@ -32,7 +32,7 @@
         </div>
         <div class="col">
           <% if (metaData.tags) { %>
-            <strong>Tags</strong>
+            <strong class="categories-tags-label">Tags</strong>
             <div class="d-flex gap-2 flex-wrap mt-2">
               <%for (const tag of  metaData.tags) { %>
                 <a href="/tag/<%= tag %>" class="badge small orange"><%= tag %></a>
