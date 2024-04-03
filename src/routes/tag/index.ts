@@ -11,7 +11,7 @@ export default async (app: FastifyInstance) => {
     await tag.getTagMetaData();
 
     if (!tag.metaData) {
-      return reply.code(404).view('404.ejs');
+      return reply.callNotFound();
     }
 
     const blogPostIndex = new BlogPostIndex(req.query.page);

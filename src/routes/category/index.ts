@@ -10,7 +10,7 @@ export default async (app: FastifyInstance) => {
     const category = new Category(categoryId);
 
     if (!category.metaData) {
-      return reply.code(404).view('404.ejs');
+      return reply.callNotFound();
     }
 
     const blogPostIndex = new BlogPostIndex(req.query.page);

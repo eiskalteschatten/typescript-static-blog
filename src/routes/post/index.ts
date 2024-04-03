@@ -13,7 +13,7 @@ export default async (app: FastifyInstance) => {
     await blogPost.getPost();
 
     if (!blogPost.metaData || !blogPost.parsedBody) {
-      return reply.code(404).view('404.ejs');
+      return reply.callNotFound();
     }
 
     const sidebarData = await Sidebar.getGenericSidebarData();
