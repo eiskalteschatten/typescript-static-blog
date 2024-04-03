@@ -12,7 +12,9 @@ export default async (app: FastifyInstance) => {
     const blogPost = new BlogPost(postId);
     await blogPost.getPost();
 
-    // TODO: 404 if no post is found
+    if (!blogPost.metaData || !blogPost.parsedBody) {
+      return reply.code(404).view('404.ejs');
+    }
 
     const sidebarData = await Sidebar.getGenericSidebarData();
     const postCategories = Categories.getCategoriesByIds(blogPost.metaData.categories);

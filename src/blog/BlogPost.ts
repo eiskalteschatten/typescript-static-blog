@@ -14,6 +14,10 @@ export default class BlogPost implements IBlogPost {
   constructor(public postId: string) {}
 
   async getPost(): Promise<IBlogPost | undefined> {
+    if (!this.postExists()) {
+      return;
+    }
+
     await this.getMetaData();
     await this.getPostBody();
 
@@ -56,5 +60,10 @@ export default class BlogPost implements IBlogPost {
     catch (error) {
       console.error(error);
     }
+  }
+
+  private postExists(): boolean {
+    const postDir = path.resolve(this.postsDirectory, this.postId);
+    return fs.existsSync(postDir);
   }
 }
