@@ -19,23 +19,23 @@
         <%- body %>
       </div>
 
-      <div class="row">
+      <div class="categories-tags row">
         <div class="col">
           <% if (postCategories) { %>
-            <strong class="categories-tags-label">Categories</strong>
+            <strong>Categories</strong>
             <div class="d-flex gap-2 flex-wrap mt-2">
               <% for (const category of postCategories) { %>
-                <a href="/category/<%= category.id %>" class="badge small green"><%= category.name %></a>
+                <a href="/category/<%= category.id %>/" class="badge small green"><%= category.name %></a>
               <% } %>
             </div>
           <% } %>
         </div>
         <div class="col">
-          <% if (metaData.tags) { %>
-            <strong class="categories-tags-label">Tags</strong>
+          <% if (postTags) { %>
+            <strong>Tags</strong>
             <div class="d-flex gap-2 flex-wrap mt-2">
-              <%for (const tag of  metaData.tags) { %>
-                <a href="/tag/<%= tag %>" class="badge small orange"><%= tag %></a>
+              <%for (const tag of  postTags) { %>
+                <a href="/tag/<%= tag.slug %>/" class="badge small orange"><%= tag.name %></a>
               <% } %>
             </div>
           <% } %>

@@ -18,4 +18,9 @@ export default class Tags {
       console.error(error);
     }
   }
+
+  static async getTagsByName(tagNames: string[]): Promise<CachedTag[] | undefined> {
+    const allTags = await Tags.getAllTags();
+    return allTags.filter(tag => tagNames.includes(tag.name));
+  }
 }
