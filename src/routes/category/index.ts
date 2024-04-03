@@ -9,6 +9,10 @@ export default async (app: FastifyInstance) => {
     const { categoryId } = req.params;
     const category = new Category(categoryId);
 
+    if (!category.metaData) {
+      return reply.code(404).view('404.ejs');
+    }
+
     const blogPostIndex = new BlogPostIndex(req.query.page);
     await blogPostIndex.getPostsByCategory(categoryId);
     const templateData = await blogPostIndex.getTemplateData();
