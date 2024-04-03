@@ -21,11 +21,11 @@
 
       <div class="row">
         <div class="col">
-          <% if (metaData.categories) { %>
+          <% if (postCategories) { %>
             <strong class="categories-tags-label">Categories</strong>
             <div class="d-flex gap-2 flex-wrap mt-2">
-              <% for (const category of metaData.categories) { %>
-                <a href="/category/<%= category %>" class="badge small green"><%= category %></a>
+              <% for (const category of postCategories) { %>
+                <a href="/category/<%= category.id %>" class="badge small green"><%= category.name %></a>
               <% } %>
             </div>
           <% } %>
