@@ -14,6 +14,12 @@
     border-radius: var(--border-radius);
   }
 
+  .post-body {
+    h2 {
+      margin-top: 2.5em;
+    }
+  }
+
   .categories-tags {
     text-transform: uppercase;
     font-size: .9em;
@@ -21,7 +27,7 @@
     transition: opacity 250ms;
 
     &:hover {
-        opacity: 1;
+      opacity: 1;
     }
   }
 }
