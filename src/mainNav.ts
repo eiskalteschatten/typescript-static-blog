@@ -11,6 +11,11 @@ const mainNav: MainNavItem[] = [
     url: '/',
   },
   {
+    id: 'categories',
+    label: 'Categories',
+    url: '/categories/',
+  },
+  {
     id: 'allPosts',
     label: 'All Posts',
     url: '/posts/',

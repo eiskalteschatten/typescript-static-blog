@@ -1,0 +1,24 @@
+<div class="container">
+  <h1 class="page-title"><%= title %></h1>
+
+  <div class="row">
+    <div class="col-12 col-lg-8">
+      <% for (const postsForCategory of postsForCategories) { %>
+        <div class="section no-top-padding">
+          <div class="d-flex flex-column flex-sm-row align-items-lg-center justify-content-between pb-4">
+            <h2 class="section-header mb-0"><%= postsForCategory.category.name %></h2>
+
+            <a href="/category/<%= postsForCategory.category.id %>/" class="primary d-inline-flex align-items-center gap-1 fw-semibold">
+              More <%= postsForCategory.category.name %> &#x2192;
+            </a>
+          </div>
+
+          <!-- <?php include "components/category-group.php"; ?> -->
+        </div>
+      <% } %>
+    </div>
+    <div class="col-lg-3 mt-5 mt-lg-0 offset-lg-1">
+      <%- include('./_partials/genericSidebar.ejs') %>
+    </div>
+  </div>
+</div>
