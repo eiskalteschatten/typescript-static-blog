@@ -5,7 +5,7 @@
       <ul>
         <% for (const category of categories) { %>
           <li>
-            <a href="/category/<%= category.id %>">
+            <a href="/category/<%= category.id %>/">
               <%= category.name %>
             </a>
           </li>
@@ -20,7 +20,7 @@
       <ul>
         <% for (const tag of tags) { %>
           <li>
-            <a href="/tag/<%= tag.slug %>">
+            <a href="/tag/<%= tag.slug %>/">
               <%= tag.name %>
             </a>
           </li>
