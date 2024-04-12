@@ -19,6 +19,7 @@ export default async (app: FastifyInstance) => {
 
     return reply.view('_blog/index.ejs', {
       title: author.metaData.name,
+      author: author.metaData,
       ...templateData,
     });
   });
