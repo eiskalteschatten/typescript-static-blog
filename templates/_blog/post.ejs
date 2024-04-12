@@ -10,7 +10,9 @@
         <% } %>
 
       <div class="post-meta low-opacity-text d-flex gap-2">
-        <a href="/author/" class="body-color">author</a>
+        <% for (const author of metaData.authors) { %>
+          <a href="/author/<%= author.id %>/" class="body-color"><%= author.name %></a>
+        <% } %>
         <span>∙</span>
         <time datetime="<%= metaData.publishedDate %>"><%= helpers.formatLocaleDateTime(metaData.publishedDate) %></time>
       </div>
