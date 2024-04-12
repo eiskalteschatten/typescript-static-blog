@@ -1,3 +1,5 @@
+import { AuthorMetaData } from './author.interface';
+
 export interface ItemTileItem {
   id: string;
   title: string;
@@ -5,5 +7,6 @@ export interface ItemTileItem {
   image: string;
   link: string;
   date: string | Date;
+  authors: AuthorMetaData[];
   openInNewTab?: boolean;
 }

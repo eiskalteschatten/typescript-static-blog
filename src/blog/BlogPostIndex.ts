@@ -1,6 +1,8 @@
 import path from 'node:path';
 import fs from 'node:fs';
 
+import authors from '@data/authors.json';
+
 import { BlogPostMetaData } from '@/interfaces/blog.interface';
 import { ItemTileItem } from '@/interfaces/itemTile.interface';
 import Sidebar from '@/components/Sidebar';
@@ -23,6 +25,7 @@ export default class BlogPostIndex {
       image: post.titleImage,
       link: `/post/${post.id}`,
       date: post.publishedDate,
+      authors: authors.filter(author => post.authors.includes(author.id)),
     }));
   }
 

@@ -24,7 +24,7 @@
       </div>
 
       <div class="item-tile-meta low-opacity-text d-flex gap-2">
-        <a href="/author/" class="body-color">author</a>
+        <%- include('../_partials/authorAvatarName.ejs', { authors: item.authors }) %>
         <span>∙</span>
         <time datetime="<%= item.date %>"><%= helpers.formatLocaleDateTime(item.date) %></time>
       </div>
