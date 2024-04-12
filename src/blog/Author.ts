@@ -7,7 +7,7 @@ export default class Author {
 
   constructor(public authorId: string) {}
 
-  async getAuthorMetaData(): Promise<AuthorMetaData> {
+  getAuthorMetaData(): AuthorMetaData {
     this.metaData = authors.find(author => author.id === this.authorId);
     return this.metaData;
   }

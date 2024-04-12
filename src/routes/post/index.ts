@@ -24,6 +24,7 @@ export default async (app: FastifyInstance) => {
       title: blogPost.metaData.title,
       body: blogPost.parsedBody,
       metaData: blogPost.metaData,
+      authors: blogPost.authors,
       postCategories,
       postTags,
       ...sidebarData,

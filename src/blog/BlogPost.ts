@@ -4,11 +4,15 @@ import { marked } from 'marked';
 
 import { BlogPostMetaData, BlogPost as IBlogPost } from '@/interfaces/blog.interface';
 import { ItemTileItem } from '@/interfaces/itemTile.interface';
+import { AuthorMetaData } from '@/interfaces/author.interface';
+
+import Author from './Author';
 
 export default class BlogPost implements IBlogPost {
   metaData: BlogPostMetaData;
   body: string;
   parsedBody: string;
+  authors: AuthorMetaData[] = [];
 
   private postsDirectory = path.resolve(process.cwd(), 'data', 'posts');
 
@@ -21,11 +25,13 @@ export default class BlogPost implements IBlogPost {
 
     await this.getMetaData();
     await this.getPostBody();
+    await this.getAuthors();
 
     return {
       metaData: this.metaData,
       body: this.body,
       parsedBody: this.parsedBody,
+      authors: this.authors,
     };
   }
 
@@ -60,6 +66,21 @@ export default class BlogPost implements IBlogPost {
     }
     catch (error) {
       console.error(error);
+    }
+  }
+
+  async getAuthors(): Promise<AuthorMetaData[]> {
+    if (this.authors.length > 0) {
+      return this.authors;
+    }
+
+    if (!this.metaData) {
+      await this.getMetaData();
+    }
+
+    for (const authorId of this.metaData.authors) {
+      const author = new Author(authorId);
+      this.authors.push(author.getAuthorMetaData());
     }
   }
 

@@ -1,3 +1,5 @@
+import { AuthorMetaData } from './author.interface';
+
 export interface BlogPostMetaData {
   id: string;
   title: string;
@@ -15,6 +17,7 @@ export interface BlogPost {
   metaData: BlogPostMetaData;
   body: string;
   parsedBody: string;
+  authors: AuthorMetaData[];
 }
 
 export interface WordPressPost {
