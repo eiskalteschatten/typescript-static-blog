@@ -1,7 +1,7 @@
 {
   "id": "test-post",
   "title": "Test Post",
-  "author": "alexseifert",
+  "authors": ["alexseifert"],
   "excerpt": "Nothing to see here.",
   "metaDescription": "Nothing to see here.",
   "categories": ["news", "the-old-west"],

@@ -1,7 +1,7 @@
 export interface BlogPostMetaData {
   id: string;
   title: string;
-  author: string;
+  authors: string[];
   titleImage: string;
   excerpt: string;
   categories: string[];
