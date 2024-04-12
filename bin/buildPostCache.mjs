@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import { slugify } from './utils.mjs';
 
 import categories from '../data/categories.json' assert { type: 'json' };
+import authors from '../data/authors.json' assert { type: 'json' };
 
 console.log('Building post caches...');
 
@@ -104,6 +105,23 @@ function buildTagCache() {
   fs.writeFileSync(cacheFile, JSON.stringify(allTagData, null, 2));
 }
 
+function buildAuthorCache() {
+  console.log('Building author cache...');
+
+  const authorCacheDirectory = path.resolve(cacheDirectory, 'authors');
+
+  if (!fs.existsSync(authorCacheDirectory)) {
+    fs.mkdirSync(authorCacheDirectory);
+  }
+
+  for (const author of authors) {
+    const postsForAuthor = allPostsData.filter(post => post.authors.includes(author.id));
+    const cacheFile = path.resolve(authorCacheDirectory, `${author.id}.json`);
+    const sortedPostFolders = postsForAuthor.map(post => post.id);
+    fs.writeFileSync(cacheFile, JSON.stringify(sortedPostFolders, null, 2));
+  }
+}
+
 function buildArchiveCache() {
   console.log('Building archive cache...');
 
@@ -140,6 +158,7 @@ await setup();
 buildAllPostsCache();
 buildCategoryCache();
 buildTagCache();
+buildAuthorCache();
 buildArchiveCache();
 
 console.log('All post caches have been successfully built.');

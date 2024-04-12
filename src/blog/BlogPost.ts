@@ -80,7 +80,7 @@ export default class BlogPost implements IBlogPost {
 
     for (const authorId of this.metaData.authors) {
       const author = new Author(authorId);
-      this.authors.push(author.getAuthorMetaData());
+      this.authors.push(author.metaData);
     }
   }
 
@@ -97,6 +97,7 @@ export default class BlogPost implements IBlogPost {
       image: this.metaData.titleImage,
       link: `/post/${this.metaData.id}`,
       date: this.metaData.publishedDate,
+      authors: this.authors,
     };
   }
 }

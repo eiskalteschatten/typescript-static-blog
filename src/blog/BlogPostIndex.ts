@@ -44,6 +44,11 @@ export default class BlogPostIndex {
     return await this.parsePostIdCacheFile(cacheFile);
   }
 
+  async getPostsByAuthor(authorId: string): Promise<BlogPostMetaData[]> {
+    const cacheFile = path.resolve(this.cacheDirectory, 'authors', `${authorId}.json`);
+    return await this.parsePostIdCacheFile(cacheFile);
+  }
+
   private async parsePostIdCacheFile(cacheFile: string): Promise<BlogPostMetaData[]> {
     let postIds = [];
 

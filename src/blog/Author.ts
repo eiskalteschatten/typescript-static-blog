@@ -5,9 +5,11 @@ import { AuthorMetaData } from '@/interfaces/author.interface';
 export default class Author {
   metaData: AuthorMetaData;
 
-  constructor(public authorId: string) {}
+  constructor(public authorId: string) {
+    this.getAuthorMetaData();
+  }
 
-  getAuthorMetaData(): AuthorMetaData {
+  private getAuthorMetaData(): AuthorMetaData {
     this.metaData = authors.find(author => author.id === this.authorId);
     return this.metaData;
   }
