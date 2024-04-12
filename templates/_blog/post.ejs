@@ -34,7 +34,7 @@
           <% if (postTags) { %>
             <strong>Tags</strong>
             <div class="d-flex gap-2 flex-wrap mt-2">
-              <%for (const tag of  postTags) { %>
+              <%for (const tag of postTags) { %>
                 <a href="/tag/<%= tag.slug %>/" class="badge small orange"><%= tag.name %></a>
               <% } %>
             </div>
