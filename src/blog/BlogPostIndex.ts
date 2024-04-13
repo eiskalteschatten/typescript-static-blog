@@ -10,12 +10,14 @@ import Sidebar from '@/components/Sidebar';
 export default class BlogPostIndex {
   private cacheDirectory = path.resolve(process.cwd(), '.cache');
   private postsDirectory = path.resolve(process.cwd(), 'data', 'posts');
-  private postsPerPage = 12;
 
   posts: BlogPostMetaData[] = [];
   totalPages = 1;
 
-  constructor(public page = 1) {}
+  constructor(
+    public page = 1,
+    private postsPerPage = 12
+  ) {}
 
   getPostsAsItemTileItems(): ItemTileItem[] {
     return this.posts.map(post => ({
