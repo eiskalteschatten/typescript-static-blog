@@ -72,7 +72,7 @@ export default class BlogPostIndex {
       try {
         const postMetaData = JSON.parse(fileContent) as BlogPostMetaData;
 
-        if (new Date(postMetaData.publishedDate) <= new Date()) {
+        if (new Date(postMetaData.publishedDate) <= new Date() && postMetaData.status === 'published') {
           this.posts.push(postMetaData);
         }
       }

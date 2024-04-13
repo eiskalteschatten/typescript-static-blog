@@ -25,7 +25,7 @@ export default class BlogPost implements IBlogPost {
 
     await this.getMetaData();
 
-    if (new Date(this.metaData.publishedDate) > new Date()) {
+    if (new Date(this.metaData.publishedDate) > new Date() || this.metaData.status !== 'published') {
       return;
     }
 

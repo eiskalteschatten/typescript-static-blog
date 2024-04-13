@@ -1,6 +1,7 @@
 {
   "id": "scheduled-post",
   "title": "Scheduled Post",
+  "status": "draft",
   "authors": [
     "alexseifert"
   ],

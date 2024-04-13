@@ -1,6 +1,7 @@
 {
   "id": "new-post",
   "title": "New Post",
+  "status": "draft",
   "authors": ["alexseifert"],
   "titleImage": "/images/posts/{new-post}/title-image.jpg",
   "excerpt": "",

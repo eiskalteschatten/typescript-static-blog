@@ -3,6 +3,7 @@ import { AuthorMetaData } from './author.interface';
 export interface BlogPostMetaData {
   id: string;
   title: string;
+  status: 'draft' | 'published';
   authors: string[];
   titleImage: string;
   excerpt: string;
