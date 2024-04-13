@@ -2,13 +2,7 @@
   <h1 class="page-title"><%= title %></h1>
 
   <% if (typeof author !== 'undefined') { %>
-    <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-5 mb-5">
-      <img src="<%= author.avatar %>" alt="<%= author.name %>" class="avatar rounded-circle" width="125" height="125">
-      <div class="text-center text-md-start author-bio">
-        <p><%= author.bio %></p>
-        <p><a href="<%= author.website %>" target="_blank">Website &#x2192;</a></p>
-      </div>
-    </div>
+    <%- include('../_partials/authorBio.ejs') %>
   <% } %>
 
   <div class="row">
