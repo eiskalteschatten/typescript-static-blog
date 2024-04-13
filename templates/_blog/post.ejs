@@ -31,7 +31,7 @@
           <% } %>
         </div>
         <div class="col">
-          <% if (postTags) { %>
+          <% if (postTags && postTags.length > 0) { %>
             <strong>Tags</strong>
             <div class="d-flex gap-2 flex-wrap mt-2">
               <%for (const tag of postTags) { %>
