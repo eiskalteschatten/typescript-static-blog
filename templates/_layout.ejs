@@ -7,7 +7,30 @@
     <meta name="description" content="" >
     <meta name="color-scheme" content="light dark">
 
-    <title><%= typeof title !== 'undefined' ? `${title} - TypeScript Static Blog` : 'TypeScript Static Blog' %></title>
+    <%
+      var _siteHost = 'http://localhost';
+      var _title = typeof title !== 'undefined' ? `${title} - TypeScript Static Blog` : 'TypeScript Static Blog';
+      var _description = typeof metaDescription !== 'undefined' ? metaDescription : 'A simple blog written in TypeScript that is generated statically.';
+    %>
+
+    <meta name="description" content="<%= _description %>">
+    <% if (typeof metaKeywords !== 'undefined') { %><meta name="keywords" content="<%= metaKeywords.join(",") %>"><% } %>
+
+    <meta property="og:locale" content="en_US">
+    <%# <meta property="og:type" content={finalType}> %>
+    <meta property="og:title" content="<%= _title %>">
+    <meta property="og:description" content="<%= _description %>">
+    <% if (typeof ogUrl !== 'undefined') { %><meta property="og:url" content="<%= _siteHost %><%= ogUrl %>"><% } %>
+    <meta property="og:site_name" content="The Old West">
+    <% if (typeof ogImage !== 'undefined') { %><meta property="og:image" content="<%= _siteHost %><%= ogImage %>"><% } %>
+    <% if (typeof articlePublishedTime !== 'undefined') { %><meta property="article:published_time" content="<%= articlePublishedTime %>"><% } %>
+    <% if (typeof articleModifiedTime !== 'undefined') { %><meta property="article:modified_time" content="<%= articleModifiedTime %>"><% } %>
+    <% if (typeof metaKeywords !== 'undefined') { %><meta property="article:tag"  content="<%= metaKeywords.join(",") %>"><% } %>
+    <meta property="article:author" content="Alex Seifert">
+    <meta property="profile:first_name" content="Alex">
+    <meta property="profile:last_name" content="Seifert">
+
+    <title><%= _title %></title>
 
     <link rel="icon" type="image/svg+xml" href="/images/favicon.svg">
 
@@ -17,6 +40,95 @@
 
     <script defer src="/scripts/scripts.js?v=1"></script>
     <script defer src="/scripts/web-components/index.js?v=1" type="module"></script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "<%= _siteHost %>/#/person",
+            "name": "Alex Seifert",
+            "image": {
+              "@type": "ImageObject",
+              "@id": "<%= _siteHost %>/#personlogo",
+              "inLanguage": "en-US",
+              "url": "https://www.alexseifert.com",
+              "caption": "Alex Seifert"
+            },
+            "description": ""
+          },
+          {
+            "@type": "WebSite",
+            "@id": "<%= _siteHost %>/#website",
+            "url": "<%= _siteHost %>",
+            "name": "The Old West",
+            "description": "The Old West is an online museum dedicated to the old American West.",
+            "publisher": {
+              "@id": "<%= _siteHost %>/#/person"
+            },
+            "inLanguage": "en-US"
+          },
+          <% if (typeof ogUrl !== 'undefined') { %>
+            {
+              "@type": "WebPage",
+              "@id": "<%= _siteHost %><%= ogUrl %>#webpage",
+              "url": "<%= _siteHost %><%= ogUrl %>",
+              "name": "An Interactive Map of the Lewis and Clark Expedition - The Old West",
+              "isPartOf": {
+                "@id": "<%= _siteHost %>/#website"
+              },
+              <% if (typeof articlePublishedTime !== 'undefined') { %>"datePublished": "<%= articlePublishedTime %>",<% } %>
+              <% if (typeof articleModifiedTime !== 'undefined') { %>"dateModified": "<%= articleModifiedTime %>",<% } %>
+              "inLanguage": "en-US",
+              "description": "<%= _description %>",
+              "potentialAction": [
+                {
+                  "@type": "ReadAction",
+                  "target": [
+                    "<%= _siteHost %><%= ogUrl %>"
+                  ]
+                }
+              ]
+            },
+            <% if (typeof ogImage !== 'undefined') { %>
+              {
+                "@type": "ImageObject",
+                "@id": "<%= _siteHost %><%= ogUrl %>#primaryimage",
+                "url": "<%= _siteHost %><%= ogImage %>",
+                "inLanguage": "en-US"
+              },
+            <% } %>
+            {
+              "@type": "Article",
+              "@id": "<%= _siteHost %><%= ogUrl %>#article",
+              "isPartOf": {
+                "@id": "<%= _siteHost %><%= ogUrl %>#webpage"
+              },
+              "author": {
+                "@id": "<%= _siteHost %>/#/person"
+              },
+              "headline": "<%= _title %>",
+              <% if (typeof articlePublishedTime !== 'undefined') { %>"datePublished": "<%= articlePublishedTime %>",<% } %>
+              <% if (typeof articleModifiedTime !== 'undefined') { %>"dateModified": "<%= articleModifiedTime %>",<% } %>
+              "commentCount": 0,
+              "mainEntityOfPage": {
+                "@id": "<%= _siteHost %><%= ogUrl %>#webpage"
+              },
+              "publisher": {
+                "@id": "<%= _siteHost %>/#/person"
+              },
+              "image": {
+                "@id": "<%= _siteHost %><%= ogUrl %>#primaryimage"
+              },
+              <% if (typeof metaKeywords !== 'undefined') { %>"keywords": "<%= metaKeywords.join(",") %>",<% } %>
+              <%# "articleSection": "History Online", %>
+              "inLanguage": "en-US"
+            }
+          <% } %>
+        ]
+      }
+    </script>
   </head>
   <body>
     <header class="header py-2 pe-3 d-flex align-items-center justify-content-between">
