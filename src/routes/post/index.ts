@@ -12,7 +12,7 @@ export default async (app: FastifyInstance) => {
     const blogPost = new BlogPost(postId);
     await blogPost.getPost();
 
-    if (!blogPost.metaData || blogPost.parsedBody === undefined) {
+    if (!blogPost.metaData || blogPost.parsedBody === undefined || new Date(blogPost.metaData.publishedDate) > new Date()) {
       return reply.callNotFound();
     }
 
