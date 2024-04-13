@@ -71,7 +71,10 @@ export default class BlogPostIndex {
 
       try {
         const postMetaData = JSON.parse(fileContent) as BlogPostMetaData;
-        this.posts.push(postMetaData);
+
+        if (new Date(postMetaData.publishedDate) <= new Date()) {
+          this.posts.push(postMetaData);
+        }
       }
       catch (error) {
         console.error(error);
