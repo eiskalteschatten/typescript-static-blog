@@ -1,7 +1,17 @@
 <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-5 mb-5">
   <img src="<%= author.avatar %>" alt="<%= author.name %>" class="avatar rounded-circle" width="125" height="125">
+
   <div class="text-center text-md-start author-bio">
-    <p><%= author.bio %></p>
-    <p><a href="<%= author.website %>" target="_blank">Website &#x2192;</a></p>
+    <% if (showName) { %>
+      <a href="/author/<%= author.id %>/" class="author-name mb-2 d-block">
+        <%= author.name %>
+      </a>
+    <% } %>
+
+    <div><%= author.bio %></div>
+
+    <% if (showWebsite) { %>
+      <a href="<%= author.website %>" target="_blank" class="mt-2 d-block">Website &#x2192;</a>
+    <% } %>
   </div>
 </div>

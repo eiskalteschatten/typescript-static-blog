@@ -2,7 +2,7 @@
   <h1 class="page-title"><%= title %></h1>
 
   <% if (typeof author !== 'undefined') { %>
-    <%- include('../_partials/authorBio.ejs') %>
+    <%- include('../_partials/authorBio.ejs', { showName: false, showWebsite: true }) %>
   <% } %>
 
   <div class="row">
