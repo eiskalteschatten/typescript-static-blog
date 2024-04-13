@@ -14,7 +14,8 @@
     "start": "node ./dist/src/main.js",
     "test": "npm run lint",
     "lint": "eslint \"./**/*.{tsx,ts,js,json}\"",
-    "postcache": "node ./bin/buildPostCache.mjs"
+    "post:cache": "node ./bin/buildPostCache.mjs",
+    "post:new": "node ./bin/newPost.mjs"
   },
   "repository": {
     "type": "git",

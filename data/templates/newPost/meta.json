@@ -1,0 +1,16 @@
+{
+  "id": "new-post",
+  "title": "New Post",
+  "authors": ["alexseifert"],
+  "titleImage": "/images/posts/{new-post}/title-image.jpg",
+  "excerpt": "",
+  "metaDescription": "",
+  "categories": [
+    ""
+  ],
+  "tags": [
+    ""
+  ],
+  "publishedDate": "2021-04-16T14:34:13",
+  "updatedAt": "2021-04-16T14:34:13"
+}
