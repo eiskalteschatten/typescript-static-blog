@@ -9,8 +9,9 @@
 
     <%
       var _siteHost = 'http://localhost';
+      var _defaultMetaDescription = 'A simple blog written in TypeScript that is generated statically.';
       var _title = typeof title !== 'undefined' ? `${title} - TypeScript Static Blog` : 'TypeScript Static Blog';
-      var _description = typeof metaDescription !== 'undefined' ? metaDescription : 'A simple blog written in TypeScript that is generated statically.';
+      var _description = typeof metaDescription !== 'undefined' ? metaDescription : _defaultMetaDescription;
     %>
 
     <meta name="description" content="<%= _description %>">
@@ -45,25 +46,27 @@
       {
         "@context": "https://schema.org",
         "@graph": [
-          {
-            "@type": "Person",
-            "@id": "<%= _siteHost %>/#/person",
-            "name": "Alex Seifert",
-            "image": {
-              "@type": "ImageObject",
-              "@id": "<%= _siteHost %>/#personlogo",
-              "inLanguage": "en-US",
-              "url": "https://www.alexseifert.com",
-              "caption": "Alex Seifert"
+          <% for (const author of authors) { %>
+            {
+              "@type": "Person",
+              "@id": "<%= _siteHost %>/#/person",
+              "name": "<%= author.name %>",
+              "image": {
+                "@type": "ImageObject",
+                "@id": "<%= _siteHost %>/#personlogo",
+                "inLanguage": "en-US",
+                "url": "<%= _siteHost %><%= author.avatar %>",
+                "caption": "<%= author.name %>"
+              },
+              "description": "<%= author.bio %>"
             },
-            "description": ""
-          },
+          <% } %>
           {
             "@type": "WebSite",
             "@id": "<%= _siteHost %>/#website",
             "url": "<%= _siteHost %>",
-            "name": "The Old West",
-            "description": "The Old West is an online museum dedicated to the old American West.",
+            "name": "TypeScript Static Blog",
+            "description": "<%= _defaultMetaDescription %>",
             "publisher": {
               "@id": "<%= _siteHost %>/#/person"
             },
