@@ -15,6 +15,10 @@ if (!title) {
 const id = slugify(title);
 const newPostPath = path.resolve(pathToPosts, id);
 
+if (fs.existsSync(newPostPath)) {
+  throw new Error(`A post with the title ${title} already exists!`);
+}
+
 fs.cpSync(pathToTemplate, newPostPath, { recursive: true });
 
 const pathToMetaFile = path.resolve(newPostPath, 'meta.json');
@@ -32,4 +36,4 @@ const newMetaData = {
 
 fs.writeFileSync(pathToMetaFile, JSON.stringify(newMetaData, null, 2));
 
-console.log(title, 'created at', newPostPath);
+console.log(`New Post "${title}"`, 'created at', newPostPath);
