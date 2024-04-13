@@ -46,19 +46,35 @@
       {
         "@context": "https://schema.org",
         "@graph": [
-          <% for (const author of authors) { %>
+          <% if (typeof authors !== 'undefined') { %>
+            <% for (const author of authors) { %>
+              {
+                "@type": "Person",
+                "@id": "<%= _siteHost %>/#/person",
+                "name": "<%= author.name %>",
+                "image": {
+                  "@type": "ImageObject",
+                  "@id": "<%= _siteHost %>/#personlogo",
+                  "inLanguage": "en-US",
+                  "url": "<%= _siteHost %><%= author.avatar %>",
+                  "caption": "<%= author.name %>"
+                },
+                "description": "<%= author.bio %>"
+              },
+            <% } %>
+          <% } else { %>
             {
               "@type": "Person",
               "@id": "<%= _siteHost %>/#/person",
-              "name": "<%= author.name %>",
+              "name": "Alex Seifert",
               "image": {
                 "@type": "ImageObject",
                 "@id": "<%= _siteHost %>/#personlogo",
                 "inLanguage": "en-US",
-                "url": "<%= _siteHost %><%= author.avatar %>",
-                "caption": "<%= author.name %>"
+                "url": "<%= _siteHost %>images/authors/alexseifert.jpg",
+                "caption": "Alex Seifert"
               },
-              "description": "<%= author.bio %>"
+              "description": "Alex Seifert is a web developer and designer who enjoys creating things that are both beautiful and functional. He has been working with the web for over 10 years and has a passion for learning new things."
             },
           <% } %>
           {
