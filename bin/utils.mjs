@@ -12,6 +12,11 @@ export function slugify(string) {
 }
 
 export async function downloadImage(imageUrl, destination) {
+  if (fs.existsSync(destination)) {
+    console.error('File already exists:', destination);
+    return;
+  }
+
   const response = await fetch(imageUrl);
   const fileStream = fs.createWriteStream(destination, { flags: 'wx' });
   await finished(Readable.fromWeb(response.body).pipe(fileStream));
