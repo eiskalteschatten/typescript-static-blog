@@ -171,7 +171,7 @@ async function fetchPosts() {
 async function fetchTag(tagId) {
   const response = await fetch(`${tagsUrl}/${tagId}`);
   const tag = await response.json();
-  return tag.slug;
+  return tag.name;
 }
 
 await fetchAuthors();
