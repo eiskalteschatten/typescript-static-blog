@@ -47,6 +47,32 @@ async function fetchAuthors() {
   await fs.promises.writeFile(authorsFile, JSON.stringify(newAuthors, null, 2));
 }
 
+async function fetchCategories() {
+  // TODO: pagination
+
+  console.log('Importing categories...');
+
+  const response = await fetch(categoriesUrl);
+  const categories = await response.json();
+  const newCategories = [];
+
+  for (const category of categories) {
+    if (category.count === 0) {
+      continue;
+    }
+
+    newCategories.push({
+      id: category.slug,
+      name: category.name,
+      description: category.description,
+    });
+  }
+
+  const categoriesFile = path.resolve(dataDirectory, 'categories.json');
+  await fs.promises.writeFile(categoriesFile, JSON.stringify(newCategories, null, 2));
+}
+
 await fetchAuthors();
+await fetchCategories();
 
 console.log('Posts successfully imported from Wordpress!');
