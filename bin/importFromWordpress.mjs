@@ -103,22 +103,36 @@ async function fetchPosts() {
   const categoriesFileContent = await fs.promises.readFile(categoriesFile, 'utf8');
   const categories = JSON.parse(categoriesFileContent);
 
+  const downloadPostImage = async post => {
+    const basename = path.basename(post.jetpack_featured_media_url);
+    const extention = path.extname(post.jetpack_featured_media_url).split('?')[0];
+    const fileName = `${basename}${extention}`;
+    const destinationFolder = path.resolve(process.cwd(), 'public', 'images', 'posts', post.slug);
+
+    if (!fs.existsSync(destinationFolder)) {
+      fs.promises.mkdir(destinationFolder, { recursive: true });
+    }
+
+    const destinationFile = path.resolve(destinationFolder, fileName);
+    await downloadImage(post.jetpack_featured_media_url, destinationFile);
+    return `/images/posts/${post.slug}/${destinationFile}`;
+  };
+
   const importData = async page => {
-    // TODO: import images
     const response = await fetch(`${postsUrl}?page=${page}`);
     const posts = await response.json();
 
     for (const post of posts) {
       const postAuthor = authors.find(author => post.author === author.wordpressId);
       const postCategories = categories.filter(category => post.categories.includes(category.wordpressId));
+      const titleImage = await downloadPostImage(post);
 
       const metaData = {
         id: post.slug,
         title: post.title.rendered,
         status: post.status === 'publish' ? 'published' : 'draft',
         authors: [postAuthor.id],
-        // TODO
-        titleImage: post.jetpack_featured_media_url,
+        titleImage,
         excerpt: post.yoast_head_json.description,
         metaDescription: post.yoast_head_json.description,
         categories: postCategories.map(category => category.id),
