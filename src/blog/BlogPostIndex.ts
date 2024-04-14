@@ -6,6 +6,7 @@ import authors from '@data/authors.json';
 import { BlogPostMetaData } from '@/interfaces/blog.interface';
 import { ItemTileItem } from '@/interfaces/itemTile.interface';
 import Sidebar from '@/components/Sidebar';
+import BlogPost from './BlogPost';
 
 export default class BlogPostIndex {
   private cacheDirectory = path.resolve(process.cwd(), '.cache');
@@ -29,6 +30,17 @@ export default class BlogPostIndex {
       date: post.publishedDate,
       authors: authors.filter(author => post.authors.includes(author.id)),
     }));
+  }
+
+  async getAllPostIds(): Promise<string[]> {
+    try {
+      const cacheFile = path.resolve(this.cacheDirectory, 'allPosts.json');
+      const fileContent = await fs.promises.readFile(cacheFile, 'utf8');
+      return JSON.parse(fileContent);
+    }
+    catch (error) {
+      console.error(error);
+    }
   }
 
   async getAllPosts(): Promise<BlogPostMetaData[]> {
@@ -74,7 +86,7 @@ export default class BlogPostIndex {
       try {
         const postMetaData = JSON.parse(fileContent) as BlogPostMetaData;
 
-        if (new Date(postMetaData.publishedDate) <= new Date() && postMetaData.status === 'published') {
+        if (BlogPost.blogPostCanBePublished(postMetaData)) {
           this.posts.push(postMetaData);
         }
       }

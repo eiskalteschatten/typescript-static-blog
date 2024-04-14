@@ -14,10 +14,8 @@
     "start": "node ./dist/src/main.js",
     "test": "npm run lint",
     "lint": "eslint \"./**/*.{tsx,ts,js,json}\"",
-    "posts": "npm run post:cache && npm run post:rss",
     "posts:cache": "node ./bin/buildPostCache.mjs",
-    "posts:new": "node ./bin/newPost.mjs",
-    "posts:rss": "node ./bin/buildRssFeed.mjs"
+    "posts:new": "node ./bin/newPost.mjs"
   },
   "repository": {
     "type": "git",

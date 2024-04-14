@@ -103,4 +103,8 @@ export default class BlogPost implements IBlogPost {
       authors: this.authors,
     };
   }
+
+  static blogPostCanBePublished(metaData: BlogPostMetaData): boolean {
+    return new Date(metaData.publishedDate) <= new Date() && metaData.status === 'published';
+  }
 }

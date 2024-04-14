@@ -54,4 +54,3 @@ dist
 .vs
 .DS_STORE
 public/css
-public/feed.xml
