@@ -19,8 +19,8 @@ const dataDirectory = path.resolve(process.cwd(), 'data');
 const apiUrl = 'https://www.developers-notebook.com/wp-json/wp/v2/';
 const authorsUrl = `${apiUrl}users`;
 const categoriesUrl = `${apiUrl}categories`;
-const tagsUrl = `${apiUrl}tags`;
 const postsUrl = `${apiUrl}posts`;
+const tagsUrl = `${apiUrl}tags`;
 
 async function fetchAuthors() {
   console.log('Importing authors...');
@@ -89,7 +89,60 @@ async function fetchCategories() {
   await fs.promises.writeFile(categoriesFile, JSON.stringify(newCategories, null, 2));
 }
 
+async function fetchPosts() {
+  console.log('Importing posts...');
+
+  const totalPagesResponse = await fetch(postsUrl);
+  const totalPages = totalPagesResponse.headers.get('x-wp-totalpages');
+
+  const importData = async page => {
+    // TODO: import images
+    const response = await fetch(`${postsUrl}?page=${page}`);
+    const posts = await response.json();
+
+    for (const post of posts) {
+      const metaData = {
+        id: post.slug,
+        title: post.title.rendered,
+        status: post.status === 'publish' ? 'published' : 'draft',
+        // TODO
+        // authors:
+        // TODO
+        titleImage: post.jetpack_featured_media_url,
+        excerpt: post.yoast_head_json.description,
+        metaDescription: post.yoast_head_json.description,
+        // TODO
+        // categories:
+        // TODO
+        // tags:,
+        publishedDate: post.date,
+        updatedAt: post.modified,
+      };
+
+      const pathToPostFolder = path.resolve(dataDirectory, 'posts', post.slug);
+      await fs.promises.mkdir(pathToPostFolder);
+
+      const metaDataFile = path.resolve(pathToPostFolder, 'meta.json');
+      await fs.promises.writeFile(metaDataFile, JSON.stringify(metaData, null, 2));
+
+      // TODO: convert to markdown, import images and replace image URLs
+      const content = post.content.rendered;
+      const contentFile = path.resolve(pathToPostFolder, 'index.md');
+      await fs.promises.writeFile(contentFile, content);
+    }
+  };
+
+  for (let page = 1; page <= totalPages; page++) {
+    await importData(page);
+  }
+}
+
+async function fetchTag(tagId) {
+
+}
+
 await fetchAuthors();
 await fetchCategories();
+await fetchPosts();
 
 console.log('Posts successfully imported from Wordpress!');
