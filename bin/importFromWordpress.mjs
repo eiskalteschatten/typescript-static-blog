@@ -126,6 +126,7 @@ async function fetchPosts() {
         // tags:,
         publishedDate: post.date,
         updatedAt: post.modified,
+        wordpressId: post.id,
       };
 
       const pathToPostFolder = path.resolve(dataDirectory, 'posts', post.slug);
@@ -150,8 +151,8 @@ async function fetchTag(tagId) {
 
 }
 
-// await fetchAuthors();
-// await fetchCategories();
+await fetchAuthors();
+await fetchCategories();
 await fetchPosts();
 
 console.log('Posts successfully imported from Wordpress!');
