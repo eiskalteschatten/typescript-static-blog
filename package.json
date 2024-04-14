@@ -15,7 +15,8 @@
     "test": "npm run lint",
     "lint": "eslint \"./**/*.{tsx,ts,js,json}\"",
     "posts:cache": "node ./bin/buildPostCache.mjs",
-    "posts:new": "node ./bin/newPost.mjs"
+    "posts:new": "node ./bin/newPost.mjs",
+    "posts:import": "node ./bin/importFromWordpress.mjs"
   },
   "repository": {
     "type": "git",
