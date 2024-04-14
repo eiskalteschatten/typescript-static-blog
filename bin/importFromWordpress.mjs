@@ -9,6 +9,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import TurndownService from 'turndown';
 
 import { downloadImage, convertEscapedAscii } from './utils.mjs';
 
@@ -156,8 +157,9 @@ async function fetchPosts() {
       const metaDataFile = path.resolve(pathToPostFolder, 'meta.json');
       await fs.promises.writeFile(metaDataFile, JSON.stringify(metaData, null, 2));
 
-      // TODO: convert to markdown, import images and replace image URLs
-      const content = post.content.rendered;
+      // TODO: import images and replace image URLs
+      const turndownService = new TurndownService();
+      const content = turndownService.turndown(post.content.rendered);
       const contentFile = path.resolve(pathToPostFolder, 'index.md');
       await fs.promises.writeFile(contentFile, content);
     }
