@@ -34,7 +34,8 @@ async function fetchAuthors() {
     const authors = await response.json();
 
     for (const author of authors) {
-      const avatarFile = `${author.slug}.jpg`;
+      const extention = path.extname(author.avatar_urls[96]).split('&')[0];
+      const avatarFile = `${author.slug}${extention}`;
       const avatarFilePath = path.resolve(process.cwd(), 'public', 'images', 'authors', avatarFile);
       await downloadImage(author.avatar_urls[96], avatarFilePath);
 
