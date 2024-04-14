@@ -113,7 +113,7 @@ async function fetchPosts() {
     const fileName = path.basename(post.jetpack_featured_media_url).split('?')[0];
     const destinationFile = path.resolve(destinationFolder, fileName);
     await downloadImage(post.jetpack_featured_media_url, destinationFile);
-    return `/images/posts/${post.slug}/${destinationFile}`;
+    return `/images/posts/${post.slug}/${fileName}`;
   };
 
   const importData = async page => {
