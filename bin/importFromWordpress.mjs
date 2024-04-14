@@ -10,7 +10,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { downloadImage } from './utils.mjs';
+import { downloadImage, convertEscapedAscii } from './utils.mjs';
 
 console.log('Importing data from Wordpress...');
 
@@ -134,7 +134,7 @@ async function fetchPosts() {
 
       const metaData = {
         id: post.slug,
-        title: post.title.rendered,
+        title: convertEscapedAscii(post.title.rendered),
         status: post.status === 'publish' ? 'published' : 'draft',
         authors: [postAuthor.id],
         titleImage,

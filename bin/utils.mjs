@@ -21,3 +21,7 @@ export async function downloadImage(imageUrl, destination) {
   const fileStream = fs.createWriteStream(destination, { flags: 'wx' });
   await finished(Readable.fromWeb(response.body).pipe(fileStream));
 }
+
+export function convertEscapedAscii(string) {
+  return string.replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(dec));
+}
