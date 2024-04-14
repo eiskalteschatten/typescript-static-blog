@@ -25,7 +25,7 @@ const feed = new RSS({
 const cacheFile = path.resolve(cacheDirectory, 'allPosts.json');
 
 if (!fs.existsSync(cacheFile)) {
-  throw new Error('Please run npm run post:cache before building the RSS feed!');
+  throw new Error('Please run "npm run posts:cache" before building the RSS feed!');
 }
 
 const fileContent = fs.readFileSync(cacheFile, 'utf8');

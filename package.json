@@ -15,9 +15,9 @@
     "test": "npm run lint",
     "lint": "eslint \"./**/*.{tsx,ts,js,json}\"",
     "posts": "npm run post:cache && npm run post:rss",
-    "post:cache": "node ./bin/buildPostCache.mjs",
-    "post:new": "node ./bin/newPost.mjs",
-    "post:rss": "node ./bin/buildRssFeed.mjs"
+    "posts:cache": "node ./bin/buildPostCache.mjs",
+    "posts:new": "node ./bin/newPost.mjs",
+    "posts:rss": "node ./bin/buildRssFeed.mjs"
   },
   "repository": {
     "type": "git",
