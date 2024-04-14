@@ -15,6 +15,8 @@ import { downloadImage } from './utils.mjs';
 console.log('Importing posts from Wordpress...');
 
 const dataDirectory = path.resolve(process.cwd(), 'data');
+const categoriesFile = path.resolve(dataDirectory, 'categories.json');
+const authorsFile = path.resolve(dataDirectory, 'authors.json');
 
 const apiUrl = 'https://www.developers-notebook.com/wp-json/wp/v2/';
 const authorsUrl = `${apiUrl}users`;
@@ -45,6 +47,7 @@ async function fetchAuthors() {
         bio: author.description,
         website: author.url,
         avatar: `/images/authors/${avatarFile}`,
+        wordpressId: author.id,
       });
     }
   };
@@ -53,7 +56,6 @@ async function fetchAuthors() {
     await importData(page);
   }
 
-  const authorsFile = path.resolve(dataDirectory, 'authors.json');
   await fs.promises.writeFile(authorsFile, JSON.stringify(newAuthors, null, 2));
 }
 
@@ -77,6 +79,7 @@ async function fetchCategories() {
         id: category.slug,
         name: category.name,
         description: category.description,
+        wordpressId: category.id,
       });
     }
   };
@@ -85,7 +88,6 @@ async function fetchCategories() {
     await importData(page);
   }
 
-  const categoriesFile = path.resolve(dataDirectory, 'categories.json');
   await fs.promises.writeFile(categoriesFile, JSON.stringify(newCategories, null, 2));
 }
 
@@ -95,24 +97,31 @@ async function fetchPosts() {
   const totalPagesResponse = await fetch(postsUrl);
   const totalPages = totalPagesResponse.headers.get('x-wp-totalpages');
 
+  const authorsFileContent = await fs.promises.readFile(authorsFile, 'utf8');
+  const authors = JSON.parse(authorsFileContent);
+
+  const categoriesFileContent = await fs.promises.readFile(categoriesFile, 'utf8');
+  const categories = JSON.parse(categoriesFileContent);
+
   const importData = async page => {
     // TODO: import images
     const response = await fetch(`${postsUrl}?page=${page}`);
     const posts = await response.json();
 
     for (const post of posts) {
+      const postAuthor = authors.find(author => post.author === author.wordpressId);
+      const postCategories = categories.filter(category => post.categories.includes(category.wordpressId));
+
       const metaData = {
         id: post.slug,
         title: post.title.rendered,
         status: post.status === 'publish' ? 'published' : 'draft',
-        // TODO
-        // authors:
+        authors: [postAuthor.id],
         // TODO
         titleImage: post.jetpack_featured_media_url,
         excerpt: post.yoast_head_json.description,
         metaDescription: post.yoast_head_json.description,
-        // TODO
-        // categories:
+        categories: postCategories.map(category => category.id),
         // TODO
         // tags:,
         publishedDate: post.date,
@@ -141,8 +150,8 @@ async function fetchTag(tagId) {
 
 }
 
-await fetchAuthors();
-await fetchCategories();
+// await fetchAuthors();
+// await fetchCategories();
 await fetchPosts();
 
 console.log('Posts successfully imported from Wordpress!');
