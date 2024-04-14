@@ -48,24 +48,31 @@ async function fetchAuthors() {
 }
 
 async function fetchCategories() {
-  // TODO: pagination
-
   console.log('Importing categories...');
 
-  const response = await fetch(categoriesUrl);
-  const categories = await response.json();
   const newCategories = [];
+  const totalPagesResponse = await fetch(categoriesUrl);
+  const totalPages = totalPagesResponse.headers.get('x-wp-totalpages');
 
-  for (const category of categories) {
-    if (category.count === 0) {
-      continue;
+  const importData = async page => {
+    const response = await fetch(`${categoriesUrl}?page=${page}`);
+    const categories = await response.json();
+
+    for (const category of categories) {
+      if (category.count === 0) {
+        continue;
+      }
+
+      newCategories.push({
+        id: category.slug,
+        name: category.name,
+        description: category.description,
+      });
     }
+  };
 
-    newCategories.push({
-      id: category.slug,
-      name: category.name,
-      description: category.description,
-    });
+  for (let page = 1; page <= totalPages; page++) {
+    await importData(page);
   }
 
   const categoriesFile = path.resolve(dataDirectory, 'categories.json');
