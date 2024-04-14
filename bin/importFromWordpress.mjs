@@ -135,7 +135,7 @@ async function fetchPosts() {
         metaDescription: post.yoast_head_json.description,
         categories: postCategories.map(category => category.id),
         // TODO
-        // tags:,
+        tags: [],
         publishedDate: post.date,
         updatedAt: post.modified,
         wordpressId: post.id,
