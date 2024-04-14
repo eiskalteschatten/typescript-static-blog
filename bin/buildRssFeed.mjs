@@ -1,12 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import RSS from 'rss';
+import { marked } from 'marked';
 
 import categories from '../data/categories.json' assert { type: 'json' };
 import authors from '../data/authors.json' assert { type: 'json' };
 
 console.log('Building the RSS feed...');
 
+const postsDirectory = path.resolve(process.cwd(), 'data', 'posts');
+const cacheDirectory = path.resolve(process.cwd(), '.cache');
 const url = 'http://localhost:4000';
 
 const feed = new RSS({
@@ -19,25 +22,26 @@ const feed = new RSS({
   pubDate: new Date().toISOString(),
 });
 
-const cacheFile = path.resolve(this.cacheDirectory, 'allPosts.json');
+const cacheFile = path.resolve(cacheDirectory, 'allPosts.json');
 
 if (!fs.existsSync(cacheFile)) {
   throw new Error('Please run npm run post:cache before building the RSS feed!');
 }
 
-const fileContent = await fs.promises.readFile(cacheFile, 'utf8');
+const fileContent = fs.readFileSync(cacheFile, 'utf8');
 const postIds = JSON.parse(fileContent);
 
-const postIdsForPage = postIds.slice((this.page - 1) * this.postsPerPage, this.page * this.postsPerPage);
-
-for (const postId of postIdsForPage) {
-  const fullPathToFolder = path.resolve(this.postsDirectory, postId);
+for (const postId of postIds) {
+  const fullPathToFolder = path.resolve(postsDirectory, postId);
   const fullPathtoMetaFile = path.resolve(fullPathToFolder, 'meta.json');
   const fileContent = await fs.promises.readFile(fullPathtoMetaFile, 'utf8');
   const postMetaData = JSON.parse(fileContent);
 
   if (new Date(postMetaData.publishedDate) <= new Date() && postMetaData.status === 'published') {
     const postCategories = categories.filter(category => postMetaData.categories.includes(category.id));
+    const postMarkdownFile = path.resolve(postsDirectory, postId, 'index.md');
+    const postBody = fs.readFileSync(postMarkdownFile, 'utf8');
+    const contentHtml = await marked.parse(postBody);
 
     feed.item({
       title: postMetaData.title,
