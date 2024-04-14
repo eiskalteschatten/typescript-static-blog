@@ -5,6 +5,8 @@ import BlogPost from '@/blog/BlogPost';
 import Categories from '@/blog/Categories';
 import Tags from '@/blog/Tags';
 
+import authors from '@data/authors.json';
+
 const url = 'http://localhost:4000';
 
 export default async (app: FastifyInstance) => {
@@ -67,6 +69,25 @@ export default async (app: FastifyInstance) => {
       xml += `
         <url>
           <loc>${url}/tag/${tag.slug}/</loc>
+          <lastmod>${new Date().toISOString()}</lastmod>
+        </url>
+      `;
+    }
+
+    xml += '</urlset>';
+
+    return reply
+      .header('Content-Type', 'application/rss+xml; charset=UTF-8')
+      .send(xml);
+  });
+
+  app.get('/authors', async (req: FastifyRequest, reply: FastifyReply) => {
+    let xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
+
+    for (const author of authors) {
+      xml += `
+        <url>
+          <loc>${url}/author/${author.id}/</loc>
           <lastmod>${new Date().toISOString()}</lastmod>
         </url>
       `;
