@@ -10,6 +10,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import { downloadImage } from './utils.mjs';
+
 console.log('Importing posts from Wordpress...');
 
 const dataDirectory = path.resolve(process.cwd(), 'data');
@@ -21,21 +23,24 @@ const tagsUrl = `${apiUrl}tags`;
 const postsUrl = `${apiUrl}posts`;
 
 async function fetchAuthors() {
+  console.log('Importing authors...');
+
   const response = await fetch(authorsUrl);
   const authors = await response.json();
+  const newAuthors = [];
 
-  // TODO: save author avatars
+  for (const author of authors) {
+    const avatarFile = path.resolve(process.cwd(), 'public', 'images', 'authors', `${author.slug}.jpg`);
+    await downloadImage(author.avatar_urls[96], avatarFile);
 
-  const newAuthors = authors.map(author => {
-    return {
+    newAuthors.push({
       id: author.slug,
       name: author.name,
       bio: author.description,
       website: author.url,
-      // TODO!
-      avatar: author.avatar_urls['96'],
-    };
-  });
+      avatar: avatarFile,
+    });
+  }
 
   const authorsFile = path.resolve(dataDirectory, 'authors.json');
   await fs.promises.writeFile(authorsFile, JSON.stringify(newAuthors, null, 2));
