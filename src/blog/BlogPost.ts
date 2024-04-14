@@ -47,8 +47,6 @@ export default class BlogPost implements IBlogPost {
 
     try {
       const post = `${this.postsDirectory}/${this.postId}/index.md`;
-      await fs.promises.access(post);
-
       this.body = await fs.promises.readFile(post, 'utf8');
       this.parsedBody = await marked.parse(this.body);
 
