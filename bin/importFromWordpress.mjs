@@ -25,22 +25,31 @@ const postsUrl = `${apiUrl}posts`;
 async function fetchAuthors() {
   console.log('Importing authors...');
 
-  const response = await fetch(authorsUrl);
-  const authors = await response.json();
   const newAuthors = [];
+  const totalPagesResponse = await fetch(authorsUrl);
+  const totalPages = totalPagesResponse.headers.get('x-wp-totalpages');
 
-  for (const author of authors) {
-    const avatarFile = `${author.slug}.jpg`;
-    const avatarFilePath = path.resolve(process.cwd(), 'public', 'images', 'authors', avatarFile);
-    await downloadImage(author.avatar_urls[96], avatarFilePath);
+  const importData = async page => {
+    const response = await fetch(`${authorsUrl}?page=${page}`);
+    const authors = await response.json();
 
-    newAuthors.push({
-      id: author.slug,
-      name: author.name,
-      bio: author.description,
-      website: author.url,
-      avatar: `/images/authors/${avatarFile}`,
-    });
+    for (const author of authors) {
+      const avatarFile = `${author.slug}.jpg`;
+      const avatarFilePath = path.resolve(process.cwd(), 'public', 'images', 'authors', avatarFile);
+      await downloadImage(author.avatar_urls[96], avatarFilePath);
+
+      newAuthors.push({
+        id: author.slug,
+        name: author.name,
+        bio: author.description,
+        website: author.url,
+        avatar: `/images/authors/${avatarFile}`,
+      });
+    }
+  };
+
+  for (let page = 1; page <= totalPages; page++) {
+    await importData(page);
   }
 
   const authorsFile = path.resolve(dataDirectory, 'authors.json');
