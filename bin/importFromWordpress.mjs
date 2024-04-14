@@ -92,6 +92,7 @@ async function fetchCategories() {
 }
 
 async function fetchPosts() {
+  // TODO: Not all posts are being imported... probably has to do with status as my drafts aren't there
   console.log('Importing posts...');
 
   const totalPagesResponse = await fetch(postsUrl);
@@ -124,6 +125,12 @@ async function fetchPosts() {
       const postAuthor = authors.find(author => post.author === author.wordpressId);
       const postCategories = categories.filter(category => post.categories.includes(category.wordpressId));
       const titleImage = await downloadPostImage(post);
+      const tags = [];
+
+      for (const tag of post.tags) {
+        const tagId = await fetchTag(tag);
+        tags.push(tagId);
+      }
 
       const metaData = {
         id: post.slug,
@@ -134,8 +141,7 @@ async function fetchPosts() {
         excerpt: post.yoast_head_json.description,
         metaDescription: post.yoast_head_json.description,
         categories: postCategories.map(category => category.id),
-        // TODO
-        tags: [],
+        tags,
         publishedDate: post.date,
         updatedAt: post.modified,
         wordpressId: post.id,
@@ -163,7 +169,9 @@ async function fetchPosts() {
 }
 
 async function fetchTag(tagId) {
-
+  const response = await fetch(`${tagsUrl}/${tagId}`);
+  const tag = await response.json();
+  return tag.slug;
 }
 
 await fetchAuthors();
