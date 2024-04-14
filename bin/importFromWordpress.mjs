@@ -30,15 +30,16 @@ async function fetchAuthors() {
   const newAuthors = [];
 
   for (const author of authors) {
-    const avatarFile = path.resolve(process.cwd(), 'public', 'images', 'authors', `${author.slug}.jpg`);
-    await downloadImage(author.avatar_urls[96], avatarFile);
+    const avatarFile = `${author.slug}.jpg`;
+    const avatarFilePath = path.resolve(process.cwd(), 'public', 'images', 'authors', avatarFile);
+    await downloadImage(author.avatar_urls[96], avatarFilePath);
 
     newAuthors.push({
       id: author.slug,
       name: author.name,
       bio: author.description,
       website: author.url,
-      avatar: avatarFile,
+      avatar: `/images/authors/${avatarFile}`,
     });
   }
 
