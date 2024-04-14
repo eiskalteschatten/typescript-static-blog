@@ -12,7 +12,7 @@ import path from 'node:path';
 
 import { downloadImage } from './utils.mjs';
 
-console.log('Importing posts from Wordpress...');
+console.log('Importing data from Wordpress...');
 
 const dataDirectory = path.resolve(process.cwd(), 'data');
 const categoriesFile = path.resolve(dataDirectory, 'categories.json');
@@ -104,15 +104,13 @@ async function fetchPosts() {
   const categories = JSON.parse(categoriesFileContent);
 
   const downloadPostImage = async post => {
-    const basename = path.basename(post.jetpack_featured_media_url);
-    const extention = path.extname(post.jetpack_featured_media_url).split('?')[0];
-    const fileName = `${basename}${extention}`;
     const destinationFolder = path.resolve(process.cwd(), 'public', 'images', 'posts', post.slug);
 
     if (!fs.existsSync(destinationFolder)) {
       fs.promises.mkdir(destinationFolder, { recursive: true });
     }
 
+    const fileName = path.basename(post.jetpack_featured_media_url).split('?')[0];
     const destinationFile = path.resolve(destinationFolder, fileName);
     await downloadImage(post.jetpack_featured_media_url, destinationFile);
     return `/images/posts/${post.slug}/${destinationFile}`;
@@ -144,7 +142,10 @@ async function fetchPosts() {
       };
 
       const pathToPostFolder = path.resolve(dataDirectory, 'posts', post.slug);
-      await fs.promises.mkdir(pathToPostFolder);
+
+      if (!fs.existsSync(pathToPostFolder)) {
+        await fs.promises.mkdir(pathToPostFolder);
+      }
 
       const metaDataFile = path.resolve(pathToPostFolder, 'meta.json');
       await fs.promises.writeFile(metaDataFile, JSON.stringify(metaData, null, 2));
@@ -169,4 +170,4 @@ await fetchAuthors();
 await fetchCategories();
 await fetchPosts();
 
-console.log('Posts successfully imported from Wordpress!');
+console.log('Data successfully imported from Wordpress!');
