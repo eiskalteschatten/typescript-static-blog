@@ -1,6 +1,6 @@
 /*
-  1. Import categories, tags and authors (and author avatars) -- only those that have posts
-  2. Import posts with images and link them to the categories, tags and authors
+  1. Import categories and authors (and author avatars) -- only those that have posts
+  2. Import posts with images and link them to the categories and authors. Also import tags.
 
   Notes:
     - Think about pagination
