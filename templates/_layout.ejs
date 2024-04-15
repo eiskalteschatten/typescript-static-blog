@@ -37,12 +37,19 @@
 
     <link rel="stylesheet" href="/css/bootstrap.css?v=1">
     <link rel="stylesheet" href="/css/main.css?v=1">
+    <!-- <link rel="preload" href="/css/secondary.css?v=1" as="style" class="asyncCss"> -->
     <link rel="preload" href="/css/secondary.css?v=1" as="style" class="asyncCss">
+    <link rel="preload" href="/libs/prism/prism-gruvbox-dark.css" as="style" class="asyncCss">
+    <noscript>
+        <link rel="stylesheet" href="/libs/prism/prism-gruvbox-dark.css" type="text/css">
+        <link rel="stylesheet" href="/css/secondary.css?v=1" type="text/css">
+    </noscript>
 
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="<%= _siteHost %>/feed/" />
 
     <script defer src="/scripts/scripts.js?v=1"></script>
     <script defer src="/scripts/web-components/index.js?v=1" type="module"></script>
+    <script defer src="/libs/prism/prism.js"></script>
 
     <script type="application/ld+json">
       {
