@@ -38,6 +38,8 @@ async function fetchAuthors() {
     const authors = await response.json();
 
     for (const author of authors) {
+      console.log('Importing author:', author.name);
+
       const extention = path.extname(author.avatar_urls[96]).split('&')[0];
       const avatarFile = `${author.slug}${extention}`;
       const avatarFilePath = path.resolve(process.cwd(), 'public', 'images', 'authors', avatarFile);
@@ -76,6 +78,8 @@ async function fetchCategories() {
       if (category.count === 0) {
         continue;
       }
+
+      console.log('Importing category:', category.name);
 
       newCategories.push({
         id: category.slug,
@@ -136,6 +140,9 @@ async function fetchPosts() {
     const posts = await response.json();
 
     for (const post of posts) {
+      const postTitle = convertEscapedAscii(post.title.rendered);
+      console.log('Importing post:', postTitle);
+
       const postAuthor = authors.find(author => post.author === author.wordpressId);
       const postCategories = categories.filter(category => post.categories.includes(category.wordpressId));
       const titleImage = await downloadPostImage(post.jetpack_featured_media_url, post.slug);
@@ -148,7 +155,7 @@ async function fetchPosts() {
 
       const metaData = {
         id: post.slug,
-        title: convertEscapedAscii(post.title.rendered),
+        title: postTitle,
         status: post.status === 'publish' ? 'published' : 'draft',
         authors: [postAuthor.id],
         titleImage,
