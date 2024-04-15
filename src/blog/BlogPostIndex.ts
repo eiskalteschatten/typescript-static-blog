@@ -20,8 +20,10 @@ export default class BlogPostIndex {
     private postsPerPage = 12
   ) {}
 
-  getPostsAsItemTileItems(): ItemTileItem[] {
-    return this.posts.map(post => ({
+  getPostsAsItemTileItems(posts?: BlogPostMetaData[]): ItemTileItem[] {
+    const _posts = posts ? posts : this.posts;
+
+    return _posts.map(post => ({
       id: post.id,
       title: post.title,
       description: post.excerpt,
@@ -74,7 +76,7 @@ export default class BlogPostIndex {
       console.error(error);
     }
 
-    const postIdsForPage = postIds.slice((this.page - 1) * this.postsPerPage, this.page * this.postsPerPage);
+    const postIdsForPage = postIds.slice((this.page - 1) * (this.postsPerPage + 1), this.page * (this.postsPerPage + 1));
 
     this.totalPages = Math.ceil(postIds.length / this.postsPerPage);
 
