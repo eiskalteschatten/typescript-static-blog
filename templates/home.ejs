@@ -1,13 +1,16 @@
 <div class="container">
-  <div class="mb-5">
+  <section class="section no-padding-top">
     <%- include('./_partials/itemTileGrid.ejs', { items: latestTwoPosts }) %>
-  </div>
+  </section>
 
-  <div class="row">
-    <div class="col-12 col-lg-9">
-      <%- include('./_partials/itemTileGridHorizontal.ejs', { items: leftoverPosts }) %>
+  <section class="section no-padding-top">
+    <div class="row">
+      <div class="col-12 col-lg-9">
+        <%- include('./_partials/itemTileGridHorizontal.ejs', { items: leftoverPosts }) %>
+      </div>
+      <div class="col-12 col-lg-3 mt-5 mt-lg-0">
+        <%- include('./_partials/genericSidebar.ejs') %>
+      </div>
     </div>
-    <div class="col-12 col-lg-3 mt-5 mt-lg-0">
-      <%- include('./_partials/genericSidebar.ejs') %>
-    </div>
+  </section>
 </div>
