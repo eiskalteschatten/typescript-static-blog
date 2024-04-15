@@ -1,7 +1,7 @@
 <div class="item-tile col-12 col-sm-6 d-flex flex-column gap-4 p-4">
   <a href="<%= item.link %>/" <% if (item.openInNewTab) { %>target="_blank"<% } %>>
     <% if (item.image) { %>
-      <img src="<%= item.image %>" class="item-tile-image" alt="<%= item.title %>" loading="lazy">
+      <img src="<%= item.image %>" class="item-tile-image large" alt="<%= item.title %>" loading="lazy">
     <% } else { %>
       <div class="no-item-tile-title-image">
         <span class="material-icons">article</span>

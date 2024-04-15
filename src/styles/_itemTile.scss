@@ -3,6 +3,10 @@
   height: 300px;
   object-fit: cover;
   border-radius: var(--border-radius);
+
+  &.large {
+    height: 400px;
+  }
 }
 
 .no-item-tile-title-image {
