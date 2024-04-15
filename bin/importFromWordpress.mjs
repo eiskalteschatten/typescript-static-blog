@@ -93,7 +93,6 @@ async function fetchCategories() {
 }
 
 async function fetchPosts() {
-  // TODO: Not all posts are being imported... probably has to do with status as my drafts aren't there
   console.log('Importing posts...');
 
   const totalPagesResponse = await fetch(postsUrl);
