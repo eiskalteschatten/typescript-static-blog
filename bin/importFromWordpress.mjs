@@ -178,7 +178,10 @@ async function fetchPosts() {
       await fs.promises.writeFile(metaDataFile, JSON.stringify(metaData, null, 2));
 
       const htmlWithImages = await downloadAndUpdateImages(post.content.rendered, post.slug);
-      const turndownService = new TurndownService();
+      const turndownService = new TurndownService({
+        bulletListMarker: '-',
+        codeBlockStyle: 'fenced',
+      });
       const content = turndownService.turndown(htmlWithImages);
       const contentFile = path.resolve(pathToPostFolder, 'index.md');
       await fs.promises.writeFile(contentFile, content);
