@@ -122,20 +122,7 @@ async function fetchPosts() {
     return `/images/posts/${postSlug}/${fileName}`;
   };
 
-  const downloadAndUpdateImages = async (html, postSlug) => {
-    const $ = cheerio.load(html);
-    const images = $('img');
-
-    for (const image of images) {
-      const src = $(image).attr('src');
-      const newSrc = await downloadPostImage(src, postSlug);
-      $(image).attr('src', newSrc);
-    }
-
-    return $.html();
-  };
-
-  const cleanUpRemainingHtml = html => {
+  const cleanUpHtml = html => {
     const $ = cheerio.load(html);
 
     const figures = $('figure');
@@ -151,6 +138,23 @@ async function fetchPosts() {
     const captions = $('figcaption');
     for (const caption of captions) {
       $(caption).removeAttr('class');
+    }
+
+    $('.wp-polls').html('<em>Polls have been temporarily removed while we migrate to a new platform.</em>');
+    $('.wp-polls-loading').remove();
+
+    return $.html();
+  };
+
+
+  const downloadAndUpdateImages = async (html, postSlug) => {
+    const $ = cheerio.load(html);
+    const images = $('img');
+
+    for (const image of images) {
+      const src = $(image).attr('src');
+      const newSrc = await downloadPostImage(src, postSlug);
+      $(image).attr('src', newSrc);
     }
 
     return $.html();
@@ -198,14 +202,18 @@ async function fetchPosts() {
       const metaDataFile = path.resolve(pathToPostFolder, 'meta.json');
       await fs.promises.writeFile(metaDataFile, JSON.stringify(metaData, null, 2));
 
-      const htmlWithImages = await downloadAndUpdateImages(post.content.rendered, post.slug);
+      const cleanedContent = cleanUpHtml(post.content.rendered);
+      const htmlWithImages = await downloadAndUpdateImages(cleanedContent, post.slug);
+
       const turndownService = new TurndownService({
         bulletListMarker: '-',
         codeBlockStyle: 'fenced',
+        emDelimiter: '*',
       });
+
       turndownService.keep(['figure', 'figcaption']);
-      const convertedContent = turndownService.turndown(htmlWithImages);
-      const content = cleanUpRemainingHtml(convertedContent);
+
+      const content = turndownService.turndown(htmlWithImages);
       const contentFile = path.resolve(pathToPostFolder, 'index.md');
       await fs.promises.writeFile(contentFile, content);
     }
