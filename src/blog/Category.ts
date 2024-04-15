@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import categories from '@data/categories.json';
 
 import { CategoryMetaData } from '@/interfaces/category.interface';
+import logger from '@/lib/logger';
 
 export default class Category {
   metaData: CategoryMetaData;
@@ -21,7 +22,7 @@ export default class Category {
       return postIds.slice(0,3);
     }
     catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 }

@@ -5,6 +5,7 @@ import { marked } from 'marked';
 import { BlogPostMetaData, BlogPost as IBlogPost } from '@/interfaces/blog.interface';
 import { ItemTileItem } from '@/interfaces/itemTile.interface';
 import { AuthorMetaData } from '@/interfaces/author.interface';
+import logger from '@/lib/logger';
 
 import Author from './Author';
 
@@ -53,7 +54,7 @@ export default class BlogPost implements IBlogPost {
       return this.body;
     }
     catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -68,7 +69,7 @@ export default class BlogPost implements IBlogPost {
       return this.metaData;
     }
     catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 

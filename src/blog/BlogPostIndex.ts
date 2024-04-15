@@ -6,6 +6,8 @@ import authors from '@data/authors.json';
 import { BlogPostMetaData } from '@/interfaces/blog.interface';
 import { ItemTileItem } from '@/interfaces/itemTile.interface';
 import Sidebar from '@/components/Sidebar';
+import logger from '@/lib/logger';
+
 import BlogPost from './BlogPost';
 
 export default class BlogPostIndex {
@@ -41,7 +43,7 @@ export default class BlogPostIndex {
       return JSON.parse(fileContent);
     }
     catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
@@ -73,7 +75,7 @@ export default class BlogPostIndex {
       postIds = JSON.parse(fileContent);
     }
     catch (error) {
-      console.error(error);
+      logger.error(error);
     }
 
     const postIdsForPage = postIds.slice((this.page - 1) * (this.postsPerPage + 1), this.page * (this.postsPerPage + 1));
@@ -93,7 +95,7 @@ export default class BlogPostIndex {
         }
       }
       catch (error) {
-        console.error(error);
+        logger.error(error);
       }
     }
 

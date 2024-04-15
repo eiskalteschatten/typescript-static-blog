@@ -2,6 +2,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 
 import { CachedTag } from '@/interfaces/tag.interface';
+import logger from '@/lib/logger';
 
 const cacheDirectory = path.resolve(process.cwd(), '.cache', 'tags');
 
@@ -15,7 +16,7 @@ export default class Tags {
       return tags;
     }
     catch (error) {
-      console.error(error);
+      logger.error(error);
     }
   }
 
