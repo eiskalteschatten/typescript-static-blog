@@ -135,6 +135,27 @@ async function fetchPosts() {
     return $.html();
   };
 
+  const cleanUpRemainingHtml = html => {
+    const $ = cheerio.load(html);
+
+    const figures = $('figure');
+    for (const figure of figures) {
+      $(figure).removeAttr('class');
+    }
+
+    const images = $('img');
+    for (const image of images) {
+      $(image).removeAttr('class width height data-recalc-dims sizes srcset');
+    }
+
+    const captions = $('figcaption');
+    for (const caption of captions) {
+      $(caption).removeAttr('class');
+    }
+
+    return $.html();
+  };
+
   const importData = async page => {
     const response = await fetch(`${postsUrl}?page=${page}`);
     const posts = await response.json();
@@ -182,7 +203,9 @@ async function fetchPosts() {
         bulletListMarker: '-',
         codeBlockStyle: 'fenced',
       });
-      const content = turndownService.turndown(htmlWithImages);
+      turndownService.keep(['figure', 'figcaption']);
+      const convertedContent = turndownService.turndown(htmlWithImages);
+      const content = cleanUpRemainingHtml(convertedContent);
       const contentFile = path.resolve(pathToPostFolder, 'index.md');
       await fs.promises.writeFile(contentFile, content);
     }
