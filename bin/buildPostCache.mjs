@@ -5,6 +5,7 @@ import { slugify } from './utils.mjs';
 
 import categories from '../data/categories.json' assert { type: 'json' };
 import authors from '../data/authors.json' assert { type: 'json' };
+import { count } from 'node:console';
 
 console.log('Building post caches...');
 
@@ -92,7 +93,6 @@ function buildTagCache() {
   for (const tag in tagData) {
     const slug = slugify(tag);
     const cacheFile = path.resolve(tagCacheDirectory, `${slug}.json`);
-
     fs.writeFileSync(cacheFile, JSON.stringify(tagData[tag], null, 2));
   }
 
@@ -100,6 +100,7 @@ function buildTagCache() {
   const allTagData = tags.map(tag => ({
     name: tag,
     slug: slugify(tag),
+    count: tagData[tag].length,
   }));
 
   fs.writeFileSync(cacheFile, JSON.stringify(allTagData, null, 2));
