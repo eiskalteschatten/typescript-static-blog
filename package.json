@@ -36,6 +36,7 @@
     "@types/rss": "^0.0.32",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
+    "cheerio": "^1.0.0-rc.12",
     "concurrently": "^8.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.31.0",
