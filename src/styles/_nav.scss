@@ -66,6 +66,7 @@
     border-radius: var(--border-radius);
     transition: background-color 175ms;
     font-size: 0.9em;
+    font-weight: 600;
     user-select: none;
 
     &:hover, &.selected {
