@@ -10,6 +10,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import TurndownService from 'turndown';
+import * as cheerio from 'cheerio';
 
 import { downloadImage, convertEscapedAscii } from './utils.mjs';
 
@@ -104,17 +105,30 @@ async function fetchPosts() {
   const categoriesFileContent = await fs.promises.readFile(categoriesFile, 'utf8');
   const categories = JSON.parse(categoriesFileContent);
 
-  const downloadPostImage = async post => {
-    const destinationFolder = path.resolve(process.cwd(), 'public', 'images', 'posts', post.slug);
+  const downloadPostImage = async (src, postSlug) => {
+    const destinationFolder = path.resolve(process.cwd(), 'public', 'images', 'posts', postSlug);
 
     if (!fs.existsSync(destinationFolder)) {
       fs.promises.mkdir(destinationFolder, { recursive: true });
     }
 
-    const fileName = path.basename(post.jetpack_featured_media_url).split('?')[0];
+    const fileName = path.basename(src).split('?')[0];
     const destinationFile = path.resolve(destinationFolder, fileName);
-    await downloadImage(post.jetpack_featured_media_url, destinationFile);
-    return `/images/posts/${post.slug}/${fileName}`;
+    await downloadImage(src, destinationFile);
+    return `/images/posts/${postSlug}/${fileName}`;
+  };
+
+  const downloadAndUpdateImages = async (html, postSlug) => {
+    const $ = cheerio.load(html);
+    const images = $('img');
+
+    for (const image of images) {
+      const src = $(image).attr('src');
+      const newSrc = await downloadPostImage(src, postSlug);
+      $(image).attr('src', newSrc);
+    }
+
+    return $.html();
   };
 
   const importData = async page => {
@@ -124,7 +138,7 @@ async function fetchPosts() {
     for (const post of posts) {
       const postAuthor = authors.find(author => post.author === author.wordpressId);
       const postCategories = categories.filter(category => post.categories.includes(category.wordpressId));
-      const titleImage = await downloadPostImage(post);
+      const titleImage = await downloadPostImage(post.jetpack_featured_media_url, post.slug);
       const tags = [];
 
       for (const tag of post.tags) {
@@ -156,9 +170,9 @@ async function fetchPosts() {
       const metaDataFile = path.resolve(pathToPostFolder, 'meta.json');
       await fs.promises.writeFile(metaDataFile, JSON.stringify(metaData, null, 2));
 
-      // TODO: import images and replace image URLs
+      const htmlWithImages = await downloadAndUpdateImages(post.content.rendered, post.slug);
       const turndownService = new TurndownService();
-      const content = turndownService.turndown(post.content.rendered);
+      const content = turndownService.turndown(htmlWithImages);
       const contentFile = path.resolve(pathToPostFolder, 'index.md');
       await fs.promises.writeFile(contentFile, content);
     }
