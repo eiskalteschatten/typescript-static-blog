@@ -15,5 +15,7 @@
     </a>
   </h3>
 
-  <%- include('./itemTileMetaData.ejs') %>
+  <div class="item-tile-meta low-opacity-text d-flex gap-2">
+    <time datetime="<%= item.date %>"><%= helpers.formatLocaleDateTime(item.date) %></time>
+  </div>
 </div>
