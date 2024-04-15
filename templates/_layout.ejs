@@ -152,20 +152,33 @@
     </script>
   </head>
   <body>
-    <header class="header py-2 pe-3 d-flex align-items-center justify-content-between">
-      <div class="container-xl d-flex align-items-center gap-5">
-        <%- include('./_partials/logo.ejs') %>
+    <header class="header py-2 d-flex align-items-center justify-content-between">
+      <div class="container-xl d-flex align-items-center justify-content-between gap-5 h-100 w-100">
+        <div class="d-flex align-items-center gap-3">
+          <mobile-menu-button></mobile-menu-button>
 
-        <nav class="d-none d-lg-flex align-items-center gap-2 main-nav">
-          <% for (const navItem of mainNav) { %>
-            <a href="<%=navItem.url%>" is="nav-link" class="main-nav-button <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>">
-              <%=navItem.label%>
-            </a>
+          <%- include('./_partials/logo.ejs') %>
+
+          <nav class="d-none d-lg-flex align-items-center gap-2 main-nav">
+            <% for (const navItem of mainNav) { %>
+              <a href="<%=navItem.url%>" is="nav-link" class="main-nav-button <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>">
+                <%=navItem.label%>
+              </a>
             <% } %>
           </nav>
         </div>
 
-        <mobile-menu-button></mobile-menu-button>
+        <div class="d-flex align-items-center justify-content-end">
+          <a href="/feed" target="_blank" class="button icon-button transparent-bg js-track-click-event" data-tracking-action="MainMenu" data-tracking-name="RSSButton">
+              <i class="material-icons">rss_feed</i>
+          </a>
+          <% /*
+          <button id="headerSearchButton" class="button icon-button transparent-bg">
+              <span class="material-icons search-icon">search</span>
+          </button>
+          */ %>
+        </div>
+      </div>
     </header>
 
     <main class="flex-grow-1 py-4">
