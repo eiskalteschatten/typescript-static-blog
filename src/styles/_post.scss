@@ -17,6 +17,15 @@
     img {
       max-width: 100%;
     }
+
+    figure {
+      text-align: center;
+
+      figcaption {
+        font-size: .8em;
+        opacity: .8;
+      }
+    }
   }
 
   .categories-tags {
