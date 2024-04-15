@@ -17,15 +17,23 @@
   <% if (typeof tags !== 'undefined') { %>
     <nav class="tags">
       <h4 class="sidebar-title">Tags</h4>
-      <ul>
+      <div>
+        <%
+          var tagCounts = tags.map(tag => tag.count);
+          var max = Math.max(...tagCounts);
+          var min = Math.min(...tagCounts);
+          var fontMin = 8;
+          var fontMax = 22;
+          var fontStep = (fontMax - fontMin) / (max - min);
+        %>
+
         <% for (const tag of tags) { %>
-          <li>
-            <a href="/tag/<%= tag.slug %>/">
-              <%= tag.name %>
-            </a>
-          </li>
+          <% var fontSize = fontMin + (tag.count - min) * fontStep; %>
+          <a href="/tag/<%= tag.slug %>/" class="d-inline-block ms-2" style="font-size: <%= fontSize %>pt;">
+            <%= tag.name %>
+          </a>
         <% } %>
-      </ul>
+      </div>
     </nav>
   <% } %>
 </aside>
