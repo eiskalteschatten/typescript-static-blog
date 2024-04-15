@@ -1,0 +1,5 @@
+<div class="item-tile-meta low-opacity-text d-flex gap-2">
+  <%- include('./authorAvatarName.ejs', { authors: item.authors }) %>
+  <span>∙</span>
+  <time datetime="<%= item.date %>"><%= helpers.formatLocaleDateTime(item.date) %></time>
+</div>

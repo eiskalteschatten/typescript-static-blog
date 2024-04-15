@@ -1,4 +1,4 @@
-<div class="item-tile col-12 col-sm-6 col-xl-4 d-flex flex-column gap-4 p-4">
+<div class="item-tile col-12 col-sm-6 d-flex flex-column gap-4 p-4">
   <a href="<%= item.link %>/" <% if (item.openInNewTab) { %>target="_blank"<% } %>>
     <% if (item.image) { %>
       <img src="<%= item.image %>" class="item-tile-image" alt="<%= item.title %>" loading="lazy">
@@ -18,4 +18,6 @@
   <div class="item-tile-description low-opacity-text">
     <%- item.description %>
   </div>
+
+  <%- include('./itemTileMetaData.ejs') %>
 </div>

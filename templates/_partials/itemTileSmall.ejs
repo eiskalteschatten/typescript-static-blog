@@ -15,9 +15,5 @@
     </a>
   </h3>
 
-  <div class="item-tile-meta low-opacity-text d-flex gap-2">
-    <a href="/author/" class="body-color">author</a>
-    <span>∙</span>
-    <time datetime="<%= item.date %>"><%= helpers.formatLocaleDateTime(item.date) %></time>
-  </div>
+  <%- include('./itemTileMetaData.ejs') %>
 </div>
