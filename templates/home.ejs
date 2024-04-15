@@ -7,14 +7,14 @@
     <div class="row">
       <div class="col-12 col-lg-9">
         <%- include('./_partials/itemTileGridHorizontal.ejs', { items: leftoverPosts }) %>
+
+        <div class="text-center mt-3">
+          <a href="/posts/?page=2" class="button white large">View more articles &#x2192;</a>
+        </div>
       </div>
       <div class="col-12 col-lg-3 mt-5 mt-lg-0">
         <%- include('./_partials/genericSidebar.ejs') %>
       </div>
-    </div>
-
-    <div class="text-center">
-      <a href="/posts/?page=2" class="button white large">View more articles &#x2192;</a>
     </div>
   </section>
 </div>
