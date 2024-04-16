@@ -6,7 +6,7 @@ class CookieBanner extends HTMLElement {
   connectedCallback() {
     const hasClosedCookieBanner = !!localStorage.getItem('allCookiesAccepted');
 
-    if (!hasClosedCookieBanner) {
+    if (!hasClosedCookieBanner && !navigator.doNotTrack) {
       this.classList.add('show');
     }
 
