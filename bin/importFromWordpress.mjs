@@ -20,7 +20,7 @@ const dataDirectory = path.resolve(process.cwd(), 'data');
 const categoriesFile = path.resolve(dataDirectory, 'categories.json');
 const authorsFile = path.resolve(dataDirectory, 'authors.json');
 
-const apiUrl = 'https://blog.alexseifert.com/wp-json/wp/v2/';
+const apiUrl = 'https://www.developers-notebook.com/wp-json/wp/v2/';
 const authorsUrl = `${apiUrl}users`;
 const categoriesUrl = `${apiUrl}categories`;
 const postsUrl = `${apiUrl}posts`;
