@@ -21,14 +21,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eiskalteschatten/typescript-fastify.git"
+    "url": "git+https://github.com/eiskalteschatten/typescript-static-blog.git"
   },
   "author": "Alex Seifert",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/eiskalteschatten/typescript-fastify/issues"
+    "url": "https://github.com/eiskalteschatten/typescript-static-blog/issues"
   },
-  "homepage": "https://github.com/eiskalteschatten/typescript-fastify#readme",
+  "homepage": "https://github.com/eiskalteschatten/typescript-static-blog#readme",
   "devDependencies": {
     "@types/ejs": "^3.1.2",
     "@types/node": "^20.10.0",
