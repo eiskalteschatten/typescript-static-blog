@@ -44,7 +44,11 @@ app.register(helmet, {
   contentSecurityPolicy: {
     useDefaults: true,
     directives: {
-      'img-src': process.env.NODE_ENV === 'development' ? ['http:', 'https:', 'data:'] : ['https:', 'data:'],
+      /* eslint-disable quotes */
+      defaultSrc: ["'self'"],
+      'img-src': ["'self'", 'https:', 'data:'],
+      scriptSrc: ["'self'"],
+      /* eslint-enable quotes */
     },
   },
 });
