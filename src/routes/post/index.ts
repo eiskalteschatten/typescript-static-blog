@@ -26,6 +26,7 @@ export default async (app: FastifyInstance) => {
 
     return reply.view('_blog/post.ejs', {
       title: blogPost.metaData.title,
+      mainNavId: blogPost.metaData.id,
       body: blogPost.parsedBody,
       metaData: blogPost.metaData,
       authors: blogPost.authors,

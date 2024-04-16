@@ -19,6 +19,7 @@ export default async (app: FastifyInstance) => {
 
     return reply.view('_blog/index.ejs', {
       title: category.metaData.name,
+      mainNavId: category.metaData.id,
       ...templateData,
     });
   });
