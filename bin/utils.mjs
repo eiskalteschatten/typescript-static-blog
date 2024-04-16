@@ -17,14 +17,19 @@ export async function downloadImage(imageUrl, destination) {
     return;
   }
 
-  const response = await fetch(imageUrl);
+  try {
+    const response = await fetch(imageUrl);
 
-  if (response.ok) {
-    const fileStream = fs.createWriteStream(destination, { flags: 'wx' });
-    await finished(Readable.fromWeb(response.body).pipe(fileStream));
+    if (response.ok) {
+      const fileStream = fs.createWriteStream(destination, { flags: 'wx' });
+      await finished(Readable.fromWeb(response.body).pipe(fileStream));
+    }
+    else {
+      console.error('Failed to download image:', imageUrl);
+    }
   }
-  else {
-    console.error('Failed to download image:', imageUrl);
+  catch (error) {
+    console.error('Failed to download image:', imageUrl, error);
   }
 }
 
