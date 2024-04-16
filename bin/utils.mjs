@@ -14,7 +14,7 @@ export function slugify(string) {
 export async function downloadImage(imageUrl, destination) {
   if (fs.existsSync(destination)) {
     console.error('File already exists:', destination);
-    return;
+    return true;
   }
 
   try {
@@ -23,13 +23,15 @@ export async function downloadImage(imageUrl, destination) {
     if (response.ok) {
       const fileStream = fs.createWriteStream(destination, { flags: 'wx' });
       await finished(Readable.fromWeb(response.body).pipe(fileStream));
+      return true;
     }
-    else {
-      console.error('Failed to download image:', imageUrl);
-    }
+
+    console.error('Failed to download image:', imageUrl);
+    return false;
   }
   catch (error) {
     console.error('Failed to download image:', imageUrl, error);
+    return false;
   }
 }
 

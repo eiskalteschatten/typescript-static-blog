@@ -20,7 +20,7 @@ const dataDirectory = path.resolve(process.cwd(), 'data');
 const categoriesFile = path.resolve(dataDirectory, 'categories.json');
 const authorsFile = path.resolve(dataDirectory, 'authors.json');
 
-const apiUrl = 'https://www.developers-notebook.com/wp-json/wp/v2/';
+const apiUrl = 'https://blog.alexseifert.com/wp-json/wp/v2/';
 const authorsUrl = `${apiUrl}users`;
 const categoriesUrl = `${apiUrl}categories`;
 const postsUrl = `${apiUrl}posts`;
@@ -57,14 +57,16 @@ async function fetchAuthors() {
       const extention = path.extname(author.avatar_urls[96]).split('&')[0];
       const avatarFile = `${author.slug}${extention}`;
       const avatarFilePath = path.resolve(process.cwd(), 'public', 'images', 'authors', avatarFile);
-      await downloadImage(author.avatar_urls[96], avatarFilePath);
+      const imageDownloaded = await downloadImage(author.avatar_urls[96], avatarFilePath);
 
       newAuthors.push({
         id: author.slug,
         name: author.name,
         bio: author.description,
         website: author.url,
-        avatar: `/images/authors/${avatarFile}`,
+        ...imageDownloaded && {
+          avatar: `/images/authors/${avatarFile}`,
+        },
         wordpressId: author.id,
       });
     }
@@ -146,8 +148,8 @@ async function fetchPosts() {
 
     const fileName = path.basename(src).split('?')[0];
     const destinationFile = path.resolve(destinationFolder, fileName);
-    await downloadImage(src, destinationFile);
-    return `/images/posts/${postSlug}/${fileName}`;
+    const imageDownloaded = await downloadImage(src, destinationFile);
+    return imageDownloaded ? `/images/posts/${postSlug}/${fileName}` : undefined;
   };
 
   const cleanUpHtml = html => {
