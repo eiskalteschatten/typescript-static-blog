@@ -60,6 +60,11 @@ async function fetchAuthors() {
     await importData(page);
   }
 
+  if (fs.existsSync(authorsFile)) {
+    const existingAuthors = await fs.promises.readFile(authorsFile, 'utf8');
+    newAuthors.push(...JSON.parse(existingAuthors));
+  }
+
   await fs.promises.writeFile(authorsFile, JSON.stringify(newAuthors, null, 2));
 }
 
@@ -92,6 +97,11 @@ async function fetchCategories() {
 
   for (let page = 1; page <= totalPages; page++) {
     await importData(page);
+  }
+
+  if (fs.existsSync(categoriesFile)) {
+    const existingCategories = await fs.promises.readFile(categoriesFile, 'utf8');
+    newCategories.push(...JSON.parse(existingCategories));
   }
 
   await fs.promises.writeFile(categoriesFile, JSON.stringify(newCategories, null, 2));
