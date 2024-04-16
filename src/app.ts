@@ -44,7 +44,7 @@ app.register(helmet, {
   contentSecurityPolicy: {
     useDefaults: true,
     directives: {
-      'img-src': ['https:', 'data:'],
+      'img-src': process.env.NODE_ENV === 'development' ? ['http:', 'https:', 'data:'] : ['https:', 'data:'],
     },
   },
 });
