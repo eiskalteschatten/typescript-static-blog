@@ -45,3 +45,4 @@ npm run posts
 
 1. Change all instances of `http://localhost` to your website's URL (mainly for SEO tags).
 2. Add tracking if wanted, but don't track if the cookies haven't been accepted or DO NOT TRACK is enabled in the user's browser.
+3. Update default page title and meta description
