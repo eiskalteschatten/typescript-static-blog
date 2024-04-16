@@ -18,8 +18,14 @@ export async function downloadImage(imageUrl, destination) {
   }
 
   const response = await fetch(imageUrl);
-  const fileStream = fs.createWriteStream(destination, { flags: 'wx' });
-  await finished(Readable.fromWeb(response.body).pipe(fileStream));
+
+  if (response.ok) {
+    const fileStream = fs.createWriteStream(destination, { flags: 'wx' });
+    await finished(Readable.fromWeb(response.body).pipe(fileStream));
+  }
+  else {
+    console.error('Failed to download image:', imageUrl);
+  }
 }
 
 export function convertEscapedAscii(string) {
