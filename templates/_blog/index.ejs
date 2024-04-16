@@ -10,13 +10,50 @@
       <%- include('../_partials/itemTileGridHorizontal.ejs', { items: blogPosts }) %>
 
       <% if (totalPages > 1) { %>
+        <%
+          var links = [];
+          currentPage = Number(currentPage);
+
+          if (currentPage >= 1) {
+            links.push(currentPage);
+          }
+
+          if (currentPage >= 3) {
+            links.push(currentPage - 1);
+            links.push(currentPage - 2);
+          }
+
+          if ((currentPage + 2) <= totalPages) {
+            links.push(currentPage + 2);
+            links.push(currentPage + 1);
+          }
+
+          links.sort((a, b) => a - b);
+        %>
+
         <div class="pagination d-flex gap-1 justify-content-center mt-2 mt-md-5">
-          <% if (currentPage != 1) { %>
+          <% if (currentPage > 1) { %>
             <a href="?page=<%= Number(currentPage) - 1 %>" class="pagination-link badge">&#x2190; Previous</a>
           <% } %>
 
-          <% for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) { %>
-            <a href="?page=<%= pageNumber %>" class="pagination-link badge <% if (pageNumber == currentPage) { %>selected<% } %>"><%= pageNumber %></a>
+          <% if (!links.includes(1)) { %>
+            <a href="?page=1" class="pagination-link badge <% if (1 == currentPage) { %>selected<% } %>">1</a>
+
+            <% if (!links.includes(2)) { %>
+              <span class="pagination-link badge disabled">...</span>
+            <% } %>
+          <% } %>
+
+          <% for (const link of links) { %>
+            <a href="?page=<%= link %>" class="pagination-link badge <% if (link == currentPage) { %>selected<% } %>"><%= link %></a>
+          <% } %>
+
+          <% if (!links.includes(totalPages)) { %>
+            <% if (!links.includes(totalPages - 1)) { %>
+              <span class="pagination-link badge disabled">...</span>
+            <% } %>
+
+            <a href="?page=<%= totalPages %>" class="pagination-link badge <% if (totalPages == currentPage) { %>selected<% } %>"><%= totalPages %></a>
           <% } %>
 
           <% if (currentPage < totalPages) { %>
