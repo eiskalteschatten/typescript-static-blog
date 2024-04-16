@@ -26,6 +26,8 @@ const categoriesUrl = `${apiUrl}categories`;
 const postsUrl = `${apiUrl}posts`;
 const tagsUrl = `${apiUrl}tags`;
 
+const imagesNotDownloaded = [];
+
 async function fetchAuthors() {
   console.log('Importing authors...');
 
@@ -58,6 +60,10 @@ async function fetchAuthors() {
       const avatarFile = `${author.slug}${extention}`;
       const avatarFilePath = path.resolve(process.cwd(), 'public', 'images', 'authors', avatarFile);
       const imageDownloaded = await downloadImage(author.avatar_urls[96], avatarFilePath);
+
+      if (!imageDownloaded) {
+        imagesNotDownloaded.push(author.avatar_urls[96]);
+      }
 
       newAuthors.push({
         id: author.slug,
@@ -149,6 +155,11 @@ async function fetchPosts() {
     const fileName = path.basename(src).split('?')[0];
     const destinationFile = path.resolve(destinationFolder, fileName);
     const imageDownloaded = await downloadImage(src, destinationFile);
+
+    if (!imageDownloaded) {
+      imagesNotDownloaded.push(src);
+    }
+
     return imageDownloaded ? `/images/posts/${postSlug}/${fileName}` : undefined;
   };
 
@@ -263,5 +274,10 @@ async function fetchTag(tagId) {
 await fetchAuthors();
 await fetchCategories();
 await fetchPosts();
+
+if (imagesNotDownloaded.length > 0) {
+  console.log('The following images could not be downloaded:');
+  console.log(JSON.stringify(imagesNotDownloaded, null, 2));
+}
 
 console.log('Data successfully imported from Wordpress!');
