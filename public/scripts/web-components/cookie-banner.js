@@ -1,4 +1,4 @@
-class CookieBanner extends HTMLDialogElement {
+class CookieBanner extends HTMLElement {
   constructor() {
     super();
   }
@@ -7,7 +7,7 @@ class CookieBanner extends HTMLDialogElement {
     const hasClosedCookieBanner = !!localStorage.getItem('allCookiesAccepted');
 
     if (!hasClosedCookieBanner) {
-      this.showModal();
+      this.classList.add('show');
     }
 
     const onlyNecessaryButton = document.getElementById('cookieBannerOnlyNecessaryButton');
@@ -19,13 +19,13 @@ class CookieBanner extends HTMLDialogElement {
 
   acceptOnlyNecessaryCookies() {
     localStorage.setItem('allCookiesAccepted', 'false');
-    this.close();
+    this.classList.remove('show');
   }
 
   acceptAllCookies() {
     localStorage.setItem('allCookiesAccepted', 'true');
-    this.close();
+    this.classList.remove('show');
   }
 }
 
-customElements.define('cookie-banner', CookieBanner, { extends: 'dialog' });
+customElements.define('cookie-banner', CookieBanner);
