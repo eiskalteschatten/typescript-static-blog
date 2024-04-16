@@ -1,18 +1,5 @@
 @import "./variables";
 
-.sub-headline {
-  opacity: .65;
-  transition: opacity 250ms;
-
-  &:hover {
-    opacity: 1;
-  }
-
-  p {
-    margin: 15px 0 0 0;
-  }
-}
-
 .badge {
   text-decoration: none;
   display: block;
