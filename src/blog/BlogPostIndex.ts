@@ -80,7 +80,7 @@ export default class BlogPostIndex {
 
     const postIdsForPage = postIds.slice((this.page - 1) * (this.postsPerPage + 1), this.page * (this.postsPerPage + 1));
 
-    this.totalPages = Math.ceil(postIds.length / this.postsPerPage);
+    this.totalPages = Math.ceil(postIds.length / this.postsPerPage) - 1;
 
     for (const postId of postIdsForPage) {
       const fullPathToFolder = path.resolve(this.postsDirectory, postId);
