@@ -9,6 +9,10 @@ export default async (app: FastifyInstance) => {
     await blogPostIndex.getAllPosts();
     const templateData = await blogPostIndex.getTemplateData();
 
+    if (blogPostIndex.posts.length === 0) {
+      return reply.callNotFound();
+    }
+
     return reply.view('_blog/index.ejs', {
       title: 'All Posts',
       mainNavId: 'allPosts',
