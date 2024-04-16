@@ -29,7 +29,13 @@ const tagsUrl = `${apiUrl}tags`;
 async function fetchAuthors() {
   console.log('Importing authors...');
 
-  const newAuthors = [];
+  let newAuthors = [];
+
+  if (fs.existsSync(authorsFile)) {
+    const existingAuthors = await fs.promises.readFile(authorsFile, 'utf8');
+    newAuthors = JSON.parse(existingAuthors);
+  }
+
   const totalPagesResponse = await fetch(authorsUrl);
   const totalPages = totalPagesResponse.headers.get('x-wp-totalpages');
 
@@ -39,6 +45,14 @@ async function fetchAuthors() {
 
     for (const author of authors) {
       console.log('Importing author:', author.name);
+
+      const existingAuthorIndex = newAuthors.findIndex(existingAuthor => existingAuthor.id === author.slug);
+
+      if (existingAuthorIndex > -1) {
+        console.log(`Author "${author.slug}" already exists, skipping...`);
+        newAuthors[existingAuthorIndex].wordpressId = author.id;
+        continue;
+      }
 
       const extention = path.extname(author.avatar_urls[96]).split('&')[0];
       const avatarFile = `${author.slug}${extention}`;
@@ -60,18 +74,19 @@ async function fetchAuthors() {
     await importData(page);
   }
 
-  if (fs.existsSync(authorsFile)) {
-    const existingAuthors = await fs.promises.readFile(authorsFile, 'utf8');
-    newAuthors.push(...JSON.parse(existingAuthors));
-  }
-
   await fs.promises.writeFile(authorsFile, JSON.stringify(newAuthors, null, 2));
 }
 
 async function fetchCategories() {
   console.log('Importing categories...');
 
-  const newCategories = [];
+  let newCategories = [];
+
+  if (fs.existsSync(categoriesFile)) {
+    const existingCategories = await fs.promises.readFile(categoriesFile, 'utf8');
+    newCategories = JSON.parse(existingCategories);
+  }
+
   const totalPagesResponse = await fetch(categoriesUrl);
   const totalPages = totalPagesResponse.headers.get('x-wp-totalpages');
 
@@ -86,6 +101,14 @@ async function fetchCategories() {
 
       console.log('Importing category:', category.name);
 
+      const existingCategoryIndex = newCategories.findIndex(existingCategory => existingCategory.id === category.slug);
+
+      if (existingCategoryIndex > -1) {
+        console.log(`Category "${category.slug}" already exists, skipping...`);
+        newCategories[existingCategoryIndex].wordpressId = category.id;
+        continue;
+      }
+
       newCategories.push({
         id: category.slug,
         name: category.name,
@@ -97,11 +120,6 @@ async function fetchCategories() {
 
   for (let page = 1; page <= totalPages; page++) {
     await importData(page);
-  }
-
-  if (fs.existsSync(categoriesFile)) {
-    const existingCategories = await fs.promises.readFile(categoriesFile, 'utf8');
-    newCategories.push(...JSON.parse(existingCategories));
   }
 
   await fs.promises.writeFile(categoriesFile, JSON.stringify(newCategories, null, 2));
