@@ -145,22 +145,24 @@ async function fetchPosts() {
   const categoriesFileContent = await fs.promises.readFile(categoriesFile, 'utf8');
   const categories = JSON.parse(categoriesFileContent);
 
-  const downloadPostImage = async (src, postSlug) => {
-    const destinationFolder = path.resolve(process.cwd(), 'public', 'images', 'posts', postSlug);
-
-    if (!fs.existsSync(destinationFolder)) {
-      fs.promises.mkdir(destinationFolder, { recursive: true });
-    }
-
+  const downloadPostImage = async src => {
+    const destinationFolder = path.resolve(process.cwd(), 'public', 'images', 'posts');
     const fileName = path.basename(src).split('?')[0];
     const destinationFile = path.resolve(destinationFolder, fileName);
+    const imagePath = `/images/posts/${fileName}`;
+
+    if (fs.existsSync(destinationFile)) {
+      console.log(`Post image "${destinationFile}" already exists, skipping...`);
+      return imagePath;
+    }
+
     const imageDownloaded = await downloadImage(src, destinationFile);
 
     if (!imageDownloaded) {
       imagesNotDownloaded.push(src);
     }
 
-    return imageDownloaded ? `/images/posts/${postSlug}/${fileName}` : undefined;
+    return imageDownloaded ? imagePath : undefined;
   };
 
   const cleanUpHtml = html => {
@@ -188,13 +190,13 @@ async function fetchPosts() {
   };
 
 
-  const downloadAndUpdateImages = async (html, postSlug) => {
+  const downloadAndUpdateImages = async html => {
     const $ = cheerio.load(html);
     const images = $('img');
 
     for (const image of images) {
       const src = $(image).attr('src');
-      const newSrc = await downloadPostImage(src, postSlug);
+      const newSrc = await downloadPostImage(src);
       $(image).attr('src', newSrc);
     }
 
@@ -211,7 +213,7 @@ async function fetchPosts() {
 
       const postAuthor = authors.find(author => post.author === author.wordpressId);
       const postCategories = categories.filter(category => post.categories.includes(category.wordpressId));
-      const titleImage = await downloadPostImage(post.jetpack_featured_media_url, post.slug);
+      const titleImage = await downloadPostImage(post.jetpack_featured_media_url);
       const tags = [];
 
       for (const tag of post.tags) {
@@ -244,7 +246,7 @@ async function fetchPosts() {
       await fs.promises.writeFile(metaDataFile, JSON.stringify(metaData, null, 2));
 
       const cleanedContent = cleanUpHtml(post.content.rendered);
-      const htmlWithImages = await downloadAndUpdateImages(cleanedContent, post.slug);
+      const htmlWithImages = await downloadAndUpdateImages(cleanedContent);
 
       const turndownService = new TurndownService({
         bulletListMarker: '-',
