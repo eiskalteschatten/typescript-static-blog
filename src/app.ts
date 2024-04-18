@@ -63,7 +63,7 @@ app.register(fastifyStatic, {
 
 app.setNotFoundHandler((req: FastifyRequest, reply: FastifyReply) => {
   reply.view('404.ejs', {
-    title: 'Page Not Found!',
+    title: 'Page Not Found',
   });
 });
 
