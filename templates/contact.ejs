@@ -2,9 +2,9 @@
   <h1 class="page-title"><%= title %></h1>
 
   <% if (typeof success !== 'undefined') { %>
-    <div class="mb-5 success-message fw-bold">Your message was sent successfully!</div>
+    <div class="mb-5 success-message fw-bold text-center">Your message was sent successfully!</div>
   <% } else if (typeof error !== 'undefined') { %>
-    <div class="mb-5 error-message fw-bold">An error occurred while sending your message. Please send your message directly to <a href="mailto:alex@alexseifert.com">alex@alexseifert.com</a>.</div>
+    <div class="mb-5 error-message fw-bold text-center">An error occurred while sending your message. Please send your message directly to <a href="mailto:alex@alexseifert.com">alex@alexseifert.com</a>.</div>
   <% } %>
 
   <form method="post" action="/contact" class="contact-form mx-auto mb-5">
