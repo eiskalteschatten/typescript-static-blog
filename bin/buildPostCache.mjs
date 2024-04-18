@@ -5,7 +5,6 @@ import { slugify } from './utils.mjs';
 
 import categories from '../data/categories.json' assert { type: 'json' };
 import authors from '../data/authors.json' assert { type: 'json' };
-import { count } from 'node:console';
 
 console.log('Building post caches...');
 
