@@ -12,6 +12,10 @@ export default async (app: FastifyInstance) => {
     const blogPost = new BlogPost(postId);
     await blogPost.getPost();
 
+    if (!blogPost.exists()) {
+      return reply.callNotFound();
+    }
+
     if (
       (!blogPost.metaData
         || blogPost.parsedBody === undefined

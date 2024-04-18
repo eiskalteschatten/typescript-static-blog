@@ -20,7 +20,7 @@ export default class BlogPost implements IBlogPost {
   constructor(public postId: string) {}
 
   async getPost(): Promise<IBlogPost | undefined> {
-    if (!this.postExists()) {
+    if (!this.exists()) {
       return;
     }
 
@@ -94,7 +94,7 @@ export default class BlogPost implements IBlogPost {
     }
   }
 
-  private postExists(): boolean {
+  exists(): boolean {
     const postDir = path.resolve(this.postsDirectory, this.postId);
     return fs.existsSync(postDir);
   }
