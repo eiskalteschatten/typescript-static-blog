@@ -49,6 +49,9 @@ app.register(helmet, {
       'img-src': ["'self'", 'https:', 'data:'],
       scriptSrc: ["'self'"],
       /* eslint-enable quotes */
+      ...process.env.NODE_ENV === 'development' && {
+        'upgrade-insecure-requests': null,
+      },
     },
   },
 });
