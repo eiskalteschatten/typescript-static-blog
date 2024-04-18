@@ -48,8 +48,8 @@ app.register(helmet, {
       /* eslint-disable quotes */
       defaultSrc: ["'self'"],
       'img-src': ["'self'", 'https:', 'data:'],
-      scriptSrc: ["'self'"],
-      scriptSrcAttr: [ "'unsafe-inline'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrcAttr: ["'unsafe-inline'"],
       /* eslint-enable quotes */
       ...process.env.NODE_ENV === 'development' && {
         'upgrade-insecure-requests': null,
