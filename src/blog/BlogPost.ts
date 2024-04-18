@@ -65,7 +65,13 @@ export default class BlogPost implements IBlogPost {
 
     try {
       const metaDataString = await fs.promises.readFile(`${this.postsDirectory}/${this.postId}/meta.json`, 'utf8');
-      this.metaData = JSON.parse(metaDataString);
+      const metaData = JSON.parse(metaDataString);
+
+      this.metaData = {
+        ...metaData,
+        scheduled: new Date(metaData.publishedDate) > new Date(),
+      };
+
       return this.metaData;
     }
     catch (error) {

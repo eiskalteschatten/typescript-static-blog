@@ -1,0 +1,8 @@
+<div class="d-flex gap-2">
+  <% if (metaData.status === 'draft') { %>
+    <span class="material-icons primary-color">edit</span>
+  <% } %>
+  <% if (metaData.scheduled === true) { %>
+    <span class="material-icons primary-color">schedule</span>
+  <% } %>
+</div>

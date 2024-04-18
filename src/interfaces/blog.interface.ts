@@ -12,6 +12,7 @@ export interface BlogPostMetaData {
   publishedDate: string;
   updatedAt: string;
   metaDescription: string;
+  scheduled?: boolean;
 }
 
 export interface BlogPost {

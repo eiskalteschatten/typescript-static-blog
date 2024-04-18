@@ -1,4 +1,9 @@
 .blog-post {
+  .post-title {
+    font-weight: 700;
+    line-height: 1.5em;
+  }
+
   .title-image {
     max-width: 100%;
     border-radius: var(--border-radius);

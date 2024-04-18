@@ -94,6 +94,10 @@ p {
   }
 }
 
+.primary-color {
+  color: var(--primary-color);
+}
+
 @import "./fonts";
 @import "./structure";
 @import "./header";

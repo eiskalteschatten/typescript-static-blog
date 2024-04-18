@@ -1,19 +1,23 @@
 <div class="container blog-post mb-5">
-  <h1 class="page-title"><%= title %></h1>
-
   <div class="row">
     <div class="col-12 col-lg-8">
+      <h1 class="post-title mb-2"><%= title %></h1>
+
+      <div class="post-meta low-opacity-text d-flex gap-2 mb-4 align-items-center">
+        <%- include('../_partials/authorAvatarName.ejs') %>
+        <span>∙</span>
+        <time datetime="<%= metaData.publishedDate %>"><%= helpers.formatLocaleDateTime(metaData.publishedDate) %></time>
+        <% if (metaData.status === 'draft' || metaData.scheduled === true) { %>
+          <span>∙</span>
+          <%- include('../_partials/postDraftScheduledIndicators.ejs') %>
+        <% } %>
+      </div>
+
       <% if (metaData.titleImage) { %>
         <div class="text-center">
           <img src="<%= metaData.titleImage %>" alt="<%= title %>" class="title-image mb-4">
         </div>
-        <% } %>
-
-      <div class="post-meta low-opacity-text d-flex gap-2 mb-4">
-        <%- include('../_partials/authorAvatarName.ejs') %>
-        <span>∙</span>
-        <time datetime="<%= metaData.publishedDate %>"><%= helpers.formatLocaleDateTime(metaData.publishedDate) %></time>
-      </div>
+      <% } %>
 
       <div class="post-body mb-5">
         <%- body %>
