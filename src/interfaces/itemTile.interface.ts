@@ -9,4 +9,6 @@ export interface ItemTileItem {
   date: string | Date;
   authors: AuthorMetaData[];
   openInNewTab?: boolean;
+  status: string;
+  scheduled: boolean;
 }

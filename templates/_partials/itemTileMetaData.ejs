@@ -1,5 +1,9 @@
-<div class="item-tile-meta low-opacity-text d-flex gap-2">
+<div class="item-tile-meta low-opacity-text d-flex gap-2 align-items-center">
   <%- include('./authorAvatarName.ejs', { authors: item.authors }) %>
   <span>∙</span>
   <time datetime="<%= item.date %>"><%= helpers.formatLocaleDateTime(item.date) %></time>
+  <% if (item.status === 'draft' || item.scheduled === true) { %>
+    <span>∙</span>
+    <%- include('./postDraftScheduledIndicators.ejs', { metaData: { status: item.status, scheduled: item.scheduled } }) %>
+  <% } %>
 </div>

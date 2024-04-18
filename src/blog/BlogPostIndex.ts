@@ -33,6 +33,8 @@ export default class BlogPostIndex {
       link: `/post/${post.id}`,
       date: post.publishedDate,
       authors: authors.filter(author => post.authors.includes(author.id)),
+      status: post.status,
+      scheduled: new Date(post.publishedDate) > new Date(),
     }));
   }
 
