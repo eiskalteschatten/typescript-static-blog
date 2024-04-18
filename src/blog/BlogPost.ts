@@ -26,7 +26,7 @@ export default class BlogPost implements IBlogPost {
 
     await this.getMetaData();
 
-    if (!BlogPost.blogPostCanBePublished(this.metaData.id)) {
+    if (!BlogPost.blogPostCanBePublished(this.metaData)) {
       return;
     }
 
@@ -108,11 +108,13 @@ export default class BlogPost implements IBlogPost {
       link: `/post/${this.metaData.id}`,
       date: this.metaData.publishedDate,
       authors: this.authors,
+      status: this.metaData.status,
+      scheduled: this.metaData.scheduled,
     };
   }
 
   static blogPostCanBePublished(metaData: BlogPostMetaData): boolean {
-  if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development') {
       return true;
     }
 
