@@ -10,6 +10,35 @@ import authors from '@data/authors.json';
 const url = 'http://localhost:4000';
 
 export default async (app: FastifyInstance) => {
+  app.get('.xml', async (req: FastifyRequest, reply: FastifyReply) => {
+    const lastmod = new Date();
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+      <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+          <sitemap>
+              <loc>https://www.developers-notebook.com/sitemap/posts/</loc>
+              <lastmod>${lastmod.toISOString()}</lastmod>
+          </sitemap>
+          <sitemap>
+              <loc>https://www.developers-notebook.com/sitemap/categories/</loc>
+              <lastmod>${lastmod.toISOString()}</lastmod>
+          </sitemap>
+          <sitemap>
+              <loc>https://www.developers-notebook.com/sitemap/tags/</loc>
+              <lastmod>${lastmod.toISOString()}</lastmod>
+          </sitemap>
+          <sitemap>
+              <loc>https://www.developers-notebook.com/sitemap/authors/</loc>
+              <lastmod>${lastmod.toISOString()}</lastmod>
+          </sitemap>
+      </sitemapindex>
+    `;
+
+    return reply
+      .header('Content-Type', 'application/rss+xml; charset=UTF-8')
+      .send(xml);
+  });
+
   app.get('/posts', async (req: FastifyRequest, reply: FastifyReply) => {
     let xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
 
