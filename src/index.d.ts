@@ -5,6 +5,7 @@ declare module 'fastify' {
     locals: {
       mainNav: MainNavItem[];
       helpers: any;
+      isDev: boolean;
     };
   }
 }

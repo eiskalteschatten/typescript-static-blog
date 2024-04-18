@@ -26,6 +26,7 @@ app.addHook('preHandler', function (request: FastifyRequest, reply: FastifyReply
   reply.locals = {
     mainNav,
     helpers: esjHelpers,
+    isDev: process.env.NODE_ENV === 'development',
   };
 
   done();
