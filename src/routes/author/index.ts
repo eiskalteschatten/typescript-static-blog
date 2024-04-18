@@ -4,8 +4,8 @@ import BlogPostIndex from '@/blog/BlogPostIndex';
 import Author from '@/blog/Author';
 
 export default async (app: FastifyInstance) => {
-  type PostsRequest = FastifyRequest<{ Params: { authorId: string }; Querystring: { page?: number } }>;
-  app.get('/:authorId', async (req: PostsRequest, reply: FastifyReply) => {
+  type AuthorRequest = FastifyRequest<{ Params: { authorId: string }; Querystring: { page?: number } }>;
+  app.get('/:authorId', async (req: AuthorRequest, reply: FastifyReply) => {
     const { authorId } = req.params;
     const author = new Author(authorId);
 

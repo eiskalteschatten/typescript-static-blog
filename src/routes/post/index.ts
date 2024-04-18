@@ -6,8 +6,8 @@ import Categories from '@/blog/Categories';
 import Tags from '@/blog/Tags';
 
 export default async (app: FastifyInstance) => {
-  type PostsRequest = FastifyRequest<{ Params: { postId: string } }>;
-  app.get('/:postId', async (req: PostsRequest, reply: FastifyReply) => {
+  type PostRequest = FastifyRequest<{ Params: { postId: string } }>;
+  app.get('/:postId', async (req: PostRequest, reply: FastifyReply) => {
     const { postId } = req.params;
     const blogPost = new BlogPost(postId);
     await blogPost.getPost();

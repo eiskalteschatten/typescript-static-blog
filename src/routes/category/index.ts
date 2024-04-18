@@ -4,8 +4,8 @@ import BlogPostIndex from '@/blog/BlogPostIndex';
 import Category from '@/blog/Category';
 
 export default async (app: FastifyInstance) => {
-  type PostsRequest = FastifyRequest<{ Params: { categoryId: string }; Querystring: { page?: number } }>;
-  app.get('/:categoryId', async (req: PostsRequest, reply: FastifyReply) => {
+  type CategoryRequest = FastifyRequest<{ Params: { categoryId: string }; Querystring: { page?: number } }>;
+  app.get('/:categoryId', async (req: CategoryRequest, reply: FastifyReply) => {
     const { categoryId } = req.params;
     const category = new Category(categoryId);
 
