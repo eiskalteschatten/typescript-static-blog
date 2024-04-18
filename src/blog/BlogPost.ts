@@ -26,7 +26,7 @@ export default class BlogPost implements IBlogPost {
 
     await this.getMetaData();
 
-    if (new Date(this.metaData.publishedDate) > new Date() || this.metaData.status !== 'published') {
+    if (!BlogPost.blogPostCanBePublished(this.metaData.id)) {
       return;
     }
 
@@ -106,6 +106,10 @@ export default class BlogPost implements IBlogPost {
   }
 
   static blogPostCanBePublished(metaData: BlogPostMetaData): boolean {
+  if (process.env.NODE_ENV === 'development') {
+      return true;
+    }
+
     return new Date(metaData.publishedDate) <= new Date() && metaData.status === 'published';
   }
 }
