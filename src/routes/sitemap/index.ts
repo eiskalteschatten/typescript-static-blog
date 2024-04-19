@@ -16,23 +16,58 @@ export default async (app: FastifyInstance) => {
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
       <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
           <sitemap>
-              <loc>https://www.developers-notebook.com/sitemap/posts/</loc>
+              <loc>${url}/sitemap/pages/</loc>
               <lastmod>${lastmod.toISOString()}</lastmod>
           </sitemap>
           <sitemap>
-              <loc>https://www.developers-notebook.com/sitemap/categories/</loc>
+              <loc>${url}/sitemap/posts/</loc>
               <lastmod>${lastmod.toISOString()}</lastmod>
           </sitemap>
           <sitemap>
-              <loc>https://www.developers-notebook.com/sitemap/tags/</loc>
+              <loc>${url}/sitemap/categories/</loc>
               <lastmod>${lastmod.toISOString()}</lastmod>
           </sitemap>
           <sitemap>
-              <loc>https://www.developers-notebook.com/sitemap/authors/</loc>
+              <loc>${url}/sitemap/tags/</loc>
+              <lastmod>${lastmod.toISOString()}</lastmod>
+          </sitemap>
+          <sitemap>
+              <loc>${url}/sitemap/authors/</loc>
               <lastmod>${lastmod.toISOString()}</lastmod>
           </sitemap>
       </sitemapindex>
     `;
+
+    return reply
+      .header('Content-Type', 'application/rss+xml; charset=UTF-8')
+      .send(xml);
+  });
+
+  app.get('/pages', async (req: FastifyRequest, reply: FastifyReply) => {
+    let xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
+
+    const pages = [
+      '/',
+      '/about/',
+      '/posts/',
+      '/categories/',
+      '/contact/',
+      '/imprint/',
+      '/privacy-statement/',
+    ];
+
+    for (const page of pages) {
+      const lastmod = new Date();
+
+      xml += `
+        <url>
+          <loc>${url}${page}</loc>
+          <lastmod>${lastmod.toISOString()}</lastmod>
+        </url>
+      `;
+    }
+
+    xml += '</urlset>';
 
     return reply
       .header('Content-Type', 'application/rss+xml; charset=UTF-8')
