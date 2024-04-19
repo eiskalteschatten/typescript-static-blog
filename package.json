@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc",
     "postbuild": "sass src/styles:public/css --style compressed",
+    "prepare": "node ./bin/copyFromNodeModules.mjs",
     "dev:backend": "cross-env NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --rs --inspect=0.0.0.0:9229 -- src/main.ts",
     "dev:scss": "sass --watch src/styles:public/css",
     "predev": "cross-env NODE_ENV=development ts-node ./src/bootstrap.ts",
@@ -63,6 +64,7 @@
     "nodemailer": "^6.9.3",
     "pino": "^8.8.0",
     "pino-pretty": "^11.0.0",
+    "prismjs": "^1.29.0",
     "rss": "^1.2.2"
   }
 }
