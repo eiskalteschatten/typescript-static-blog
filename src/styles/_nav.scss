@@ -25,15 +25,16 @@
     padding: 0;
 
     .mobile-nav-button {
-      font-size: 1.2em;
+      font-size: 1.1em;
       position: relative;
       border-top-right-radius: var(--border-radius);
       border-bottom-right-radius: var(--border-radius);
       text-decoration: none;
       white-space: nowrap;
-      padding: 6px 12px;
+      padding: 6px 16px;
       color: var(--color);
       user-select: none;
+      font-weight: 600;
 
       &.selected {
         background-color: var(--active-background-color);
