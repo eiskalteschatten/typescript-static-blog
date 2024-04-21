@@ -47,9 +47,10 @@ app.register(helmet, {
     directives: {
       /* eslint-disable quotes */
       defaultSrc: ["'self'"],
-      'img-src': ["'self'", 'https:', 'data:'],
+      imgSrc: ["'self'", 'https:', 'data:'],
       scriptSrc: ["'self'", "'unsafe-inline'"],
       scriptSrcAttr: ["'unsafe-inline'"],
+      frameSrc: ["'self'", 'https://www.youtube.com'],
       /* eslint-enable quotes */
       ...process.env.NODE_ENV === 'development' && {
         'upgrade-insecure-requests': null,
