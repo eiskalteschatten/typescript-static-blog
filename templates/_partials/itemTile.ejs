@@ -1,4 +1,4 @@
-<div class="item-tile col-12 col-sm-6 d-flex flex-column gap-4 p-4">
+<div class="item-tile col-12 col-sm-6 d-flex flex-column gap-4 pb-5 pb-sm-0">
   <a href="<%= item.link %>/" <% if (item.openInNewTab) { %>target="_blank"<% } %>>
     <% if (item.image) { %>
       <img src="<%= item.image %>" class="item-tile-image large" alt="<%= item.title %>" <% if (typeof noLazyLoading === 'undefined' || !noLazyLoading) { %>loading="lazy"<% } %>>
