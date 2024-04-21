@@ -36,6 +36,24 @@
         margin-top: 10px;
       }
     }
+
+    iframe, embed {
+      width: 100%;
+      height: 500px;
+      max-height: 90vh;
+
+      @media (max-width: $xsMax) {
+        height: 200px;
+      }
+
+      @media (min-width: $smMin) and (max-width: $smMax) {
+        height: 400px;
+      }
+
+      @media (min-width: $mdMin) and (max-width: $mdMax) {
+        height: 360px;
+      }
+    }
   }
 
   .categories-tags {
