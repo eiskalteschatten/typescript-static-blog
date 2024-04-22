@@ -6,7 +6,7 @@
         <% for (const post of latestPosts) { %>
           <li class="d-flex gap-3 my-3">
             <a href="/post/<%= post.id %>/">
-              <img src="<%= post.titleImage %>" alt="<%= post.title %>" width="150" height="75" class="sidebar-latest-post-image">
+              <img src="<%= post.titleImage %>" alt="<%= post.title %>" width="150" height="75" class="sidebar-latest-post-image" loading="lazy">
             </a>
             <a href="/post/<%= post.id %>/"><%= post.title %></a>
           </li>
