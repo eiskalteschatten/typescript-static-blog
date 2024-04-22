@@ -11,7 +11,7 @@ export default async (app: FastifyInstance) => {
     const latestTwoPosts = blogPostIndex.getPostsAsItemTileItems(blogPostIndex.posts.slice(0, 2));
     const leftoverPosts = blogPostIndex.getPostsAsItemTileItems(blogPostIndex.posts.slice(2));
 
-    const sidebarData = await Sidebar.getGenericSidebarData();
+    const sidebarData = await Sidebar.getGenericSidebarData(false);
 
     return reply.view('home.ejs', {
       mainNavId: 'home',

@@ -18,4 +18,9 @@
       padding: 3px 0;
     }
   }
+
+  .sidebar-latest-post-image {
+    object-fit: cover;
+    border-radius: var(--border-radius);
+  }
 }

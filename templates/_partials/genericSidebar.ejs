@@ -1,4 +1,20 @@
 <aside class="sidebar d-flex flex-column gap-5">
+  <% if (typeof latestPosts !== 'undefined') { %>
+    <nav class="latest-posts">
+      <h4 class="sidebar-title">Latest Posts</h4>
+      <ul>
+        <% for (const post of latestPosts) { %>
+          <li class="d-flex gap-3 my-3">
+            <a href="/post/<%= post.id %>/">
+              <img src="<%= post.titleImage %>" alt="<%= post.title %>" width="150" height="75" class="sidebar-latest-post-image">
+            </a>
+            <a href="/post/<%= post.id %>/"><%= post.title %></a>
+          </li>
+        <% } %>
+      </ul>
+    </nav>
+  <% } %>
+
   <% if (typeof categories !== 'undefined') { %>
     <nav class="categories">
       <h4 class="sidebar-title">Categories</h4>
