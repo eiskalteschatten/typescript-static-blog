@@ -4,8 +4,9 @@
   "description": "",
   "main": "dist/src/main.js",
   "scripts": {
+    "prebuild": "sass src/styles:public/css --style compressed",
     "build": "tsc",
-    "postbuild": "sass src/styles:public/css --style compressed",
+    "postbuild": "node ./bin/postBuild.mjs",
     "prepare": "node ./bin/copyFromNodeModules.mjs",
     "dev:backend": "cross-env NODE_ENV=development ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --rs --inspect=0.0.0.0:9229 -- src/main.ts",
     "dev:scss": "sass --watch src/styles:public/css",
