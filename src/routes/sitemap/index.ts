@@ -1,4 +1,6 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import fs from 'node:fs';
+import path from 'node:path';
 
 import BlogPostIndex from '@/blog/BlogPostIndex';
 import BlogPost from '@/blog/BlogPost';
@@ -7,33 +9,34 @@ import Tags from '@/blog/Tags';
 
 import authors from '@data/authors.json';
 
-const url = 'http://localhost:4000';
+const url = process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : 'https://www.developers-notebook.com';
+const buildDateFile = path.resolve(process.cwd(), '.cache', 'buildDate.txt');
 
 export default async (app: FastifyInstance) => {
   app.get('.xml', async (req: FastifyRequest, reply: FastifyReply) => {
-    const lastmod = new Date();
+    const lastmod = await fs.promises.readFile(buildDateFile, 'utf-8');
 
     const xml = `<?xml version="1.0" encoding="UTF-8"?>
       <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
           <sitemap>
               <loc>${url}/sitemap/pages/</loc>
-              <lastmod>${lastmod.toISOString()}</lastmod>
+              <lastmod>${lastmod}</lastmod>
           </sitemap>
           <sitemap>
               <loc>${url}/sitemap/posts/</loc>
-              <lastmod>${lastmod.toISOString()}</lastmod>
+              <lastmod>${lastmod}</lastmod>
           </sitemap>
           <sitemap>
               <loc>${url}/sitemap/categories/</loc>
-              <lastmod>${lastmod.toISOString()}</lastmod>
+              <lastmod>${lastmod}</lastmod>
           </sitemap>
           <sitemap>
               <loc>${url}/sitemap/tags/</loc>
-              <lastmod>${lastmod.toISOString()}</lastmod>
+              <lastmod>${lastmod}</lastmod>
           </sitemap>
           <sitemap>
               <loc>${url}/sitemap/authors/</loc>
-              <lastmod>${lastmod.toISOString()}</lastmod>
+              <lastmod>${lastmod}</lastmod>
           </sitemap>
       </sitemapindex>
     `;
@@ -44,25 +47,27 @@ export default async (app: FastifyInstance) => {
   });
 
   app.get('/pages', async (req: FastifyRequest, reply: FastifyReply) => {
+    const lastmod = await fs.promises.readFile(buildDateFile, 'utf-8');
     let xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
 
     const pages = [
       '/',
       '/about/',
-      '/posts/',
+      '/all-articles/',
+      '/archive/',
       '/categories/',
       '/contact/',
       '/imprint/',
+      '/podcast/',
       '/privacy-statement/',
+      '/support/',
     ];
 
     for (const page of pages) {
-      const lastmod = new Date();
-
       xml += `
         <url>
           <loc>${url}${page}</loc>
-          <lastmod>${lastmod.toISOString()}</lastmod>
+          <lastmod>${lastmod}</lastmod>
         </url>
       `;
     }
@@ -85,12 +90,10 @@ export default async (app: FastifyInstance) => {
       await blogPost.getPost();
 
       if (BlogPost.blogPostCanBePublished(blogPost.metaData) && blogPost.parsedBody !== undefined) {
-        const lastmod = new Date(blogPost.metaData.updatedAt);
-
         xml += `
           <url>
             <loc>${url}/post/${blogPost.metaData.id}/</loc>
-            <lastmod>${lastmod.toISOString()}</lastmod>
+            <lastmod>${blogPost.metaData.updatedAt}</lastmod>
           </url>
         `;
       }
@@ -104,6 +107,7 @@ export default async (app: FastifyInstance) => {
   });
 
   app.get('/categories', async (req: FastifyRequest, reply: FastifyReply) => {
+    const lastmod = await fs.promises.readFile(buildDateFile, 'utf-8');
     let xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
 
     const categories = Categories.getSorted();
@@ -112,7 +116,7 @@ export default async (app: FastifyInstance) => {
       xml += `
         <url>
           <loc>${url}/category/${category.id}/</loc>
-          <lastmod>${new Date().toISOString()}</lastmod>
+          <lastmod>${lastmod}</lastmod>
         </url>
       `;
     }
@@ -125,6 +129,7 @@ export default async (app: FastifyInstance) => {
   });
 
   app.get('/tags', async (req: FastifyRequest, reply: FastifyReply) => {
+    const lastmod = await fs.promises.readFile(buildDateFile, 'utf-8');
     let xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
 
     const tags = await Tags.getAllTags();
@@ -133,7 +138,7 @@ export default async (app: FastifyInstance) => {
       xml += `
         <url>
           <loc>${url}/tag/${tag.slug}/</loc>
-          <lastmod>${new Date().toISOString()}</lastmod>
+          <lastmod>${lastmod}</lastmod>
         </url>
       `;
     }
@@ -146,13 +151,14 @@ export default async (app: FastifyInstance) => {
   });
 
   app.get('/authors', async (req: FastifyRequest, reply: FastifyReply) => {
+    const lastmod = await fs.promises.readFile(buildDateFile, 'utf-8');
     let xml = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">';
 
     for (const author of authors) {
       xml += `
         <url>
           <loc>${url}/author/${author.id}/</loc>
-          <lastmod>${new Date().toISOString()}</lastmod>
+          <lastmod>${lastmod}</lastmod>
         </url>
       `;
     }
