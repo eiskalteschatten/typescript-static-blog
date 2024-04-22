@@ -64,7 +64,13 @@ function buildCategoryCache() {
   for (const category of categories) {
     const postsInCategory = allPostsData.filter(post => post.categories.includes(category.id));
     const cacheFile = path.resolve(categoryCacheDirectory, `${category.id}.json`);
-    const sortedPostFolders = postsInCategory.map(post => post.id);
+
+    const sortedPostFolders = postsInCategory.map(post => ({
+      id: post.id,
+      status: post.status,
+      publishedDate: post.publishedDate,
+    }))
+    ;
     fs.writeFileSync(cacheFile, JSON.stringify(sortedPostFolders, null, 2));
   }
 }
@@ -91,7 +97,11 @@ function buildTagCache() {
         tagData[tag] = [];
       }
 
-      tagData[tag].push(post.id);
+      tagData[tag].push({
+        id: post.id,
+        status: post.status,
+        publishedDate: post.publishedDate,
+      });
     }
   }
 
@@ -123,7 +133,13 @@ function buildAuthorCache() {
   for (const author of authors) {
     const postsForAuthor = allPostsData.filter(post => post.authors.includes(author.id));
     const cacheFile = path.resolve(authorCacheDirectory, `${author.id}.json`);
-    const sortedPostFolders = postsForAuthor.map(post => post.id);
+
+    const sortedPostFolders = postsForAuthor.map(post => ({
+      id: post.id,
+      status: post.status,
+      publishedDate: post.publishedDate,
+    }));
+
     fs.writeFileSync(cacheFile, JSON.stringify(sortedPostFolders, null, 2));
   }
 }
@@ -151,7 +167,11 @@ function buildArchiveCache() {
       archiveData[key] = [];
     }
 
-    archiveData[key].push(post.id);
+    archiveData[key].push({
+      id: post.id,
+      status: post.status,
+      publishedDate: post.publishedDate,
+    });
   }
 
   for (const key in archiveData) {
