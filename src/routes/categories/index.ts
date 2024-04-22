@@ -20,10 +20,10 @@ export default async (app: FastifyInstance) => {
 
     for (const categoryMetaData of categories) {
       const category = new Category(categoryMetaData.id);
-      const postIds = await category.getFirstThreePosts();
+      const cachedPosts = await category.getFirstThreePosts();
       const posts: ItemTileItem[] = [];
 
-      for (const postId of postIds) {
+      for (const { id: postId } of cachedPosts) {
         const blogPost = new BlogPost(postId);
         await blogPost.getMetaData();
         posts.push(blogPost.getPostAsItemTileItems());
