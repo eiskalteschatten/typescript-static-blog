@@ -1,15 +1,18 @@
 import { AuthorMetaData } from './author.interface';
 
-export interface BlogPostMetaData {
+export interface BlogPostPublishData {
+  status: 'draft' | 'published';
+  publishedDate: string;
+}
+
+export interface BlogPostMetaData extends BlogPostPublishData {
   id: string;
   title: string;
-  status: 'draft' | 'published';
   authors: string[];
   titleImage: string;
   excerpt: string;
   categories: string[];
   tags?: string[];
-  publishedDate: string;
   updatedAt: string;
   metaDescription: string;
   scheduled?: boolean;

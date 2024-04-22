@@ -42,7 +42,13 @@ function buildAllPostsCache() {
   console.log('Building all posts cache...');
 
   const cacheFile = path.resolve(cacheDirectory, 'allPosts.json');
-  const sortedPostFolders = allPostsData.map(post => post.id);
+
+  const sortedPostFolders = allPostsData.map(post => ({
+    id: post.id,
+    status: post.status,
+    publishedDate: post.publishedDate,
+  }));
+
   fs.writeFileSync(cacheFile, JSON.stringify(sortedPostFolders, null, 2));
 }
 

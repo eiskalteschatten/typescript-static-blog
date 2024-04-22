@@ -42,7 +42,7 @@ export default class BlogPostIndex {
     try {
       const cacheFile = path.resolve(this.cacheDirectory, 'allPosts.json');
       const fileContent = await fs.promises.readFile(cacheFile, 'utf8');
-      return JSON.parse(fileContent);
+      return JSON.parse(fileContent).map((post: BlogPostMetaData) => post.id);
     }
     catch (error) {
       logger.error(error);
@@ -70,30 +70,30 @@ export default class BlogPostIndex {
   }
 
   private async parsePostIdCacheFile(cacheFile: string): Promise<BlogPostMetaData[]> {
-    let postIds = [];
+    let posts = [];
 
     try {
       const fileContent = await fs.promises.readFile(cacheFile, 'utf8');
-      postIds = JSON.parse(fileContent);
+      posts = JSON.parse(fileContent);
     }
     catch (error) {
       logger.error(error);
     }
 
-    const postIdsForPage = postIds.slice((this.page - 1) * this.postsPerPage, this.page * this.postsPerPage);
-    this.totalPages = Math.ceil(postIds.length / this.postsPerPage);
+    const postsForPage = posts
+      .filter(post => BlogPost.blogPostCanBePublished(post))
+      .slice((this.page - 1) * this.postsPerPage, this.page * this.postsPerPage);
 
-    for (const postId of postIdsForPage) {
+    this.totalPages = Math.ceil(posts.length / this.postsPerPage);
+
+    for (const { id: postId } of postsForPage) {
       const fullPathToFolder = path.resolve(this.postsDirectory, postId);
       const fullPathtoMetaFile = path.resolve(fullPathToFolder, 'meta.json');
       const fileContent = await fs.promises.readFile(fullPathtoMetaFile, 'utf8');
 
       try {
         const postMetaData = JSON.parse(fileContent) as BlogPostMetaData;
-
-        if (BlogPost.blogPostCanBePublished(postMetaData)) {
-          this.posts.push(postMetaData);
-        }
+        this.posts.push(postMetaData);
       }
       catch (error) {
         logger.error(error);

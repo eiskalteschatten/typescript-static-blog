@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { marked } from 'marked';
 
-import { BlogPostMetaData, BlogPost as IBlogPost } from '@/interfaces/blog.interface';
+import { BlogPostMetaData, BlogPostPublishData, BlogPost as IBlogPost } from '@/interfaces/blog.interface';
 import { ItemTileItem } from '@/interfaces/itemTile.interface';
 import { AuthorMetaData } from '@/interfaces/author.interface';
 import logger from '@/lib/logger';
@@ -113,7 +113,7 @@ export default class BlogPost implements IBlogPost {
     };
   }
 
-  static blogPostCanBePublished(metaData: BlogPostMetaData): boolean {
+  static blogPostCanBePublished(metaData: BlogPostPublishData): boolean {
     if (process.env.NODE_ENV === 'development') {
       return true;
     }
