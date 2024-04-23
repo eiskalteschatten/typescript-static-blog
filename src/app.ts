@@ -4,11 +4,14 @@ import fastifyView from '@fastify/view';
 import formBody from '@fastify/formbody';
 import helmet from '@fastify/helmet';
 import { fastifyAutoload } from '@fastify/autoload';
+import type { FastifyCookieOptions } from '@fastify/cookie';
+import cookie from '@fastify/cookie';
 import ejs from 'ejs';
 import path from 'path';
 
 import mainNav from './mainNav';
 import * as esjHelpers from './lib/ejsHelpers';
+import Stats from './stats/Stats';
 
 const port = Number(process.env.PORT) || 4000;
 
@@ -21,7 +24,8 @@ const app = Fastify({
   ignoreTrailingSlash: true,
 });
 
-app.addHook('preHandler', function (request: FastifyRequest, reply: FastifyReply, done: DoneFuncWithErrOrRes) {
+type CustomRequest = FastifyRequest<{ Querystring: { noStats?: number } }>;
+app.addHook('preHandler', (req: CustomRequest, reply: FastifyReply, done: DoneFuncWithErrOrRes) => {
   // Global variables for the EJS templates can be set here
   reply.locals = {
     mainNav,
@@ -29,10 +33,33 @@ app.addHook('preHandler', function (request: FastifyRequest, reply: FastifyReply
     isDev: process.env.NODE_ENV === 'development',
   };
 
+  if (!req.url.match(Stats.excludeFromStats)) {
+    const noStatsParam = Number(req.query.noStats);
+    const noStats = req.cookies?.noStats === 'true' || noStatsParam === 1;
+
+    if (noStatsParam === 1) {
+      reply.setCookie('noStats', 'true', {
+        path: '/',
+        // Expires in a year
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
+      });
+    }
+
+    if (!noStats) {
+      const stats = new Stats();
+      // Don't await this so that the request can be processed without waiting for the stats to be written
+      stats.addPageHit(req.url);
+    }
+  }
+
   done();
 });
 
 app.register(formBody);
+
+app.register(cookie, {
+  secret: process.env.COOKIE_SECRET,
+} as FastifyCookieOptions);
 
 app.register(fastifyView, {
   engine: { ejs },
