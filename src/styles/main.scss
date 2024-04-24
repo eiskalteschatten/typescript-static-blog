@@ -49,7 +49,7 @@ body {
 }
 
 a {
-  color: var(--primary-color);
+  color: $paletteBlue;
   transition: color 200ms;
   text-decoration: none;
 
