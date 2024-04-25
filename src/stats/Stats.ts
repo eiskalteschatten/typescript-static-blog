@@ -19,13 +19,13 @@ export default class Stats {
   }
 
   async addPageHit(url: string): Promise<void> {
-    const today = new Date().toISOString().split('T')[0];
-    const statsToday = await this.readStatsForDay(today);
-
-    statsToday[url] = statsToday[url] || 0;
-    statsToday[url]++;
-
     try {
+      const today = new Date().toISOString().split('T')[0];
+      const statsToday = await this.readStatsForDay(today);
+
+      statsToday[url] = statsToday[url] || 0;
+      statsToday[url]++;
+
       const statsFile = path.resolve(this.statsDirectory, `${today}.json`);
       const statsFileExisted = fs.existsSync(statsFile);
 
