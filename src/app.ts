@@ -10,7 +10,7 @@ import ejs from 'ejs';
 import path from 'path';
 
 import mainNav from './mainNav';
-import * as esjHelpers from './lib/ejsHelpers';
+import * as ejsHelpers from './lib/ejsHelpers';
 import Stats from './stats/Stats';
 
 const port = Number(process.env.PORT) || 4000;
@@ -29,7 +29,7 @@ app.addHook('preHandler', (req: CustomRequest, reply: FastifyReply, done: DoneFu
   // Global variables for the EJS templates can be set here
   reply.locals = {
     mainNav,
-    helpers: esjHelpers,
+    helpers: ejsHelpers,
     isDev: process.env.NODE_ENV === 'development',
   };
 
