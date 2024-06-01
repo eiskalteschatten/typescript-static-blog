@@ -1,10 +1,11 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyInstance, FastifyRequest } from 'fastify';
 
 import BlogPostIndex from '@/blog/BlogPostIndex';
 import Sidebar from '@/components/Sidebar';
+import { FastifyReplyWithView } from '@/interfaces/fastify.interface';
 
 export default async (app: FastifyInstance) => {
-  app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
+  app.get('/', async (req: FastifyRequest, reply: FastifyReplyWithView) => {
     const blogPostIndex = new BlogPostIndex();
     await blogPostIndex.getAllPosts();
 
@@ -13,11 +14,14 @@ export default async (app: FastifyInstance) => {
 
     const sidebarData = await Sidebar.getGenericSidebarData(false);
 
-    return reply.view('home.ejs', {
-      mainNavId: 'home',
-      latestTwoPosts,
-      leftoverPosts,
-      ...sidebarData,
+    return reply.render('home.ejs', {
+      req,
+      pageData: {
+        mainNavId: 'home',
+        latestTwoPosts,
+        leftoverPosts,
+        ...sidebarData,
+      },
     });
   });
 };
