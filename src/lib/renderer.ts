@@ -29,8 +29,7 @@ export default fastifyPlugin(function(fastify: FastifyInstance, options: Record<
       return this.send({ html, title });
     }
 
-    const html = await fastify.renderFullPage(template, { title, ...pageData, ...locals });
-    return this.send(html);
+    return fastify.renderFullPage(template, { title, ...pageData, ...locals });
   });
 
   done();
