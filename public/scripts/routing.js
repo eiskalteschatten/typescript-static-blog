@@ -58,8 +58,6 @@ async function clickLink(link) {
 function setLinks() {
   const links = document.querySelectorAll('a[data-link]');
 
-  console.log(links);
-
   if (links && links.length > 0) {
     links.forEach(link => link.addEventListener('click', async (e) => {
       e.preventDefault();
