@@ -58,11 +58,14 @@ async function clickLink(link) {
 function setLinks() {
   const links = document.querySelectorAll('a[data-link]');
 
+  const listenerCallback = async (e, link) => {
+    e.preventDefault();
+    links.forEach(_link => _link.removeEventListener('click', listenerCallback));
+    await clickLink(link);
+  };
+
   if (links && links.length > 0) {
-    links.forEach(link => link.addEventListener('click', async (e) => {
-      e.preventDefault();
-      await clickLink(link);
-    }));
+    links.forEach(link => link.addEventListener('click', e => listenerCallback(e, link)));
   }
 }
 
