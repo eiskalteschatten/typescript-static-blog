@@ -1,4 +1,4 @@
-import Fastify, { FastifyRequest } from 'fastify';
+import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
 import formBody from '@fastify/formbody';
@@ -12,7 +12,6 @@ import minifier from 'html-minifier';
 
 // import Stats from './stats/Stats';
 import renderer from './lib/renderer';
-import { FastifyReplyWithView } from './interfaces/fastify.interface';
 
 const port = Number(process.env.PORT) || 4000;
 
@@ -108,7 +107,7 @@ app.register(fastifyStatic, {
   root: path.join(process.cwd(), 'public'),
 });
 
-app.setNotFoundHandler((req: FastifyRequest, reply: FastifyReplyWithView) => {
+app.setNotFoundHandler((req: FastifyRequest, reply: FastifyReply) => {
   reply.render('404.ejs', {
     req,
     title: 'Page Not Found',
