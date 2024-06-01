@@ -1,11 +1,10 @@
-import { FastifyInstance, FastifyRequest } from 'fastify';
+import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 
 import BlogPostIndex from '@/blog/BlogPostIndex';
 import Sidebar from '@/components/Sidebar';
-import { FastifyReplyWithView } from '@/interfaces/fastify.interface';
 
 export default async (app: FastifyInstance) => {
-  app.get('/', async (req: FastifyRequest, reply: FastifyReplyWithView) => {
+  app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
     const blogPostIndex = new BlogPostIndex();
     await blogPostIndex.getAllPosts();
 

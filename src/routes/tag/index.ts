@@ -18,10 +18,13 @@ export default async (app: FastifyInstance) => {
     await blogPostIndex.getPostsByTag(tagSlug);
     const templateData = await blogPostIndex.getTemplateData();
 
-    return reply.view('_blog/index.ejs', {
-      title: tag.metaData.name,
-      mainNavId: tag.metaData.slug,
-      ...templateData,
+    return reply.render('_blog/index.ejs', {
+      req,
+      pageData: {
+        title: tag.metaData.name,
+        mainNavId: tag.metaData.slug,
+        ...templateData,
+      },
     });
   });
 };
