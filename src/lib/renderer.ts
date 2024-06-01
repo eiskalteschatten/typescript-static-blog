@@ -25,7 +25,7 @@ export default fastifyPlugin(function(fastify: FastifyInstance, options: Record<
     const query = req.query as PartialQuery;
 
     if ('_partial' in query) {
-      const html = await fastify.renderPartial(template, { title, ...pageData, ...locals });
+      const html = await fastify.renderPartial(template, { ...pageData, ...locals });
       return this.send({ html, title });
     }
 
