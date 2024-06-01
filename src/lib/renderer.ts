@@ -13,8 +13,6 @@ export interface RenderOptions {
 
 export default fastifyPlugin(function(fastify: FastifyInstance, options: Record<string, any>, done: () => void): void {
   fastify.decorateReply('render', async function (template: string, renderOptions: RenderOptions): Promise<FastifyReply> {
-    this.type('text/html');
-
     const locals = {
       mainNav,
       helpers: ejsHelpers,
@@ -29,6 +27,7 @@ export default fastifyPlugin(function(fastify: FastifyInstance, options: Record<
       return this.send({ html, title });
     }
 
+    this.type('text/html');
     return fastify.renderFullPage(template, { title, ...pageData, ...locals });
   });
 
