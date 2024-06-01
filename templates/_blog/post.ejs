@@ -29,7 +29,7 @@
             <strong>Categories</strong>
             <div class="d-flex gap-2 flex-wrap mt-2">
               <% for (const category of postCategories) { %>
-                <a href="/category/<%= category.id %>/" class="badge small green"><%= category.name %></a>
+                <a href="/category/<%= category.id %>/" data-link class="badge small green"><%= category.name %></a>
               <% } %>
             </div>
           <% } %>
@@ -39,7 +39,7 @@
             <strong>Tags</strong>
             <div class="d-flex gap-2 flex-wrap mt-2">
               <%for (const tag of postTags) { %>
-                <a href="/tag/<%= tag.slug %>/" class="badge small orange"><%= tag.name %></a>
+                <a href="/tag/<%= tag.slug %>/" data-link class="badge small orange"><%= tag.name %></a>
               <% } %>
             </div>
           <% } %>

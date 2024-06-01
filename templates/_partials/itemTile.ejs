@@ -1,5 +1,5 @@
 <div class="item-tile col-12 col-sm-6 d-flex flex-column gap-4">
-  <a href="<%= item.link %>/" <% if (item.openInNewTab) { %>target="_blank"<% } %>>
+  <a href="<%= item.link %>/" data-link <% if (item.openInNewTab) { %>target="_blank"<% } %>>
     <% if (item.image) { %>
       <img src="<%= item.image %>" class="item-tile-image large" alt="<%= item.title %>" <% if (typeof noLazyLoading === 'undefined' || !noLazyLoading) { %>loading="lazy"<% } %>>
     <% } else { %>
@@ -10,7 +10,7 @@
   </a>
 
   <h2 class="item-tile-name">
-    <a href="<%= item.link %>/" <% if (item.openInNewTab) { %>target="_blank"<% } %>>
+    <a href="<%= item.link %>/" data-link <% if (item.openInNewTab) { %>target="_blank"<% } %>>
       <%= item.title %>
     </a>
   </h2>

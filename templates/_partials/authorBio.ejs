@@ -3,7 +3,7 @@
 
   <div class="text-center text-md-start author-bio">
     <% if (showName) { %>
-      <a href="/author/<%= author.id %>/" class="author-name primary">
+      <a href="/author/<%= author.id %>/" data-link class="author-name primary">
         <%= author.name %>
       </a>
     <% } %>
@@ -11,7 +11,7 @@
     <div><%= author.bio %></div>
 
     <% if (showWebsite) { %>
-      <a href="<%= author.website %>" target="_blank" class="mt-2 d-block">Website &#x2192;</a>
+      <a href="<%= author.website %>" data-link target="_blank" class="mt-2 d-block">Website &#x2192;</a>
     <% } %>
   </div>
 </div>

@@ -167,7 +167,7 @@
 
           <nav class="d-none d-lg-flex align-items-center gap-2 main-nav">
             <% for (const navItem of mainNav) { %>
-              <a href="<%=navItem.url%>" is="nav-link" class="main-nav-button <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>">
+              <a href="<%=navItem.url%>" data-link is="nav-link" class="main-nav-button <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>">
                 <%=navItem.label%>
               </a>
             <% } %>
@@ -196,11 +196,11 @@
         <%- include('./_partials/logo.ejs') %>
 
         <div class="d-flex flex-column flex-md-row gap-2 gap-md-4">
-          <a href="/" class="js-track-footer-menu-click-event">Home</a>
-          <a href="/imprint/" class="js-track-footer-menu-click-event">Imprint</a>
-          <a href="/privacy-statement/" class="js-track-footer-menu-click-event">Privacy Statement</a>
-          <a href="/about/" class="js-track-footer-menu-click-event">About TypeScript Static Blog</a>
-          <a href="/contact/" class="js-track-footer-menu-click-event">Contact</a>
+          <a href="/" data-link class="js-track-footer-menu-click-event">Home</a>
+          <a href="/imprint/" data-link class="js-track-footer-menu-click-event">Imprint</a>
+          <a href="/privacy-statement/" data-link class="js-track-footer-menu-click-event">Privacy Statement</a>
+          <a href="/about/" data-link class="js-track-footer-menu-click-event">About TypeScript Static Blog</a>
+          <a href="/contact/" data-link class="js-track-footer-menu-click-event">Contact</a>
         </div>
 
         <div class="text-xl-end">
@@ -212,7 +212,7 @@
     <div class="d-lg-none mobile-menu-container" id="mobileMenu">
       <nav class="mobile-menu">
         <% for (const navItem of mainNav) { %>
-          <a href="<%=navItem.url%>" class="mobile-nav-button js-track-mobile-menu-click-event <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>"><%=navItem.label%></a>
+          <a href="<%=navItem.url%>" data-link class="mobile-nav-button js-track-mobile-menu-click-event <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>"><%=navItem.label%></a>
         <% } %>
       </nav>
     </div>
