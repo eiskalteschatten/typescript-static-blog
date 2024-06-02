@@ -1,3 +1,6 @@
+const navStartEvent = new Event('navigationStart', { cancelable: true });
+const navEndEvent = new Event('navigationEnd');
+
 function setContents(html, title, mainNavId) {
   const main = document.getElementById('main');
 
@@ -37,6 +40,10 @@ async function clickLink(link) {
   }
 
   try {
+    if (!document.dispatchEvent(navStartEvent)) {
+      return;
+    }
+
     const response = await fetch(`${link.href}?_partial`);
 
     if (response.status === 200) {
@@ -67,6 +74,8 @@ async function clickLink(link) {
       pageLoader.classList.add('hidden');
       pageLoader.classList.remove('loading');
     }
+
+    document.dispatchEvent(navEndEvent);
   }
 }
 
