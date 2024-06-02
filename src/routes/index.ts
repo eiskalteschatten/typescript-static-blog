@@ -13,14 +13,11 @@ export default async (app: FastifyInstance) => {
 
     const sidebarData = await Sidebar.getGenericSidebarData(false);
 
-    return reply.render('home.ejs', {
-      req,
-      pageData: {
-        mainNavId: 'home',
-        latestTwoPosts,
-        leftoverPosts,
-        ...sidebarData,
-      },
+    return reply.render('home.ejs', req, {
+      mainNavId: 'home',
+      latestTwoPosts,
+      leftoverPosts,
+      ...sidebarData,
     });
   });
 };

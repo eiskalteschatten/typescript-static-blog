@@ -35,14 +35,11 @@ export default async (app: FastifyInstance) => {
       });
     }
 
-    return reply.render('categories.ejs', {
-      req,
+    return reply.render('categories.ejs', req, {
       title: 'Categories',
-      pageData: {
-        mainNavId: 'categories',
-        postsForCategories,
-        ...sidebarData,
-      },
+      mainNavId: 'categories',
+      postsForCategories,
+      ...sidebarData,
     });
   });
 };

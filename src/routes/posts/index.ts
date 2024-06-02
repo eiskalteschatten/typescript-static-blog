@@ -13,13 +13,10 @@ export default async (app: FastifyInstance) => {
       return reply.callNotFound();
     }
 
-    return reply.render('_blog/index.ejs', {
-      req,
-      pageData: {
-        title: 'All Posts',
-        mainNavId: 'allPosts',
-        ...templateData,
-      },
+    return reply.render('_blog/index.ejs', req, {
+      title: 'All Posts',
+      mainNavId: 'allPosts',
+      ...templateData,
     });
   });
 };

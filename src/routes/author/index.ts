@@ -17,13 +17,10 @@ export default async (app: FastifyInstance) => {
     await blogPostIndex.getPostsByAuthor(authorId);
     const templateData = await blogPostIndex.getTemplateData();
 
-    return reply.render('_blog/index.ejs', {
-      req,
+    return reply.render('_blog/index.ejs', req, {
       title: author.metaData.name,
-      pageData: {
-        author: author.metaData,
-        ...templateData,
-      },
+      author: author.metaData,
+      ...templateData,
     });
   });
 };

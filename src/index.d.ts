@@ -13,7 +13,7 @@ declare module 'fastify' {
     renderFullPage(page: string, data?: object, opts?: RouteSpecificOptions): FastifyReply;
     renderPartial<T extends { [key: string]: any }>(page: string, data: T, opts?: RouteSpecificOptions): FastifyReply;
     renderPartial(page: string, data?: object, opts?: RouteSpecificOptions): FastifyReply;
-    render(template: string, renderOptions: RenderOptions): Promise<FastifyReply>;
+    render(template: string, req: FastifyRequest, renderOptions: RenderOptions): Promise<FastifyReply>;
   }
 
   interface FastifyInstance {
@@ -21,6 +21,6 @@ declare module 'fastify' {
     renderFullPage(page: string, data?: object, opts?: RouteSpecificOptions): FastifyReply;
     renderPartial<T extends { [key: string]: any }>(page: string, data: T, opts?: RouteSpecificOptions): FastifyReply;
     renderPartial(page: string, data?: object, opts?: RouteSpecificOptions): FastifyReply;
-    render(template: string, renderOptions: RenderOptions): Promise<FastifyReply>;
+    render(template: string, req: FastifyRequest, renderOptions: RenderOptions): Promise<FastifyReply>;
   }
 }

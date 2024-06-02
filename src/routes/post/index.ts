@@ -30,24 +30,21 @@ export default async (app: FastifyInstance) => {
     const postCategories = Categories.getCategoriesByIds(blogPost.metaData.categories);
     const postTags = await Tags.getTagsByName(blogPost.metaData.tags);
 
-    return reply.render('_blog/post.ejs', {
+    return reply.render('_blog/post.ejs', req, {
       title: blogPost.metaData.title,
-      req,
-      pageData: {
-        mainNavId: blogPost.metaData.id,
-        body: blogPost.parsedBody,
-        metaData: blogPost.metaData,
-        authors: blogPost.authors,
-        postCategories,
-        postTags,
-        metaDescription: blogPost.metaData.metaDescription,
-        metaKeywords: [...postTags.map(tag => tag.name), ...postCategories.map(category => category.name)],
-        ogImage: blogPost.metaData.titleImage,
-        ogUrl: `/blog/post/${blogPost.metaData.id}/`,
-        articlePublishedTime: blogPost.metaData.publishedDate,
-        articleModifiedTime: blogPost.metaData.updatedAt,
-        ...sidebarData,
-      },
+      mainNavId: blogPost.metaData.id,
+      body: blogPost.parsedBody,
+      metaData: blogPost.metaData,
+      authors: blogPost.authors,
+      postCategories,
+      postTags,
+      metaDescription: blogPost.metaData.metaDescription,
+      metaKeywords: [...postTags.map(tag => tag.name), ...postCategories.map(category => category.name)],
+      ogImage: blogPost.metaData.titleImage,
+      ogUrl: `/blog/post/${blogPost.metaData.id}/`,
+      articlePublishedTime: blogPost.metaData.publishedDate,
+      articleModifiedTime: blogPost.metaData.updatedAt,
+      ...sidebarData,
     });
   });
 };

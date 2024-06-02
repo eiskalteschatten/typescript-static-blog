@@ -17,13 +17,10 @@ export default async (app: FastifyInstance) => {
     await blogPostIndex.getPostsByCategory(categoryId);
     const templateData = await blogPostIndex.getTemplateData();
 
-    return reply.render('_blog/index.ejs', {
-      req,
+    return reply.render('_blog/index.ejs', req, {
       title: category.metaData.name,
-      pageData: {
-        mainNavId: category.metaData.id,
-        ...templateData,
-      },
+      mainNavId: category.metaData.id,
+      ...templateData,
     });
   });
 };
