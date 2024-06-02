@@ -1,4 +1,4 @@
-function setContents(html, title) {
+function setContents(html, title, mainNavId) {
   const main = document.getElementById('main');
 
   if (main) {
@@ -6,6 +6,21 @@ function setContents(html, title) {
   }
 
   document.title = title || 'Hybrid Frameworkless SPA Concept';
+
+  if (mainNavId) {
+    const activeLinks = document.querySelectorAll('a.js-main-nav-button');
+
+    if (activeLinks && activeLinks.length > 0) {
+      activeLinks.forEach(activeLink => activeLink.classList.remove('selected'));
+    }
+
+    const newActiveLinks = document.querySelectorAll(`a[data-nav-id="${mainNavId}"]`);
+
+    if (newActiveLinks && newActiveLinks.length > 0) {
+      newActiveLinks?.forEach(newActiveLink => newActiveLink.classList.add('selected'));
+    }
+  }
+
   setLinks();
 }
 
@@ -27,7 +42,7 @@ async function clickLink(link) {
     if (response.status === 200) {
       const partialContents = await response.json();
 
-      setContents(partialContents.html, partialContents.title);
+      setContents(partialContents.html, partialContents.title, partialContents.mainNavId);
 
       window.history.pushState({
         html: partialContents.html,

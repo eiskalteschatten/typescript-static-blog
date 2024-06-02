@@ -171,7 +171,7 @@
 
           <nav class="d-none d-lg-flex align-items-center gap-2 main-nav">
             <% for (const navItem of mainNav) { %>
-              <a href="<%=navItem.url%>" data-app-link="false" is="nav-link" class="main-nav-button <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>">
+              <a href="<%=navItem.url%>" data-app-link="false" is="nav-link" data-nav-id="<%= navItem.id %>" class="main-nav-button js-main-nav-button <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>">
                 <%=navItem.label%>
               </a>
             <% } %>
@@ -216,7 +216,7 @@
     <div class="d-lg-none mobile-menu-container" id="mobileMenu">
       <nav class="mobile-menu">
         <% for (const navItem of mainNav) { %>
-          <a href="<%=navItem.url%>" data-app-link="false" class="mobile-nav-button js-track-mobile-menu-click-event <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>"><%=navItem.label%></a>
+          <a href="<%=navItem.url%>" data-app-link="false" data-nav-id="<%= navItem.id %>" class="mobile-nav-button js-main-nav-button js-track-mobile-menu-click-event <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>"><%=navItem.label%></a>
         <% } %>
       </nav>
     </div>
