@@ -5,7 +5,7 @@ function setContents(html, title, mainNavId) {
     main.innerHTML = html;
   }
 
-  document.title = title || 'Hybrid Frameworkless SPA Concept';
+  document.title = title || 'TypeScript Static Blog';
 
   if (mainNavId) {
     const activeLinks = document.querySelectorAll('a.js-main-nav-button');
