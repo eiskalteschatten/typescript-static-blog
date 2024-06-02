@@ -56,16 +56,18 @@ async function clickLink(link) {
 }
 
 function setLinks() {
-  const links = document.querySelectorAll('a[data-link]');
+  const links = document.querySelectorAll('a[data-app-link="false"]');
 
   const listenerCallback = async (e, link) => {
     e.preventDefault();
-    links.forEach(_link => _link.removeEventListener('click', listenerCallback));
     await clickLink(link);
   };
 
   if (links && links.length > 0) {
-    links.forEach(link => link.addEventListener('click', e => listenerCallback(e, link)));
+    links.forEach(link => {
+      link.addEventListener('click', e => listenerCallback(e, link));
+      link.setAttribute('data-app-link', 'true');
+    });
   }
 }
 
