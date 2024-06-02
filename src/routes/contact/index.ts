@@ -27,7 +27,7 @@ const generateHtml = (emailData: EmailData): string => {
 
 export default async (app: FastifyInstance) => {
   app.get('/', (req: FastifyRequest, reply: FastifyReply) => {
-    reply.render('contact.ejs', req, {
+    return reply.render('contact.ejs', req, {
       title: 'Contact',
     });
   });
