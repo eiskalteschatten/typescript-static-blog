@@ -10,7 +10,7 @@ export interface RenderOptions extends Record<string, any> {
 }
 
 export default fastifyPlugin(function(fastify: FastifyInstance, options: Record<string, any>, done: () => void): void {
-  fastify.decorateReply('render', async function (template: string, req: FastifyRequest, renderOptions: RenderOptions): Promise<FastifyReply> {
+  fastify.decorateReply('render', async function (template: string, req: FastifyRequest, renderOptions?: RenderOptions): Promise<FastifyReply> {
     const locals = {
       mainNav,
       helpers: ejsHelpers,
