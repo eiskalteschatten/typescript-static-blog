@@ -3,7 +3,7 @@ import path from 'node:path';
 import TurndownService from 'turndown';
 import * as cheerio from 'cheerio';
 
-import { downloadImage, convertEscapedAscii } from './utils.mjs';
+import { downloadImage, convertEscapedAscii, stripHtml } from './utils.mjs';
 
 console.log('Importing data from Wordpress...');
 
@@ -218,7 +218,7 @@ async function fetchPosts() {
         status: post.status === 'publish' ? 'published' : 'draft',
         authors: [postAuthor.id],
         titleImage,
-        excerpt: post.yoast_head_json.description,
+        excerpt: stripHtml(post.excerpt.rendered),
         categories: postCategories.map(category => category.id),
         tags,
         publishedDate: post.date,
