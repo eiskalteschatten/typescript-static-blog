@@ -1,4 +1,4 @@
-import Fastify, { DoneFuncWithErrOrRes, FastifyReply, FastifyRequest } from 'fastify';
+import Fastify, { FastifyReply, FastifyRequest } from 'fastify';
 import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
 import formBody from '@fastify/formbody';
@@ -8,10 +8,10 @@ import type { FastifyCookieOptions } from '@fastify/cookie';
 import cookie from '@fastify/cookie';
 import ejs from 'ejs';
 import path from 'path';
+import minifier from 'html-minifier';
 
-import mainNav from './mainNav';
-import * as ejsHelpers from './lib/ejsHelpers';
-import Stats from './stats/Stats';
+// import Stats from './stats/Stats';
+import renderer from './lib/renderer';
 
 const port = Number(process.env.PORT) || 4000;
 
@@ -24,36 +24,29 @@ const app = Fastify({
   ignoreTrailingSlash: true,
 });
 
-type CustomRequest = FastifyRequest<{ Querystring: { noStats?: number } }>;
-app.addHook('preHandler', (req: CustomRequest, reply: FastifyReply, done: DoneFuncWithErrOrRes) => {
-  // Global variables for the EJS templates can be set here
-  reply.locals = {
-    mainNav,
-    helpers: ejsHelpers,
-    isDev: process.env.NODE_ENV === 'development',
-  };
+// type CustomRequest = FastifyRequest<{ Querystring: { noStats?: number } }>;
+// app.addHook('preHandler', (req: CustomRequest, reply: FastifyReply, done: DoneFuncWithErrOrRes) => {
+//   if (!req.url.match(Stats.excludeFromStats)) {
+//     const noStatsParam = Number(req.query.noStats);
+//     const noStats = req.cookies?.noStats === 'true' || noStatsParam === 1;
 
-  if (!req.url.match(Stats.excludeFromStats)) {
-    const noStatsParam = Number(req.query.noStats);
-    const noStats = req.cookies?.noStats === 'true' || noStatsParam === 1;
+//     if (noStatsParam === 1) {
+//       reply.setCookie('noStats', 'true', {
+//         path: '/',
+//         // Expires in a year
+//         expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
+//       });
+//     }
 
-    if (noStatsParam === 1) {
-      reply.setCookie('noStats', 'true', {
-        path: '/',
-        // Expires in a year
-        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
-      });
-    }
+//     if (!noStats) {
+//       const stats = new Stats();
+//       // Don't await this so that the request can be processed without waiting for the stats to be written
+//       stats.addPageHit(req.url);
+//     }
+//   }
 
-    if (!noStats) {
-      const stats = new Stats();
-      // Don't await this so that the request can be processed without waiting for the stats to be written
-      stats.addPageHit(req.url);
-    }
-  }
-
-  done();
-});
+//   done();
+// });
 
 app.register(formBody);
 
@@ -65,7 +58,27 @@ app.register(fastifyView, {
   engine: { ejs },
   root: './templates',
   layout: '_layout.ejs',
+  propertyName: 'renderFullPage',
 });
+
+app.register(fastifyView, {
+  engine: { ejs },
+  root: './templates',
+  propertyName: 'renderPartial',
+  options: {
+    useHtmlMinifier: minifier,
+    htmlMinifierOptions: {
+      removeComments: true,
+      removeCommentsFromCDATA: true,
+      collapseWhitespace: true,
+      collapseBooleanAttributes: true,
+      removeAttributeQuotes: true,
+      removeEmptyAttributes: true,
+    },
+  },
+});
+
+app.register(renderer);
 
 app.register(helmet, {
   global: true,
@@ -95,7 +108,7 @@ app.register(fastifyStatic, {
 });
 
 app.setNotFoundHandler((req: FastifyRequest, reply: FastifyReply) => {
-  reply.view('404.ejs', {
+  reply.render('404.ejs', req, {
     title: 'Page Not Found',
   });
 });

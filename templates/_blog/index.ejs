@@ -33,11 +33,11 @@
 
         <div class="pagination d-flex gap-1 justify-content-center mt-2 mt-md-5">
           <% if (currentPage > 1) { %>
-            <a href="?page=<%= Number(currentPage) - 1 %>" class="pagination-link badge">&#x2190; Previous</a>
+            <a href="?page=<%= Number(currentPage) - 1 %>" data-app-link="false" class="pagination-link badge">&#x2190; Previous</a>
           <% } %>
 
           <% if (!links.includes(1)) { %>
-            <a href="?page=1" class="pagination-link badge <% if (1 == currentPage) { %>selected<% } %>">1</a>
+            <a href="?page=1" data-app-link="false" class="pagination-link badge <% if (1 == currentPage) { %>selected<% } %>">1</a>
 
             <% if (!links.includes(2)) { %>
               <span class="pagination-link badge disabled">...</span>
@@ -45,7 +45,7 @@
           <% } %>
 
           <% for (const link of links) { %>
-            <a href="?page=<%= link %>" class="pagination-link badge <% if (link == currentPage) { %>selected<% } %>"><%= link %></a>
+            <a href="?page=<%= link %>" data-app-link="false" class="pagination-link badge <% if (link == currentPage) { %>selected<% } %>"><%= link %></a>
           <% } %>
 
           <% if (!links.includes(totalPages)) { %>
@@ -53,11 +53,11 @@
               <span class="pagination-link badge disabled">...</span>
             <% } %>
 
-            <a href="?page=<%= totalPages %>" class="pagination-link badge <% if (totalPages == currentPage) { %>selected<% } %>"><%= totalPages %></a>
+            <a href="?page=<%= totalPages %>" data-app-link="false" class="pagination-link badge <% if (totalPages == currentPage) { %>selected<% } %>"><%= totalPages %></a>
           <% } %>
 
           <% if (currentPage < totalPages) { %>
-            <a href="?page=<%= Number(currentPage) + 1 %>" class="pagination-link badge">Next &#x2192;</a>
+            <a href="?page=<%= Number(currentPage) + 1 %>" data-app-link="false" class="pagination-link badge">Next &#x2192;</a>
           <% } %>
         </div>
       <% } %>

@@ -17,7 +17,7 @@ export default async (app: FastifyInstance) => {
     await blogPostIndex.getPostsByAuthor(authorId);
     const templateData = await blogPostIndex.getTemplateData();
 
-    return reply.view('_blog/index.ejs', {
+    return reply.render('_blog/index.ejs', req, {
       title: author.metaData.name,
       author: author.metaData,
       ...templateData,

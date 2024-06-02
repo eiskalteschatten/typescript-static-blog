@@ -17,7 +17,7 @@ export default async (app: FastifyInstance) => {
     await blogPostIndex.getPostsByCategory(categoryId);
     const templateData = await blogPostIndex.getTemplateData();
 
-    return reply.view('_blog/index.ejs', {
+    return reply.render('_blog/index.ejs', req, {
       title: category.metaData.name,
       mainNavId: category.metaData.id,
       ...templateData,

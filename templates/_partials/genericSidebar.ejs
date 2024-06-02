@@ -5,10 +5,10 @@
       <ul>
         <% for (const post of latestPosts) { %>
           <li class="d-flex gap-3 my-3">
-            <a href="/post/<%= post.id %>/">
+            <a href="/post/<%= post.id %>/" data-app-link="false">
               <img src="<%= post.titleImage %>" alt="<%= post.title %>" width="135" height="75" class="sidebar-latest-post-image" loading="lazy">
             </a>
-            <a href="/post/<%= post.id %>/"><%= post.title %></a>
+            <a href="/post/<%= post.id %>/" data-app-link="false"><%= post.title %></a>
           </li>
         <% } %>
       </ul>
@@ -21,7 +21,7 @@
       <ul>
         <% for (const category of categories) { %>
           <li>
-            <a href="/category/<%= category.id %>/">
+            <a href="/category/<%= category.id %>/" data-app-link="false">
               <%= category.name %>
             </a>
           </li>
@@ -45,7 +45,7 @@
 
         <% for (const tag of tags) { %>
           <% var fontSize = fontMin + (tag.count - min) * fontStep; %>
-          <a href="/tag/<%= tag.slug %>/" class="d-inline-block ms-2" style="font-size: <%= fontSize %>pt;">
+          <a href="/tag/<%= tag.slug %>/" data-app-link="false" class="d-inline-block ms-2" style="font-size: <%= fontSize %>pt;">
             <%= tag.name %>
           </a>
         <% } %>

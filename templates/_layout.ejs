@@ -45,6 +45,7 @@
 
     <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="<%= _siteHost %>/feed/">
 
+    <script async src="/scripts/routing.js?v=1"></script>
     <script async src="/scripts/scripts.js?v=1"></script>
     <script async src="/scripts/web-components/index.js?v=1" type="module"></script>
     <script async src="/libs/prismjs/prism.js"></script>
@@ -157,6 +158,10 @@
     </script>
   </head>
   <body>
+    <div class="page-loader hidden" id="pageLoader">
+      <div class="bar"></div>
+    </div>
+
     <header class="header py-2 d-flex align-items-center justify-content-between">
       <div class="container-xl d-flex align-items-center justify-content-between gap-5 h-100 w-100">
         <div class="d-flex align-items-center gap-3 gap-lg-5">
@@ -166,7 +171,7 @@
 
           <nav class="d-none d-lg-flex align-items-center gap-2 main-nav">
             <% for (const navItem of mainNav) { %>
-              <a href="<%=navItem.url%>" is="nav-link" class="main-nav-button <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>">
+              <a href="<%=navItem.url%>" data-app-link="false" is="nav-link" data-nav-id="<%= navItem.id %>" class="main-nav-button js-main-nav-button <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>">
                 <%=navItem.label%>
               </a>
             <% } %>
@@ -186,7 +191,7 @@
       </div>
     </header>
 
-    <main class="flex-grow-1 py-4">
+    <main class="flex-grow-1 py-4" id="main">
       <%- body %>
     </main>
 
@@ -195,11 +200,11 @@
         <%- include('./_partials/logo.ejs') %>
 
         <div class="d-flex flex-column flex-md-row gap-2 gap-md-4">
-          <a href="/" class="js-track-footer-menu-click-event">Home</a>
-          <a href="/imprint/" class="js-track-footer-menu-click-event">Imprint</a>
-          <a href="/privacy-statement/" class="js-track-footer-menu-click-event">Privacy Statement</a>
-          <a href="/about/" class="js-track-footer-menu-click-event">About TypeScript Static Blog</a>
-          <a href="/contact/" class="js-track-footer-menu-click-event">Contact</a>
+          <a href="/" data-app-link="false" class="js-track-footer-menu-click-event">Home</a>
+          <a href="/imprint/" data-app-link="false" class="js-track-footer-menu-click-event">Imprint</a>
+          <a href="/privacy-statement/" data-app-link="false" class="js-track-footer-menu-click-event">Privacy Statement</a>
+          <a href="/about/" data-app-link="false" class="js-track-footer-menu-click-event">About TypeScript Static Blog</a>
+          <a href="/contact/" data-app-link="false" class="js-track-footer-menu-click-event">Contact</a>
         </div>
 
         <div class="text-xl-end">
@@ -211,7 +216,7 @@
     <div class="d-lg-none mobile-menu-container" id="mobileMenu">
       <nav class="mobile-menu">
         <% for (const navItem of mainNav) { %>
-          <a href="<%=navItem.url%>" class="mobile-nav-button js-track-mobile-menu-click-event <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>"><%=navItem.label%></a>
+          <a href="<%=navItem.url%>" data-app-link="false" data-nav-id="<%= navItem.id %>" class="mobile-nav-button js-main-nav-button js-track-mobile-menu-click-event <% if (typeof mainNavId !== 'undefined' && mainNavId === navItem.id) { %>selected<% } %>"><%=navItem.label%></a>
         <% } %>
       </nav>
     </div>

@@ -30,7 +30,7 @@ export default async (app: FastifyInstance) => {
     const postCategories = Categories.getCategoriesByIds(blogPost.metaData.categories);
     const postTags = await Tags.getTagsByName(blogPost.metaData.tags);
 
-    return reply.view('_blog/post.ejs', {
+    return reply.render('_blog/post.ejs', req, {
       title: blogPost.metaData.title,
       mainNavId: blogPost.metaData.id,
       body: blogPost.parsedBody,

@@ -1,0 +1,41 @@
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10000000;
+  pointer-events: none;
+  opacity: 0;
+  transition: width 1350ms ease-in-out, opacity 350ms linear, left 50ms ease-in-out;
+
+  .bar {
+    background-color: var(--primary-color);
+    height: 3px;
+    width: 100%;
+  }
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  &.loading {
+    opacity: 1;
+    animation: page-loading 2000ms ease-in-out;
+    animation-iteration-count: infinite;
+  }
+}
+
+@keyframes page-loading {
+  0% {
+    width: 0;
+    left: 0;
+  }
+  50% {
+    width: 100%;
+    left: 0;
+  }
+  100% {
+    width: 100%;
+    left: 100%;
+  }
+}
