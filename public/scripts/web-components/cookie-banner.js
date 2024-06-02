@@ -1,8 +1,4 @@
 class CookieBanner extends HTMLElement {
-  constructor() {
-    super();
-  }
-
   connectedCallback() {
     const hasClosedCookieBanner = !!localStorage.getItem('allCookiesAccepted');
 

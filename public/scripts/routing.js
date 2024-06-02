@@ -28,17 +28,6 @@ function setContents(html, title, mainNavId) {
 }
 
 async function clickLink(link) {
-  const pageLoader = document.getElementById('pageLoader');
-  let pageLoaderTimeout;
-
-  if (pageLoader) {
-    pageLoaderTimeout = setTimeout(() => {
-      pageLoader.classList.remove('hidden');
-      pageLoader.classList.add('loading');
-      clearTimeout(pageLoaderTimeout);
-    }, 200);
-  }
-
   try {
     if (!document.dispatchEvent(navStartEvent)) {
       return;
@@ -66,15 +55,6 @@ async function clickLink(link) {
     document.location = link.href;
   }
   finally {
-    if (pageLoader) {
-      if (pageLoaderTimeout) {
-        clearTimeout(pageLoaderTimeout);
-      }
-
-      pageLoader.classList.add('hidden');
-      pageLoader.classList.remove('loading');
-    }
-
     document.dispatchEvent(navEndEvent);
   }
 }
