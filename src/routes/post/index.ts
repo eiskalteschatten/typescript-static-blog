@@ -38,7 +38,7 @@ export default async (app: FastifyInstance) => {
       authors: blogPost.authors,
       postCategories,
       postTags,
-      metaDescription: blogPost.metaData.metaDescription,
+      metaDescription: blogPost.metaData.excerpt,
       metaKeywords: [...postTags.map(tag => tag.name), ...postCategories.map(category => category.name)],
       ogImage: blogPost.metaData.titleImage,
       ogUrl: `/blog/post/${blogPost.metaData.id}/`,

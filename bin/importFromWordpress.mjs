@@ -1,12 +1,3 @@
-/*
-  1. Import categories and authors (and author avatars) -- only those that have posts
-  2. Import posts with images and link them to the categories and authors. Also import tags.
-
-  Notes:
-    - Think about pagination
-    - Think about post status
-*/
-
 import fs from 'node:fs';
 import path from 'node:path';
 import TurndownService from 'turndown';
@@ -20,7 +11,7 @@ const dataDirectory = path.resolve(process.cwd(), 'data');
 const categoriesFile = path.resolve(dataDirectory, 'categories.json');
 const authorsFile = path.resolve(dataDirectory, 'authors.json');
 
-const apiUrl = 'https://www.developers-notebook.com/wp-json/wp/v2/';
+const apiUrl = 'https://blog.alexseifert.com/wp-json/wp/v2/';
 const authorsUrl = `${apiUrl}users`;
 const categoriesUrl = `${apiUrl}categories`;
 const postsUrl = `${apiUrl}posts`;
@@ -228,7 +219,6 @@ async function fetchPosts() {
         authors: [postAuthor.id],
         titleImage,
         excerpt: post.yoast_head_json.description,
-        metaDescription: post.yoast_head_json.description,
         categories: postCategories.map(category => category.id),
         tags,
         publishedDate: post.date,

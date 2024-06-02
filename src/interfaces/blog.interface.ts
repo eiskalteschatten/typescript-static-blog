@@ -14,7 +14,6 @@ export interface BlogPostMetaData extends BlogPostPublishData {
   categories: string[];
   tags?: string[];
   updatedAt: string;
-  metaDescription: string;
   scheduled?: boolean;
 }
 
