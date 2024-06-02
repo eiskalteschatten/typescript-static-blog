@@ -33,7 +33,8 @@ async function clickLink(link) {
       return;
     }
 
-    const response = await fetch(`${link.href}?_partial`);
+    const fetchUrl = link.href.includes('?') ? `${link.href}&_partial` : `${link.href}?_partial`;
+    const response = await fetch(fetchUrl);
 
     if (response.status === 200) {
       const partialContents = await response.json();
