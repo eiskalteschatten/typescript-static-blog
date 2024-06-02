@@ -10,13 +10,13 @@ function setContents(html, title, mainNavId) {
 
   document.title = title || 'TypeScript Static Blog';
 
+  const activeLinks = document.querySelectorAll('a.js-main-nav-button');
+
+  if (activeLinks && activeLinks.length > 0) {
+    activeLinks.forEach(activeLink => activeLink.classList.remove('selected'));
+  }
+
   if (mainNavId) {
-    const activeLinks = document.querySelectorAll('a.js-main-nav-button');
-
-    if (activeLinks && activeLinks.length > 0) {
-      activeLinks.forEach(activeLink => activeLink.classList.remove('selected'));
-    }
-
     const newActiveLinks = document.querySelectorAll(`a[data-nav-id="${mainNavId}"]`);
 
     if (newActiveLinks && newActiveLinks.length > 0) {
