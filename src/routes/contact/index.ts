@@ -42,7 +42,7 @@ export default async (app: FastifyInstance) => {
         html: generateHtml(req.body),
       });
 
-      return reply.view('contact.ejs', {
+      return reply.render('contact.ejs', req, {
         title: 'Contact',
         success: true,
       });
@@ -50,7 +50,7 @@ export default async (app: FastifyInstance) => {
     catch (error) {
       logger.error(error);
 
-      return reply.view('contact.ejs', {
+      return reply.render('contact.ejs', req, {
         title: 'Contact',
         error: true,
       });
