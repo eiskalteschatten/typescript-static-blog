@@ -1,5 +1,7 @@
 <div class="container-fluid container-xxl">
-  <h1 class="page-title"><%= title %></h1>
+  <% if (typeof title !== 'undefined') { %>
+    <h1 class="page-title"><%= title %></h1>
+  <% } %>
 
   <% if (typeof author !== 'undefined') { %>
     <%- include('../_partials/authorBio.ejs', { showName: false, showWebsite: true }) %>

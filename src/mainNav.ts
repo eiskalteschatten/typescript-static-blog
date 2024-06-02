@@ -16,11 +16,6 @@ const mainNav: MainNavItem[] = [
     url: '/categories/',
   },
   {
-    id: 'allPosts',
-    label: 'All Posts',
-    url: '/posts/',
-  },
-  {
     id: 'about',
     label: 'About TypeScript Static Blog',
     url: '/about/',
