@@ -26,7 +26,7 @@ export default fastifyPlugin(function(fastify: FastifyInstance, options: Record<
 
     if (query && '_partial' in query) {
       const html = await fastify.renderPartial(template, templateData);
-      return this.send({ html, title: renderOptions.title });
+      return this.send({ html, title: renderOptions?.title });
     }
 
     this.type('text/html');
