@@ -19,8 +19,16 @@
     }
   }
 
-  .sidebar-latest-post-image {
-    object-fit: cover;
-    border-radius: var(--border-radius);
+  .latest-posts {
+    .sidebar-latest-post-image {
+      object-fit: cover;
+      border-radius: var(--border-radius);
+    }
+
+    .no-item-tile-title-image {
+      height: 75px;
+      width: 135px;
+      font-size: 1.8em;
+    }
   }
 }
