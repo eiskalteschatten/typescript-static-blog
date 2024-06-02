@@ -24,6 +24,7 @@ function setContents(html, title, mainNavId) {
     }
   }
 
+  window.scrollTo({ top: 0, behavior: 'instant' });
   setLinks();
 }
 
