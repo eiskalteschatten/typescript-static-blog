@@ -3,8 +3,9 @@ import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import BlogPostIndex from '@/blog/BlogPostIndex';
 
 export default async (app: FastifyInstance) => {
-  app.get('/', async (req: FastifyRequest, reply: FastifyReply) => {
-    const blogPostIndex = new BlogPostIndex();
+  type PostsRequest = FastifyRequest<{ Querystring: { page?: number } }>;
+  app.get('/', async (req: PostsRequest, reply: FastifyReply) => {
+    const blogPostIndex = new BlogPostIndex(req.query.page);
     await blogPostIndex.getAllPosts();
     const templateData = await blogPostIndex.getTemplateData();
 
