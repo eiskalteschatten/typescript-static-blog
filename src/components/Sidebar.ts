@@ -5,7 +5,7 @@ import { BlogPostMetaData } from '@/interfaces/blog.interface';
 
 export default class Sidebar {
   static async getGenericSidebarData(showLatestPosts = true) {
-    const tags = await Tags.getAllTags();
+    const tags = await Tags.getMostUsedTags();
     let latestPosts: BlogPostMetaData[];
 
     if (showLatestPosts) {

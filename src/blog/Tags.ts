@@ -20,6 +20,14 @@ export default class Tags {
     }
   }
 
+  static async getMostUsedTags(): Promise<CachedTag[]> {
+    const allTags = await Tags.getAllTags();
+    return allTags
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 50)
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }
+
   static async getTagsByName(tagNames: string[]): Promise<CachedTag[] | undefined> {
     const allTags = await Tags.getAllTags();
     return allTags.filter(tag => tagNames.includes(tag.name));
