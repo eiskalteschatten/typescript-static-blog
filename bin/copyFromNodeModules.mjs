@@ -9,7 +9,6 @@ if (!fs.existsSync(pathToDestination)) {
 }
 
 const filesToCopy = {
-  prismjs: ['prism.js'],
 };
 
 for (const [packageName, files] of Object.entries(filesToCopy)) {

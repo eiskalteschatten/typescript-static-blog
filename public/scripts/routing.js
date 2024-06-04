@@ -25,6 +25,7 @@ function setContents(html, title, mainNavId) {
     }
   }
 
+  Prism.highlightAll();
   window.scrollTo({ top: 0, behavior: 'instant' });
   setLinks();
 }
