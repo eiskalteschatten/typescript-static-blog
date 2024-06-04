@@ -8,7 +8,8 @@ function setContents(html, title, mainNavId) {
     main.innerHTML = html;
   }
 
-  document.title = title || 'TypeScript Static Blog';
+  const defaultTitle = 'TypeScript Static Blog';
+  document.title = title ? `${title} - ${defaultTitle}` : defaultTitle;
 
   const activeLinks = document.querySelectorAll('a.js-main-nav-button');
 
